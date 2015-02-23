@@ -3,5 +3,5 @@ Repositorio para la asignatura de Videjuegos de la universidad de Zaragoza para 
 
 # Integrantes
 * 578207 David Orera Hernández - confirmado
-* 650435 Rafael Marcén Altarriba
+* 650435 Rafael Marcén Altarriba - confirmado
 * 647809 Rubén Tomás Gracia
