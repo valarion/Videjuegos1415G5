@@ -46,6 +46,7 @@ public class Game extends Canvas {
 		ss = new SpriteSheet(spriteSheet);
 		
 		map.loadTiles(ss);
+		map.saveImagetoFile();
 	}
 
 	public void run() {

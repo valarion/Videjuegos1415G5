@@ -1,9 +1,14 @@
 package videjouegos1415g5;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Map {
 
@@ -61,15 +66,11 @@ public class Map {
 		try {
 			tileset = s;
 
-			int numTilesAcross = 0;
-			int h = (tileset.getHeight() + 1) / tileSize;
-			for (int i = 0; i < h; i++) {
-				numTilesAcross += (tileset.getWidth() + 1) / tileSize;
-			}
-			tiles = new Tile[2][numTilesAcross / h];
+			int numTilesAcross = (tileset.getWidth() + 1) / tileSize;
+			tiles = new Tile[2][numTilesAcross];
 
 			BufferedImage subimage;
-			for (int col = 0; col < (numTilesAcross / h) - 1; col++) {
+			for (int col = 0; col < numTilesAcross; col++) {
 				subimage = tileset.obtenerSprite(col * tileSize, 0, tileSize,
 						tileSize);
 				tiles[0][col] = new Tile(subimage, false);
@@ -82,6 +83,43 @@ public class Map {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void saveImagetoFile() {
+		
+        int width = mapWidth*tileSize;
+        int height = mapHeight*tileSize;
+        BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = newImage.createGraphics();
+		
+		int error = 0;
+		for (int row = 0; row < mapHeight; row++) {
+			for (int col = 0; col < mapWidth; col++) {
+
+				int rc = map[row][col];
+
+				int r = rc / tiles[0].length;
+				int c = rc % tiles[0].length;
+
+				// Apaño provisional, el techo izquierdo no esta rotado en los
+				// sprites
+				if (rc == 26 || rc == 27)
+					error = 8;
+				else
+					error = 0;
+				g.drawImage(tiles[r][c].getImage(), error + x + col * tileSize,
+						y + row * tileSize, null);
+
+			}
+		}
+		g.dispose();
+		String file = "final_map" + this.mapPath.replaceAll("\\D+","") + ".png";
+		try {
+		    File outputfile = new File(file);
+		    ImageIO.write(newImage, "png", outputfile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int getx() {
@@ -129,6 +167,7 @@ public class Map {
 
 	public void render(Graphics2D g) {
 
+		int error = 0;
 		for (int row = 0; row < mapHeight; row++) {
 			for (int col = 0; col < mapWidth; col++) {
 
@@ -137,8 +176,16 @@ public class Map {
 				int r = rc / tiles[0].length;
 				int c = rc % tiles[0].length;
 
-				g.drawImage(tiles[r][c].getImage(), x + col * tileSize, y + row
-						* tileSize, null);
+				//System.out.println(r + " " + c);
+
+				// Apaño provisional, el techo izquierdo no esta rotado en los
+				// sprites
+				if (rc == 26 || rc == 27)
+					error = 8;
+				else
+					error = 0;
+				g.drawImage(tiles[r][c].getImage(), error + x + col * tileSize,
+						y + row * tileSize, null);
 
 			}
 		}
