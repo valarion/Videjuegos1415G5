@@ -1,0 +1,76 @@
+Round 1 (Wall)
+STAGE 1-1
+cuadrado 
+3xglobo 100puntos cada uno
+
+power-ups:
+1xfire
+
+
+STAGE 1-2
+cuadrado 11x13
+3xglobo 100puntos cada uno
+1xbola/moco rosa 400puntos
+
+power-ups:
+1x bomb
+
+STAGE 1-3
+cuadrado 11x13
+2xglobo 100puntos cada uno
+2xbola/moco rosa 400puntos
+
+power-ups:
+1xpatines
+
+STAGE 1-4
+cuadrado 11x13
+2xglobo 100puntos cada uno
+2xbola/moco rosa 400puntos
+1xmoquillo azul ojos saltones 2000puntos
+
+power-ups:
+1xcorazón raro
+
+STAGE 1-5
+rectangulo 29x13
+2xglobo
+1xbola/moco rosa 400puntos
+2xmoquillo azul ojos saltones 2000puntos
+
+power-ups:
+1xbomba con rallas 2000
+
+10:21
+
+
+STAGE 1-6
+rectangulo 29x13
+2xglobo
+1xno-globo naranja
+1xbola/moco rosa 400puntos
+2xmoquillo azul ojos saltones 2000puntos
+
+power-ups:
+1xvida
+
+STAGE 1-7
+rectangulo 29x13
+1xmurcielago (atraviesa bloques)
+2xglobo
+1xno-globo naranja
+2xmoquillo azul ojos saltones 2000puntos
+
+power-ups:
+1xatravesar paredes
+
+STAGE 1-8
+cuadrado
+
+2xpulpo/fantasma amarillo 2000
+dragón azul cabeza 4xcuerpo cola   amarillo   rosa   (atraviesa bombas)
+
+power-ups:
+
+
+15:13
