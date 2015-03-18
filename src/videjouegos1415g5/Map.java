@@ -103,7 +103,7 @@ public class Map {
 
 				// Apaño provisional, el techo izquierdo no esta rotado en los
 				// sprites
-				if (rc == 26 || rc == 27)
+				if (rc >= 25 && rc <= 27)
 					error = 8;
 				else
 					error = 0;
@@ -113,7 +113,7 @@ public class Map {
 			}
 		}
 		g.dispose();
-		String file = "final_map" + this.mapPath.replaceAll("\\D+","") + ".png";
+		String file = "res/maps/final_map" + this.mapPath.replaceAll("\\D+","") + ".png";
 		try {
 		    File outputfile = new File(file);
 		    ImageIO.write(newImage, "png", outputfile);
@@ -180,7 +180,7 @@ public class Map {
 
 				// Apaño provisional, el techo izquierdo no esta rotado en los
 				// sprites
-				if (rc == 26 || rc == 27)
+				if (rc >= 25 && rc <= 27)
 					error = 8;
 				else
 					error = 0;

@@ -6,10 +6,10 @@ import javax.swing.JFrame;
 
 public class Main {
 	
-	public static final int ALTURA = 120;
-	public static final int ANCHURA = 160;
-	private static final int ESCALA = 3;
-	public static final String TITULO = "";
+	public static final int ALTURA = 446;
+	public static final int ANCHURA = 544;
+	private static final int ESCALA = 1;
+	public static final String TITULO = "+";
 	
 	public static void main(String[] args) {
 		Game game = new Game();
