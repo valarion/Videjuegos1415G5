@@ -30,6 +30,7 @@ public class Game extends Canvas {
 	private KeyInput input = new KeyInput(this);
 
 	private Map map;
+	private GenerateObstacles obstacles;
 
 	private void init() {
 		setFocusable(true);		
@@ -47,13 +48,15 @@ public class Game extends Canvas {
 		
 		// Mapa de prueba
 		map = new Map("res/maps/map_type1.txt", 16);
-		spriteSheet = loader.cargarImagen("/maps/map8.png");
+		spriteSheet = loader.cargarImagen("/maps/map1.png");
 		ss = new SpriteSheet(spriteSheet);
 		
 		map.loadTiles(ss);
 		map.saveImagetoFile();
-		
+				
 		int escala = 2;
+		obstacles = new GenerateObstacles(ss, map.getmapWidth(), map.getmapHeight(), escala);
+
 		try {
 			BufferedImage m = ImageIO.read(getClass().getResource("/maps/final_map1.png"));
 			final_map = m.getScaledInstance(m.getWidth()*escala, 
@@ -103,8 +106,9 @@ public class Game extends Canvas {
 		g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
 		g.setColor(Color.BLACK);
 		
-		map.render(g);
-		//g.drawImage(final_map, 0, 0, this);
+		//map.render(g);
+		g.drawImage(final_map, 0, 0, this);
+		obstacles.draw(g);
 		
 		//int escalaAnchura = getWidth() / Main.ANCHURA;
 		//int escalaAltura = getHeight() / Main.ALTURA;

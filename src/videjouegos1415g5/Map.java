@@ -129,6 +129,15 @@ public class Map {
 	public int gety() {
 		return y;
 	}
+	
+	public int getmapWidth() {
+		return mapWidth;
+	}
+	
+	public int getmapHeight() {
+		return mapHeight;
+	}
+	
 
 	public int getTile(int row, int col) {
 		return map[row][col];
