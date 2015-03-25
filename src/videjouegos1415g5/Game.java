@@ -3,19 +3,14 @@ package videjouegos1415g5;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class Game extends Canvas {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private BufferedImage imagen;
-	private Image final_map;
 	private BufferedImage spriteSheet = null;
 	private SpriteSheet ss;
 	
@@ -30,6 +25,7 @@ public class Game extends Canvas {
 	private KeyInput input = new KeyInput(this);
 
 	private Map map;
+	private GenerateObstacles obstacles;
 
 	private void init() {
 		setFocusable(true);		
@@ -47,21 +43,17 @@ public class Game extends Canvas {
 		
 		// Mapa de prueba
 		map = new Map("res/maps/map_type1.txt", 16);
-		spriteSheet = loader.cargarImagen("/maps/map8.png");
+		spriteSheet = loader.cargarImagen("/maps/map1.png");
 		ss = new SpriteSheet(spriteSheet);
 		
+		int scale = 2;
 		map.loadTiles(ss);
-		map.saveImagetoFile();
-		
+		map.saveImagetoFile(false, scale);
+		obstacles = new GenerateObstacles(ss, map.getmapWidth(), map.getmapHeight(), scale);
+		map.saveImagetoFile(false, scale);
+				
 		int escala = 2;
-		try {
-			BufferedImage m = ImageIO.read(getClass().getResource("/maps/final_map1.png"));
-			final_map = m.getScaledInstance(m.getWidth()*escala, 
-											m.getHeight()*escala, 
-											Image.SCALE_SMOOTH);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		obstacles = new GenerateObstacles(ss, map.getmapWidth(), map.getmapHeight(), escala);
 	}
 
 	public void run() {
@@ -87,7 +79,9 @@ public class Game extends Canvas {
 
 			try { 
 				Thread.sleep(10); // Como a Mena le gusta
-			} catch (Exception e) {}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -103,8 +97,10 @@ public class Game extends Canvas {
 		g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
 		g.setColor(Color.BLACK);
 		
-		map.render(g);
+		//map.render(g);
 		//g.drawImage(final_map, 0, 0, this);
+		map.renderMap(g);
+		obstacles.draw(g);
 		
 		//int escalaAnchura = getWidth() / Main.ANCHURA;
 		//int escalaAltura = getHeight() / Main.ALTURA;
