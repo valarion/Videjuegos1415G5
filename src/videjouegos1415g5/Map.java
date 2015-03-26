@@ -1,6 +1,7 @@
 package videjouegos1415g5;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -21,6 +22,7 @@ public class Map {
 	private int[][] map;
 	private int mapWidth;
 	private int mapHeight;
+	private Image finalMap;
 
 	private SpriteSheet tileset;
 	private Tile[][] tiles;
@@ -85,7 +87,7 @@ public class Map {
 
 	}
 
-	public void saveImagetoFile() {
+	public void saveImagetoFile(boolean save, int scale) {
 		
         int width = mapWidth*tileSize;
         int height = mapHeight*tileSize;
@@ -113,12 +115,17 @@ public class Map {
 			}
 		}
 		g.dispose();
-		String file = "res/maps/final_map" + this.mapPath.replaceAll("\\D+","") + ".png";
-		try {
-		    File outputfile = new File(file);
-		    ImageIO.write(newImage, "png", outputfile);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (save) {
+			String file = "res/maps/final_map" + this.mapPath.replaceAll("\\D+","") + ".png";
+			try {
+			    File outputfile = new File(file);
+			    ImageIO.write(newImage, "png", outputfile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			this.finalMap = newImage.getScaledInstance(width*scale, height*scale, Image.SCALE_SMOOTH);
 		}
 	}
 
@@ -199,5 +206,9 @@ public class Map {
 			}
 		}
 
+	}
+	
+	public void renderMap(Graphics2D g) {
+		g.drawImage(finalMap, 0, 0, null);
 	}
 }
