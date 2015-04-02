@@ -5,8 +5,8 @@ import java.util.Random;
 
 public class GenerateObstacles {
 
-	private final int MAX_OBSTACLES = 300;
-	private final double LIMIT = 0.6;
+	//private final int MAX_OBSTACLES = 300;
+	private final double LIMIT = 0.8;
 
 	private Obstacle[] obstacles;
 	private int num_obstacles;
@@ -20,7 +20,7 @@ public class GenerateObstacles {
 	public GenerateObstacles(SpriteSheet ss, int finX, int finY, int scale) {
 		this.num_obstacles = 0;
 		this.tileSize *= scale;
-		this.obstacles = new Obstacle[MAX_OBSTACLES];
+		this.obstacles = new Obstacle[finX*finY];
 
 		Random rn = new Random();
 		for (int i = 0; i < obstacles.length; i++) {

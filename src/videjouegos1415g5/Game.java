@@ -42,7 +42,7 @@ public class Game extends Canvas {
 
 		
 		// Mapa de prueba
-		map = new Map("res/maps/map_type1.txt", 16);
+		map = new Map("res/maps/map1_2_square.txt", 16);
 		spriteSheet = loader.cargarImagen("/maps/map1.png");
 		ss = new SpriteSheet(spriteSheet);
 		
@@ -50,10 +50,6 @@ public class Game extends Canvas {
 		map.loadTiles(ss);
 		map.saveImagetoFile(false, scale);
 		obstacles = new GenerateObstacles(ss, map.getmapWidth(), map.getmapHeight(), scale);
-		map.saveImagetoFile(false, scale);
-				
-		int escala = 2;
-		obstacles = new GenerateObstacles(ss, map.getmapWidth(), map.getmapHeight(), escala);
 	}
 
 	public void run() {
@@ -106,7 +102,7 @@ public class Game extends Canvas {
 		//int escalaAltura = getHeight() / Main.ALTURA;
 		//g.drawImage(bomberman, x, y, Main.ANCHURA / escalaAnchura, Main.ALTURA / escalaAltura, this);
 		g.drawImage(bomberman, x, y, this);
-		
+
 		g.dispose();
 		bs.show();
 	}
