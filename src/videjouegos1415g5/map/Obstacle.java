@@ -1,7 +1,11 @@
-package videjouegos1415g5;
+package videjouegos1415g5.map;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+
+import videjouegos1415g5.GameObject;
+import videjouegos1415g5.animation.Animation;
+import videjouegos1415g5.gfx.SpriteSheet;
 
 public class Obstacle extends GameObject {
 

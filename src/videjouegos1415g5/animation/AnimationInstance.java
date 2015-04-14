@@ -1,4 +1,4 @@
-package videjouegos1415g5;
+package videjouegos1415g5.animation;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;

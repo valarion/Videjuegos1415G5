@@ -1,4 +1,4 @@
-package videjouegos1415g5;
+package videjouegos1415g5.gfx;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

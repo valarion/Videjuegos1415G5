@@ -1,4 +1,4 @@
-package videjouegos1415g5;
+package videjouegos1415g5.map.tile;
 
 import java.awt.image.*;
 

@@ -1,4 +1,4 @@
-package videjouegos1415g5;
+package videjouegos1415g5.map;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -10,6 +10,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.map.tile.Tile;
 
 public class Map {
 

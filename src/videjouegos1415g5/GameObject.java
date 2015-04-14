@@ -3,9 +3,12 @@ package videjouegos1415g5;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import videjouegos1415g5.animation.Animation;
+import videjouegos1415g5.animation.AnimationInstance;
+
 public class GameObject {
 	
-	protected Rectangle position;
+	public Rectangle position;
 	protected AnimationInstance animation;
 	
 	public GameObject(int x, int y, int size, Animation animation) {

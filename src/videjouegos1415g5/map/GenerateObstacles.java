@@ -1,7 +1,9 @@
-package videjouegos1415g5;
+package videjouegos1415g5.map;
 
 import java.awt.Graphics2D;
 import java.util.Random;
+
+import videjouegos1415g5.gfx.SpriteSheet;
 
 public class GenerateObstacles {
 

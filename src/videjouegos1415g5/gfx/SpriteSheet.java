@@ -1,4 +1,4 @@
-package videjouegos1415g5;
+package videjouegos1415g5.gfx;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
