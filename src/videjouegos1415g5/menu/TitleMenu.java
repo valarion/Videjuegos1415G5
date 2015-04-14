@@ -52,7 +52,7 @@ public class TitleMenu extends Menu {
 		if (selected < 0) selected += len;
 		if (selected >= len) selected -= len;
 
-		if (input.attack.clicked || input.menu.clicked) {
+		if (input.fire.clicked) {
 			if (selected == 0) {
 				//Sound.test.play();
 				//game.resetGame();
