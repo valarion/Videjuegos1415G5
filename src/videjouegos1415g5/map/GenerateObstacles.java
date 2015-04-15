@@ -3,7 +3,6 @@ package videjouegos1415g5.map;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-import videjouegos1415g5.gfx.SpriteSheet;
 
 public class GenerateObstacles {
 
@@ -19,9 +18,11 @@ public class GenerateObstacles {
 	private int tileSize = 16;
 	private boolean canPlace = false;
 
-	public GenerateObstacles(SpriteSheet ss, int finX, int finY, int scale) {
+	public GenerateObstacles(Map map) {
+		int finX = map.getmapWidth();
+		int finY = map.getmapHeight();
 		this.num_obstacles = 0;
-		this.tileSize *= scale;
+		this.tileSize *= map.getScale();
 		this.obstacles = new Obstacle[finX*finY];
 
 		Random rn = new Random();
@@ -52,7 +53,7 @@ public class GenerateObstacles {
 					obstacles[num_obstacles] = new Obstacle(
 							currentX * tileSize + offsetX * tileSize, 
 							currentY * tileSize + offsetY * tileSize, 
-							tileSize, null, ss, scale);
+							tileSize, null, map.getSpriteSheet(), map.getScale());
 
 					canPlace = false;
 					num_obstacles++;

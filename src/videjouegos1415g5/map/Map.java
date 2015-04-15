@@ -2,7 +2,6 @@ package videjouegos1415g5.map;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -11,10 +10,95 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.tile.Tile;
 
 public class Map {
+	private final static int TILESIZE = 16;
+	private final static int SCALE = 2;
+	private final static String path1 = "res/maps/";
+	private final static String path2 = ".txt";
+
+	// Level 1
+	public static final Map map1_1 = new Map("map1_2_square", TILESIZE);
+	public static final Map map1_2 = new Map("map1_2_square", TILESIZE);
+	public static final Map map1_3 = new Map("map1_2_square", TILESIZE);
+	public static final Map map1_4 = new Map("map1_2_square", TILESIZE);
+	public static final Map map1_5 = new Map("map1_2_height", TILESIZE);
+	public static final Map map1_6 = new Map("map1_2_height", TILESIZE);
+	public static final Map map1_7 = new Map("map1_2_height", TILESIZE);
+	public static final Map map1_8 = new Map("map1_2_square", TILESIZE);
+	
+	// Level 2
+	public static final Map map2_1 = new Map("map1_2_square", TILESIZE);
+	public static final Map map2_2 = new Map("map1_2_square", TILESIZE);
+	public static final Map map2_3 = new Map("map1_2_height", TILESIZE);
+	public static final Map map2_4 = new Map("map1_2_height", TILESIZE);
+	public static final Map map2_5 = new Map("map1_2_square", TILESIZE);
+	public static final Map map2_6 = new Map("map1_2_square", TILESIZE);
+	public static final Map map2_7 = new Map("map1_2_height", TILESIZE);
+	public static final Map map2_8 = new Map("map1_2_square", TILESIZE);
+	
+	// Level 3
+	public static final Map map3_1 = new Map("map3_height", TILESIZE);
+	public static final Map map3_2 = new Map("map3_width", TILESIZE);
+	public static final Map map3_3 = new Map("map3_width", TILESIZE);
+	public static final Map map3_4 = new Map("map3_height", TILESIZE);
+	public static final Map map3_5 = new Map("map3_width", TILESIZE);
+	public static final Map map3_6 = new Map("map3_width", TILESIZE);
+	public static final Map map3_7 = new Map("map3_height", TILESIZE);
+	public static final Map map3_8 = new Map("map3_width", TILESIZE);
+	
+	// Level 4
+	public static final Map map4_1 = new Map("map4_height", TILESIZE);
+	public static final Map map4_2 = new Map("map4_width", TILESIZE);
+	public static final Map map4_3 = new Map("map4_width", TILESIZE);
+	public static final Map map4_4 = new Map("map4_height", TILESIZE);
+	public static final Map map4_5 = new Map("map4_height", TILESIZE);
+	public static final Map map4_6 = new Map("map4_width", TILESIZE);
+	public static final Map map4_7 = new Map("map4_width", TILESIZE);
+	public static final Map map4_8 = new Map("map4_width", TILESIZE);
+	
+	// Level 5
+	public static final Map map5_1 = new Map("map5_width", TILESIZE);
+	public static final Map map5_2 = new Map("map5_width", TILESIZE);
+	public static final Map map5_3 = new Map("map5_height", TILESIZE);
+	public static final Map map5_4 = new Map("map5_width", TILESIZE);
+	public static final Map map5_5 = new Map("map5_width", TILESIZE);
+	public static final Map map5_6 = new Map("map5_height", TILESIZE);
+	public static final Map map5_7 = new Map("map5_width", TILESIZE);
+	public static final Map map5_8 = new Map("map5_width", TILESIZE);
+
+	// Level 6
+	public static final Map map6_1 = new Map("map6_width", TILESIZE);
+	public static final Map map6_2 = new Map("map6_height", TILESIZE);
+	public static final Map map6_3 = new Map("map6_width", TILESIZE);
+	public static final Map map6_4 = new Map("map6_height", TILESIZE);
+	public static final Map map6_5 = new Map("map6_height", TILESIZE);
+	public static final Map map6_6 = new Map("map6_width", TILESIZE);
+	public static final Map map6_7 = new Map("map6_height", TILESIZE);
+	public static final Map map6_8 = new Map("map6_width", TILESIZE);
+	
+	// Level 7
+	public static final Map map7_1 = new Map("map7_width", TILESIZE);
+	public static final Map map7_2 = new Map("map7_height", TILESIZE);
+	public static final Map map7_3 = new Map("map7_height", TILESIZE);
+	public static final Map map7_4 = new Map("map7_width", TILESIZE);
+	public static final Map map7_5 = new Map("map7_width", TILESIZE);
+	public static final Map map7_6 = new Map("map7_width", TILESIZE);
+	public static final Map map7_7 = new Map("map7_height", TILESIZE);
+	public static final Map map7_8 = new Map("map7_width", TILESIZE);
+	
+	// Level 8
+	public static final Map map8_1 = new Map("map8_width", TILESIZE);
+	public static final Map map8_2 = new Map("map8_width", TILESIZE);
+	public static final Map map8_3 = new Map("map8_height", TILESIZE);
+	public static final Map map8_4 = new Map("map8_width", TILESIZE);
+	public static final Map map8_5 = new Map("map8_width", TILESIZE);
+	public static final Map map8_6 = new Map("map8_height", TILESIZE);
+	public static final Map map8_7 = new Map("map8_width", TILESIZE);
+	public static final Map map8_8 = new Map("map8_width", TILESIZE);
 
 	private String mapPath;
 
@@ -37,7 +121,7 @@ public class Map {
 
 	public Map(String s, int tileSize) {
 		if (s != null) {
-			this.mapPath = s;
+			this.mapPath = path1 + s + path2;
 			this.tileSize = tileSize;
 
 			try {
@@ -65,6 +149,44 @@ public class Map {
 				e.printStackTrace();
 			}
 		}
+		
+		
+		String map = null;
+		switch (s) {
+			case "map1_2_square": case "map1_2_height":
+				map = "/maps/map1.png";
+				break;
+			case "map2_width":
+				map = "/maps/map2.png";
+				break;
+			case "map3_width": case "map3_height":
+				map = "/maps/map3.png";
+				break;
+			case "map4_width": case "map4_height":
+				map = "/maps/map4.png";
+				break;
+			case "map5_width": case "map5_height":
+				map = "/maps/map5.png";
+				break;
+			case "map6_width": case "map6_height":
+				map = "/maps/map6.png";
+				break;
+			case "map7_width": case "map7_height":
+				map = "/maps/map7.png";
+				break;
+			case "map8_width": case "map8_height":
+				map = "/maps/map8.png";
+				break;
+			default:
+				map = "/maps/map1.png";
+				
+		}
+		
+		SpriteLoader loader = new SpriteLoader();
+		BufferedImage spriteSheet = loader.cargarImagen(map);
+		SpriteSheet ss = new SpriteSheet(spriteSheet);
+		loadTiles(ss);
+		saveImagetoFile(false, 2);
 	}
 
 	public void loadTiles(SpriteSheet s) {
@@ -155,6 +277,14 @@ public class Map {
 
 	public int getTileSize() {
 		return tileSize;
+	}
+	
+	public SpriteSheet getSpriteSheet() {
+		return tileset;
+	}
+	
+	public int getScale() {
+		return SCALE;
 	}
 
 	public boolean isBlocked(int row, int col) {

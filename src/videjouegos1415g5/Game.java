@@ -52,24 +52,18 @@ public class Game extends Canvas implements Runnable {
 		
 		imagen = new BufferedImage(Main.ANCHURA, Main.ALTURA, BufferedImage.TYPE_INT_RGB);
 		
-		SpriteLoader loader = new SpriteLoader();
-		spriteSheet = loader.cargarImagen("/big_dyna.png");
+		//SpriteLoader loader = new SpriteLoader();
+		//spriteSheet = loader.cargarImagen("/big_dyna.png");
 		
 		// mas test
-		ss = new SpriteSheet(spriteSheet);
-		bomberman = ss.obtenerSprite(1, 1, pixel, pixel);
+		//ss = new SpriteSheet(spriteSheet);
+		//bomberman = ss.obtenerSprite(1, 1, pixel, pixel);
 		//bomberman1 = ss.obtenerSprite(2, 1, pixel, pixel);
 
 		
 		// Mapa de prueba
-		map = new Map("res/maps/map1_2_square.txt", 16);
-		spriteSheet = loader.cargarImagen("/maps/map1.png");
-		ss = new SpriteSheet(spriteSheet);
-		
-		int scale = 2;
-		map.loadTiles(ss);
-		map.saveImagetoFile(false, scale);
-		obstacles = new GenerateObstacles(ss, map.getmapWidth(), map.getmapHeight(), scale);
+		map = Map.map8_8;
+		obstacles = new GenerateObstacles(map);
 		
 		setMenu(new TitleMenu());
 
