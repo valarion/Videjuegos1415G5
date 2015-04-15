@@ -28,7 +28,7 @@ public class TitleMenu extends Menu {
 
 	public TitleMenu() {
 		font1 = new Font(null, true);
-		font2 = new Font(new Color(255, 0, 0), true);
+		font2 = new Font(new Color(255, 255, 0), true);
 		bgColor = new Color(73, 102, 192);
 		try {
 			bi1 = ImageIO.read(getClass().getResource(background));
@@ -75,7 +75,7 @@ public class TitleMenu extends Menu {
 	    // Transicion vertical
 		if (Main.ALTURA - ybg >= 150) {
 			g.drawImage(bg, 16, Main.ALTURA - ybg, null);
-			ybg++;
+			ybg = ybg + 2;
 			return;
 		}
 		g.drawImage(bg, 16, Main.ALTURA - ybg, null); // Fondo
@@ -94,6 +94,6 @@ public class TitleMenu extends Menu {
 		
 		font2.render(g, "Push fire button !", Main.ANCHURA - 200 * scale, 100);
 		font2.render(g, "COPYRIGHT 2015.2015", Main.ANCHURA - 200 * scale, Main.ALTURA - 63 * scale * scale);
-		font2.render(g, "VidejuegosG4 SA", Main.ANCHURA - 200 * scale, Main.ALTURA - 60 * scale * scale);
+		font2.render(g, "VidejuegosG5 SA", Main.ANCHURA - 200 * scale, Main.ALTURA - 60 * scale * scale);
 	}
 }

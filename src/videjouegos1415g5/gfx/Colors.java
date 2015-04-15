@@ -21,7 +21,7 @@ public class Colors {
 
 		for (short i = 0; i < 256; i++) {
 			red[i] = (short) color.getRed();
-			green[i] = (short) color.getBlue();
+			green[i] = (short) color.getGreen();
 			blue [i] = (short) color.getBlue();
 			alpha[i] = i;
 		}

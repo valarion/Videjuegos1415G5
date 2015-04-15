@@ -41,17 +41,17 @@ public class Font {
 			
 			for (int col = 0; col < numTilesAcross; col++) {
 				subimage = tileset.obtenerSprite(col * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE);
-				font[0][col] = Colors.convertColor(subimage, color).getScaledInstance(TILE_SIZE*scale, TILE_SIZE*scale, Image.SCALE_SMOOTH);
+				font[0][col] = Colors.convertColor(subimage, color).getScaledInstance(TILE_SIZE*scale, TILE_SIZE*scale, Image.SCALE_FAST);
 				
 				subimage = tileset.obtenerSprite(col * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE);
-				font[1][col] = Colors.convertColor(subimage, color).getScaledInstance(TILE_SIZE*scale, TILE_SIZE*scale, Image.SCALE_SMOOTH);
+				font[1][col] = Colors.convertColor(subimage, color).getScaledInstance(TILE_SIZE*scale, TILE_SIZE*scale, Image.SCALE_FAST);
 				
 				if (shadows) {
 					shadowImage = tileset.obtenerSprite(col * TILE_SIZE, 0, TILE_SIZE, TILE_SIZE);
-					shad[0][col] = Colors.convertColor(shadowImage, new Color(0,0,0)).getScaledInstance(TILE_SIZE*scale, TILE_SIZE*scale, Image.SCALE_SMOOTH);
+					shad[0][col] = Colors.convertColor(shadowImage, Color.BLACK).getScaledInstance(TILE_SIZE*scale, TILE_SIZE*scale, Image.SCALE_FAST);
 					
 					shadowImage = tileset.obtenerSprite(col * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILE_SIZE);
-					shad[1][col] = Colors.convertColor(shadowImage, new Color(0,0,0)).getScaledInstance(TILE_SIZE*scale, TILE_SIZE*scale, Image.SCALE_SMOOTH);
+					shad[1][col] = Colors.convertColor(shadowImage, Color.BLACK).getScaledInstance(TILE_SIZE*scale, TILE_SIZE*scale, Image.SCALE_FAST);
 				}
 			}
 
