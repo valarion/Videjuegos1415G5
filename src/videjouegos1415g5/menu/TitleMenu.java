@@ -15,7 +15,7 @@ import videjouegos1415g5.sound.Sound;
 public class TitleMenu extends Menu {
 	private int selected = 0;
 	private int ybg;
-	private Font font;
+	private Font font1, font2;
 	private BufferedImage bi1, bi2, bi3, bi4;
 	private Image cu, bg, dy, bl;
 	private Color bgColor;
@@ -27,7 +27,8 @@ public class TitleMenu extends Menu {
 	private static final String[] options = { "Game start", "Battle", "Setup", "Password" };
 
 	public TitleMenu() {
-		font = new Font();
+		font1 = new Font(null, true);
+		font2 = new Font(new Color(255, 0, 0), true);
 		bgColor = new Color(73, 102, 192);
 		try {
 			bi1 = ImageIO.read(getClass().getResource(background));
@@ -85,14 +86,14 @@ public class TitleMenu extends Menu {
 			String msg = options[i]; 
 			if (i == selected) {
 				g.drawImage(cu, Main.ANCHURA / 2 - 50 * scale, ((8 + i) * 7 * scale + 23) * scale, null);
-				font.render(g, msg, Main.ANCHURA / 2 - 38 * scale, (8 + i) * 7 * scale + 23);
+				font1.render(g, msg, Main.ANCHURA / 2 - 38 * scale, (8 + i) * 7 * scale + 23);
 			} else {
-				font.render(g, msg, Main.ANCHURA / 2 - 38 * scale, (8 + i) * 7 * scale + 23);
+				font1.render(g, msg, Main.ANCHURA / 2 - 38 * scale, (8 + i) * 7 * scale + 23);
 			}
 		}
 		
-		font.render(g, "Push fire button !", Main.ANCHURA - 200 * scale, 100);
-		font.render(g, "COPYRIGHT 2015.2015", Main.ANCHURA - 200 * scale, Main.ALTURA - 63 * scale * scale);
-		font.render(g, "VidejuegosG4 SA", Main.ANCHURA - 200 * scale, Main.ALTURA - 60 * scale * scale);
+		font2.render(g, "Push fire button !", Main.ANCHURA - 200 * scale, 100);
+		font2.render(g, "COPYRIGHT 2015.2015", Main.ANCHURA - 200 * scale, Main.ALTURA - 63 * scale * scale);
+		font2.render(g, "VidejuegosG4 SA", Main.ANCHURA - 200 * scale, Main.ALTURA - 60 * scale * scale);
 	}
 }
