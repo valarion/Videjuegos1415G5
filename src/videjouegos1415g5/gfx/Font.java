@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
+import videjouegos1415g5.Main;
+
 public class Font {
 	
 	final private int TILE_SIZE = 8;
@@ -18,10 +20,10 @@ public class Font {
 	private boolean shadows;
 	private static String chars = "" +
 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-			"!.<#/>0123456789 =------- ";
+			"!.<#/>0123456789  =------- ";
 	
 	public Font(Color color, boolean shadows) {
-		this.scale = 2;
+		this.scale = Main.ESCALA;
 		if (color != null)
 			this.color = color;
 		this.shadows = shadows;
@@ -59,7 +61,10 @@ public class Font {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public int getTilesize() {
+		return this.TILE_SIZE;
+	}
 	public void render(Graphics2D g, String msg, int x, int y) {
 		msg = msg.toUpperCase();
 		for (int i = 0; i < msg.length(); i++) {
@@ -68,9 +73,9 @@ public class Font {
 				int r = ix / font[0].length;
 				int c = ix % font[0].length;
 				if (shadows) {
-					g.drawImage(shad[r][c], x + i * + TILE_SIZE * scale + 2, y * scale + 2, null);
+					g.drawImage(shad[r][c], x + i * + TILE_SIZE * scale + 2, y + 2, null);
 				}
-				g.drawImage(font[r][c], x + i * + TILE_SIZE * scale, y * scale, null);
+				g.drawImage(font[r][c], x + i * + TILE_SIZE * scale, y, null);
 			}
 		}
 	}

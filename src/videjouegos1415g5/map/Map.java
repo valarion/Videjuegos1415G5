@@ -10,13 +10,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import videjouegos1415g5.Main;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.tile.Tile;
 
 public class Map {
 	private final static int TILESIZE = 16;
-	private final static int SCALE = 2;
 	private final static String path1 = "res/maps/";
 	private final static String path2 = ".txt";
 
@@ -186,7 +186,7 @@ public class Map {
 		BufferedImage spriteSheet = loader.cargarImagen(map);
 		SpriteSheet ss = new SpriteSheet(spriteSheet);
 		loadTiles(ss);
-		saveImagetoFile(false, 2);
+		saveImagetoFile(false, Main.ESCALA);
 	}
 
 	public void loadTiles(SpriteSheet s) {
@@ -284,7 +284,7 @@ public class Map {
 	}
 	
 	public int getScale() {
-		return SCALE;
+		return Main.ESCALA;
 	}
 
 	public boolean isBlocked(int row, int col) {
@@ -342,6 +342,6 @@ public class Map {
 	}
 	
 	public void renderMap(Graphics2D g) {
-		g.drawImage(finalMap, 0, 0, null);
+		g.drawImage(finalMap, -8*Main.ESCALA, 24*Main.ESCALA, null);
 	}
 }

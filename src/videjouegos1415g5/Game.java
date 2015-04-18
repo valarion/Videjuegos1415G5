@@ -62,7 +62,7 @@ public class Game extends Canvas implements Runnable {
 
 		
 		// Mapa de prueba
-		map = Map.map8_8;
+		map = Map.map1_1;
 		obstacles = new GenerateObstacles(map);
 		
 		setMenu(new TitleMenu());
@@ -108,7 +108,7 @@ public class Game extends Canvas implements Runnable {
 			}
 			
 			try { 
-				Thread.sleep(10); // Como a Mena le gusta
+				Thread.sleep(2); // Como a Mena le gusta
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

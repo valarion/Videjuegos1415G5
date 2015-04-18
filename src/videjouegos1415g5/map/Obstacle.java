@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import videjouegos1415g5.GameObject;
+import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.gfx.SpriteSheet;
 
@@ -14,6 +15,8 @@ public class Obstacle extends GameObject {
 	public Obstacle(int x, int y, int size, Animation animation,
 			SpriteSheet ss, int scale) {
 		super(x, y, size, animation);
+		this.position.x = this.position.x - 8 * Main.ESCALA;
+		this.position.y = this.position.y + 24 * Main.ESCALA;
 		this.obstacle = ss.obtenerSprite(2 * (size / scale), 0, size / scale,
 				size / scale).getScaledInstance(size, size, Image.SCALE_SMOOTH);
 	}
