@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import videjouegos1415g5.Main;
+import videjouegos1415g5.cutscenes.InitScene;
 import videjouegos1415g5.gfx.Font;
 import videjouegos1415g5.sound.Sound;
 
@@ -58,10 +59,10 @@ public class TitleMenu extends Menu {
 
 		if (input.fire.clicked) {
 			if (selected == 0) {
-				//Sound.test.play();
 				//game.resetGame();
 				//game.setMenu(new TransitionMenu(null));
-				game.setMenu(null);
+				Sound.title.stop();
+				game.setMenu(new InitScene());
 			}
 			if (selected == 1) game.setMenu(new BattleMenu(this));
 			if (selected == 2) game.setMenu(new SetupMenu(this));
@@ -70,7 +71,7 @@ public class TitleMenu extends Menu {
 	}
 
 	public void render(Graphics2D g) {	
-		Sound.intro.play();
+		Sound.title.play();
 		
 		// Color de fondo
 		g.setColor(bgColor);

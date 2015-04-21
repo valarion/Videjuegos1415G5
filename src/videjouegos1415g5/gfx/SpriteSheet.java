@@ -18,8 +18,8 @@ public class SpriteSheet {
 		this.imagen = bi;
 	}
 
-	public BufferedImage obtenerSprite(int col, int fil, int alto, int ancho) {
-		BufferedImage aux = imagen.getSubimage(col, fil, alto, ancho);
+	public BufferedImage obtenerSprite(int x, int y, int width, int height) {
+		BufferedImage aux = imagen.getSubimage(x, y, width, height);
 		//Image im = TransformColorToTransparency(aux, new Color(128, 128, 255));
 		//return ImageToBufferedImage(im, alto, ancho);
 		return aux;

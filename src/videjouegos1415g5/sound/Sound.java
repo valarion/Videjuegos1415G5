@@ -4,6 +4,7 @@ import java.applet.Applet;
 import java.applet.AudioClip;
 
 public class Sound {
+	public static final Sound title = new Sound("/music/title.wav");
 	public static final Sound intro = new Sound("/music/intro.wav");
 	
 	private boolean running;
@@ -31,5 +32,10 @@ public class Sound {
 			}
 			running = true;
 		}
+	}
+	
+	public void stop() {
+		clip.stop();
+		running = false;
 	}
 }
