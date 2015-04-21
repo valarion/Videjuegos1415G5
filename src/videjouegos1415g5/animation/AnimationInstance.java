@@ -17,6 +17,6 @@ public class AnimationInstance {
 	}
 
 	public void draw(Graphics2D g, Rectangle position) {
-		animation.draw(g,position,state);
+		//animation.draw(g,position,state);
 	}
 }

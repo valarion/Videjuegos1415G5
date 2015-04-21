@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.GenerateObstacles;
@@ -18,15 +19,6 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 	
 	private BufferedImage imagen;
-	private BufferedImage spriteSheet = null;
-	private SpriteSheet ss;
-	
-	// test
-	private BufferedImage bomberman;
-	//private BufferedImage bomberman1;
-	static int pixel = 21;
-	static int x = 100;
-	static int y = 100;
 	private int tickCount;
 	
 	private boolean running = true;
@@ -36,6 +28,7 @@ public class Game extends Canvas implements Runnable {
 	private Map map;
 	private GenerateObstacles obstacles;
 	private Menu menu;
+	private Bomberman player;
 	
 	public void start() {
 		running = true;
@@ -52,18 +45,10 @@ public class Game extends Canvas implements Runnable {
 		
 		imagen = new BufferedImage(Main.ANCHURA, Main.ALTURA, BufferedImage.TYPE_INT_RGB);
 		
-		//SpriteLoader loader = new SpriteLoader();
-		//spriteSheet = loader.cargarImagen("/big_dyna.png");
-		
-		// mas test
-		//ss = new SpriteSheet(spriteSheet);
-		//bomberman = ss.obtenerSprite(1, 1, pixel, pixel);
-		//bomberman1 = ss.obtenerSprite(2, 1, pixel, pixel);
-
-		
 		// Mapa de prueba
 		map = Map.map1_1;
 		obstacles = new GenerateObstacles(map);
+		player = new Bomberman(input);
 		
 		setMenu(new TitleMenu());
 
@@ -120,6 +105,8 @@ public class Game extends Canvas implements Runnable {
 		input.tick();
 		if (menu != null) {
 			menu.tick();
+		} else {
+			player.tick();
 		}
 	}
 
@@ -141,6 +128,7 @@ public class Game extends Canvas implements Runnable {
 		else {
 			map.renderMap(g);
 			obstacles.draw(g);
+			player.render(g);
 		}
 
 		//g.drawImage(bomberman, x, y, this);

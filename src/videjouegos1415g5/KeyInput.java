@@ -10,15 +10,15 @@ public class KeyInput implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent arg0) {
-		int keyCode = arg0.getKeyCode();
-		if (keyCode == KeyEvent.VK_W) Game.y -= 5;
-		if (keyCode == KeyEvent.VK_S) Game.y += 5;
-		if (keyCode == KeyEvent.VK_A) Game.x -= 5;
-		if (keyCode == KeyEvent.VK_D) Game.x += 5;
-		if (keyCode == KeyEvent.VK_UP) Game.y -= 5;
-		if (keyCode == KeyEvent.VK_DOWN) Game.y += 5;
-		if (keyCode == KeyEvent.VK_LEFT) Game.x -= 5;
-		if (keyCode == KeyEvent.VK_RIGHT) Game.x += 5;		
+//		int keyCode = arg0.getKeyCode();
+//		if (keyCode == KeyEvent.VK_W) Game.y -= 5;
+//		if (keyCode == KeyEvent.VK_S) Game.y += 5;
+//		if (keyCode == KeyEvent.VK_A) Game.x -= 5;
+//		if (keyCode == KeyEvent.VK_D) Game.x += 5;
+//		if (keyCode == KeyEvent.VK_UP) Game.y -= 5;
+//		if (keyCode == KeyEvent.VK_DOWN) Game.y += 5;
+//		if (keyCode == KeyEvent.VK_LEFT) Game.x -= 5;
+//		if (keyCode == KeyEvent.VK_RIGHT) Game.x += 5;		
 	}
 
 	public void keyReleased(KeyEvent arg0) {
