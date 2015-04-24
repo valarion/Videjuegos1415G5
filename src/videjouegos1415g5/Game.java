@@ -7,8 +7,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import videjouegos1415g5.entity.Bomberman;
-import videjouegos1415g5.gfx.SpriteLoader;
-import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.menu.Menu;

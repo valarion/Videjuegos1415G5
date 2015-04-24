@@ -11,8 +11,8 @@ public class GameObject {
 	public Rectangle position;
 	protected AnimationInstance animation;
 	
-	public GameObject(int x, int y, int size, Animation animation) {
-		position = new Rectangle(x,y,size,size);
+	public GameObject(int x, int y, int width, int height, Animation animation) {
+		position = new Rectangle(x, y, width, height);
 		this.animation = new AnimationInstance(animation);
 	}
 	
@@ -20,7 +20,7 @@ public class GameObject {
 		return position.intersects(o.position);
 	}
 	
-	public void update(long ms) {
+	public void tick(long ms) {
 		animation.update(ms);
 	}
 	

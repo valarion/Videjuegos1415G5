@@ -13,10 +13,12 @@ public class AnimationInstance {
 	}
 
 	public void update(long ms) {
-		state+=ms;
+		animation.tick();
+		//state+=ms;
 	}
 
 	public void draw(Graphics2D g, Rectangle position) {
 		//animation.draw(g,position,state);
+		g.drawImage(animation.getSprite(), position.x, position.y, null);
 	}
 }

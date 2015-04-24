@@ -1,6 +1,5 @@
 package videjouegos1415g5.animation;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 public class Frame implements Comparable<Frame> {

@@ -31,7 +31,7 @@ public class MapMenu extends Menu {
 	
 	public void tick() {
 		count++;
-		if (count > 60 * 3) { // 3 segundos
+		if (count > 60 * 3 || input.fire.clicked) { // 3 segundos
 			game.setMenu(null);
 		}
 	}

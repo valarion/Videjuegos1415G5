@@ -3,42 +3,38 @@ package videjouegos1415g5.entity;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import videjouegos1415g5.GameObject;
 import videjouegos1415g5.InputHandler;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
+import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
 
-public class Bomberman {
+public class Bomberman extends GameObject {
 	
 	private final String ANIMATION = "/bomberman.png"; 
-	private final int w = 24;
-	private final int h = 22;
+	private final static int w = 24;
+	private final static int h = 22;
+	private static Animation animation;
 	
 	private InputHandler input;
 	private int x, y, scale;
 	private Animation walkR, walkL, walkU, walkD;
-	private Animation animation;
 	private SpriteLoader sl;
 	private SpriteSheet ss;
 
 	
 	public Bomberman(InputHandler input) {
+		super(0, 0, w, h, null);
 		this.input = input;
 		this.scale = Main.ESCALA;
 		this.x = 100; 
 		this.y = 100;
 		
-		this.sl = new SpriteLoader();
-		BufferedImage img = sl.cargarImagen(ANIMATION);	    
-	    
+		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
-	    BufferedImage resized = new BufferedImage(img.getWidth() * scale, img.getHeight() * scale, img.getType());
-	    Graphics2D g = resized.createGraphics();
-	    g.drawImage(img, 0, 0, resized.getWidth(), resized.getHeight(), null);
-	    g.dispose();
-		
-		this.ss = new SpriteSheet(resized);
+		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(ANIMATION), scale));
 		
 		BufferedImage[] walkingLeft = {ss.obtenerSprite(6*w* scale, 0, w*scale, h*scale), 
 				ss.obtenerSprite(7*w* scale, 0, w*scale, h*scale), 
@@ -59,7 +55,7 @@ public class Bomberman {
 		this.walkD = new Animation(walkingDown, 10);
 		
 		// Animacion inicial
-		this.animation = walkD;
+		Bomberman.animation = walkD;
 	}
 	
 	public void tick() {

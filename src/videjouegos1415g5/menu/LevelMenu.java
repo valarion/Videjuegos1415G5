@@ -74,7 +74,7 @@ public class LevelMenu extends Menu {
 	
 	public void tick() {
 		count++;
-		if (count > 60 * 5) { // 5 segundos
+		if (count > 60 * 5 || input.fire.clicked) { // 5 segundos
 			head.stop();
 			game.setMenu(new MapMenu(1, 2));
 			//game.setMenu(null);
