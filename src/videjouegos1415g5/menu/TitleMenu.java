@@ -71,7 +71,7 @@ public class TitleMenu extends Menu {
 		}
 		
 		// Transicion vertical
-		if (game.getHeight() - ybg >= 87 * scale && countTransition > 60*2) {
+		if (game.getHeight() - ybg >= 87 * scale) {
 			ybg = ybg + 1 * scale;
 		}
 		countTransition++;
