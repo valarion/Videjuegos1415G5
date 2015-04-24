@@ -9,6 +9,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import videjouegos1415g5.Main;
+import videjouegos1415g5.menu.LevelMenu;
+import videjouegos1415g5.menu.MapMenu;
 import videjouegos1415g5.menu.Menu;
 import videjouegos1415g5.sound.Sound;
 
@@ -47,7 +49,7 @@ public class InitScene extends Menu {
 	public void tick() {
 		if (input.fire.clicked) {
 			Sound.intro.stop();
-			game.setMenu(null);
+			game.setMenu(new LevelMenu(5));
 		}
 	}
 	

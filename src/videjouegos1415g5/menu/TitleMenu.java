@@ -20,10 +20,10 @@ public class TitleMenu extends Menu {
 	private BufferedImage bi1, bi2, bi3, bi4;
 	private Image cu, bg, dy, bl;
 
-	private static final String cursor = "/flecharoja.png";
-	private static final String background = "/bg1.png";
-	private static final String dyna = "/dyna.png";
-	private static final String blaster = "/blaster.png";
+	private static final String cursor = "/menu/flecharoja.png";
+	private static final String background = "/menu/bg1.png";
+	private static final String dyna = "/menu/dyna.png";
+	private static final String blaster = "/menu/blaster.png";
 	private static final String[] options = { "Game start", "Battle", "Setup", "Password" };
 	private static final String push = "Push fire button !";
 	private static final String copyright = "COPYRIGHT 2015.2015";

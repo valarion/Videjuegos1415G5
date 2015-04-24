@@ -1,18 +1,18 @@
 package videjouegos1415g5.menu;
 
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import videjouegos1415g5.Main;
+import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.gfx.Font;
+import videjouegos1415g5.gfx.ScaleImg;
+import videjouegos1415g5.gfx.SpriteLoader;
+import videjouegos1415g5.gfx.SpriteSheet;
 
 public class PasswordMenu extends Menu {
 	
-	private static final String cursor = "/flecharoja.png";
+	private static final String cursor = "/menu/bomb_cursor.png";
 	private int selected = 0;
 	private String title = "Enter password ......";
 	private String[] chars = 
@@ -23,8 +23,10 @@ public class PasswordMenu extends Menu {
 	private int index = 0;;
 	private Font font1;
 	private int x, y;
-	private BufferedImage bi;
-	private Image cu;
+	private Animation bomb;
+	private SpriteLoader sl;
+	private SpriteSheet ss;
+	
 	private Menu menu;
 
 	public PasswordMenu(TitleMenu titleMenu) {
@@ -33,12 +35,14 @@ public class PasswordMenu extends Menu {
 		this.font1 = new Font(null, false);
 		this.password = new String[8];
 		
-		try {
-			bi = ImageIO.read(getClass().getResource(cursor));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		cu = bi.getScaledInstance(bi.getWidth() * scale, bi.getHeight() * scale, Image.SCALE_SMOOTH);
+		this.sl = new SpriteLoader();	    
+		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(cursor), scale));
+		
+		BufferedImage[] bomb = {ss.obtenerSprite(0, 0, 20*scale, 23*scale), 
+				ss.obtenerSprite(20*scale, 0, 20*scale, 23*scale), 
+				ss.obtenerSprite(40*scale, 0, 22*scale, 23*scale)};
+		this.bomb = new Animation(bomb, 10);
+		this.bomb.start();
 	}
 	
 	public void tick() {
@@ -53,9 +57,9 @@ public class PasswordMenu extends Menu {
 
 		if (input.fire.clicked) {
 			
-			if (chars[selected].equals(chars[chars.length -3])) index--;
-			else if (chars[selected].equals(chars[chars.length - 2])) index++;
-			else if (chars[selected].equals(chars[chars.length - 1])) {
+			if (chars[selected].equals(chars[chars.length - 3])) index--; // Caracter <
+			else if (chars[selected].equals(chars[chars.length - 2])) index++; // Caracter >
+			else if (chars[selected].equals(chars[chars.length - 1])) { // Caracter END
 				// Comprobar password
 				for (int i = 0; i<password.length; i++) {
 					System.out.print(password[i]);
@@ -63,13 +67,17 @@ public class PasswordMenu extends Menu {
 				password = new String[password.length];
 				index = 0;
 			}
-			else password[index++] = chars[selected];
+			else password[index++] = chars[selected]; // Cualquiera de los otros caracteres
 			
 			if (index < 0) index++;
 			if (index >= password.length) index--;
 		}
 		
-		if (input.exit.clicked) game.setMenu(menu);
+		if (input.exit.clicked) {
+			bomb.stop();
+			game.setMenu(menu);
+		}
+		bomb.tick();
 	}
 	
 	public void render(Graphics2D g) {
@@ -86,10 +94,10 @@ public class PasswordMenu extends Menu {
 		this.x = game.getWidth() / 2 - ((19/2)*font1.getTilesize())*scale;
 		this.y = game.getHeight() / 2 - font1.getTilesize()*3*scale;
 		
-	    // Cursor de todas las letras
-	    g.drawImage(cu, x + selected%10 * font1.getTilesize()*2*scale, 
-	    		y + selected/10 * font1.getTilesize()*2*scale, null);
-		// Letras
+	    // Cursor de todas los caracteres
+	    g.drawImage(bomb.getSprite(), x + selected%10 * font1.getTilesize()*2*scale - 6*scale, 
+	    		y + selected/10 * font1.getTilesize()*2*scale - 10*scale, null);
+		// Caracteres
 	    for (int i = 0; i < chars.length; i++) {
 	    	font1.render(g, chars[i],
 	    			x + i%10 * font1.getTilesize()*2*scale, 
@@ -106,7 +114,7 @@ public class PasswordMenu extends Menu {
 			// Guiones
 			font1.render(g, "-", 
 					x + i*font1.getTilesize()*scale, y + font1.getTilesize() * scale);
-			// Cursos de la letra seleccionada
+			// Cursor de la letra seleccionada
 			font1.render(g, "=", x+ index*font1.getTilesize()*scale, y + font1.getTilesize() * scale);
 			
 		}
