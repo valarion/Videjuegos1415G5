@@ -16,7 +16,6 @@ import videjouegos1415g5.sound.Sound;
 public class TitleMenu extends Menu {
 	private int selected = 0;
 	private int ybg;
-	private int countTransition = 0;
 	private Font font1, font2;
 	private BufferedImage bi1, bi2, bi3, bi4;
 	private Image cu, bg, dy, bl;
@@ -74,7 +73,6 @@ public class TitleMenu extends Menu {
 		if (game.getHeight() - ybg >= 87 * scale) {
 			ybg = ybg + 1 * scale;
 		}
-		countTransition++;
 	}
 
 	public void render(Graphics2D g) {	
