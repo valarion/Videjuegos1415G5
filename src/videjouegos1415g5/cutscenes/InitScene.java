@@ -10,8 +10,8 @@ import javax.imageio.ImageIO;
 
 import videjouegos1415g5.Main;
 import videjouegos1415g5.menu.LevelMenu;
-import videjouegos1415g5.menu.MapMenu;
 import videjouegos1415g5.menu.Menu;
+import videjouegos1415g5.sound.MP3Player;
 import videjouegos1415g5.sound.Sound;
 
 public class InitScene extends Menu {
@@ -44,17 +44,18 @@ public class InitScene extends Menu {
 					bi[i].getHeight() * scale, Image.SCALE_SMOOTH);
 		}
 		
+		MP3Player.intro.play();
+
 	}
 	
 	public void tick() {
 		if (input.fire.clicked) {
-			Sound.intro.stop();
+			MP3Player.intro.stop();
 			game.setMenu(new LevelMenu(5));
 		}
 	}
 	
 	public void render(Graphics2D g) {
-		Sound.intro.play();
 		g.drawImage(img[0], 0, 32 * scale, null); // Fondo
 		if (!glass_broken)
 			g.drawImage(img[1], game.getWidth() / 2 - img[1].getWidth(null) / 2 + 4*scale,

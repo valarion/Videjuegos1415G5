@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.cutscenes.InitScene;
 import videjouegos1415g5.gfx.Font;
+import videjouegos1415g5.sound.MP3Player;
 import videjouegos1415g5.sound.Sound;
 
 public class TitleMenu extends Menu {
@@ -46,6 +47,7 @@ public class TitleMenu extends Menu {
 		cu = bi2.getScaledInstance(bi2.getWidth() * scale, bi2.getHeight() * scale, Image.SCALE_SMOOTH);
 		dy = bi3.getScaledInstance(bi3.getWidth() * scale, bi3.getHeight() * scale, Image.SCALE_SMOOTH);
 		bl = bi4.getScaledInstance(bi4.getWidth() * scale, bi4.getHeight() * scale, Image.SCALE_SMOOTH);
+		MP3Player.title.play();
 
 	}
 
@@ -61,7 +63,7 @@ public class TitleMenu extends Menu {
 			if (selected == 0) {
 				//game.resetGame();
 				//game.setMenu(new TransitionMenu(null));
-				Sound.title.stop();
+				MP3Player.title.close();
 				game.setMenu(new InitScene());
 			}
 			if (selected == 1) game.setMenu(new BattleMenu(this));
@@ -76,7 +78,6 @@ public class TitleMenu extends Menu {
 	}
 
 	public void render(Graphics2D g) {	
-		Sound.title.play();
 		
 		// Color de fondo
 		g.setColor(bgColor);

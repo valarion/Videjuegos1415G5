@@ -10,6 +10,7 @@ import videjouegos1415g5.gfx.Colors;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.MP3Player;
 
 public class LevelMenu extends Menu {
 	
@@ -78,6 +79,7 @@ public class LevelMenu extends Menu {
 		this.head.start();
 		this.roundFlicker.start();
 		this.levelFlicker.start();
+		MP3Player.level_start.play();
 	}
 	
 	public void tick() {
@@ -86,6 +88,7 @@ public class LevelMenu extends Menu {
 			head.stop();
 			roundFlicker.stop();
 			levelFlicker.stop();
+			MP3Player.level_start.stop();
 			game.setMenu(new MapMenu(1, 2));
 			//game.setMenu(null);
 		}

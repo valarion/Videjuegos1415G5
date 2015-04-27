@@ -7,6 +7,7 @@ import videjouegos1415g5.Main;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.MP3Player;
 
 public class MapMenu extends Menu {
 	
@@ -27,12 +28,14 @@ public class MapMenu extends Menu {
 		this.game_start = ss.obtenerSprite(0, 14*scale, 107*scale, 13*scale);
 		this.level = ss.obtenerSprite(8*level*scale, 28*scale, 6*scale, 13*scale);
 		this.map = ss.obtenerSprite(8*map*scale, 28*scale, 6*scale, 13*scale);	
+		MP3Player.map_start.play();
 	}
 	
 	public void tick() {
 		count++;
 		if (count > 60 * 3 || input.fire.clicked) { // 3 segundos
 			game.setMenu(new GameOverMenu(1));
+			MP3Player.map_start.stop();
 			//game.setMenu(null);
 		}
 	}
