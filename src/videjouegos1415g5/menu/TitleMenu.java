@@ -63,7 +63,7 @@ public class TitleMenu extends Menu {
 			if (selected == 0) {
 				//game.resetGame();
 				//game.setMenu(new TransitionMenu(null));
-				MP3Player.title.close();
+				MP3Player.title.stop();;
 				game.setMenu(new InitScene());
 			}
 			if (selected == 1) game.setMenu(new BattleMenu(this));
@@ -84,12 +84,12 @@ public class TitleMenu extends Menu {
 	    g.fillRect(0, 0, game.getWidth(), game.getHeight());
 	    
 	    // Transicion vertical
-		if (game.getHeight() - ybg >= 87 * scale) {
+		if (game.getHeight() - ybg >= 87*scale) {
 			g.drawImage(bg, 0, game.getHeight() - ybg, null);
 			//ybg = ybg + 1 * scale;
 			return;
 		}
-		g.drawImage(bg, 0, game.getHeight() - ybg, null); // Fondo
+		g.drawImage(bg, 0, game.getHeight() - 146*scale, null); // Fondo
 		g.drawImage(dy, 25 * scale, 15 * scale, null); // Dyna
 		g.drawImage(bl, 80 * scale, 45 * scale, null); // Blaster
 		
@@ -118,5 +118,14 @@ public class TitleMenu extends Menu {
 		font2.render(g, company, 
 				game.getWidth() / 2 - (company.length() / 2) * font1.getTilesize() * scale,
 				game.getHeight() - font2.getTilesize() * 2 * scale);
+	}
+	
+	public void resize(int scale) {
+		bg = bi1.getScaledInstance(bi1.getWidth() * scale, bi1.getHeight() * scale, Image.SCALE_SMOOTH);
+		cu = bi2.getScaledInstance(bi2.getWidth() * scale, bi2.getHeight() * scale, Image.SCALE_SMOOTH);
+		dy = bi3.getScaledInstance(bi3.getWidth() * scale, bi3.getHeight() * scale, Image.SCALE_SMOOTH);
+		bl = bi4.getScaledInstance(bi4.getWidth() * scale, bi4.getHeight() * scale, Image.SCALE_SMOOTH);
+		font1 = new Font(null, true);
+		font2 = new Font(new Color(255, 255, 0), true);
 	}
 }
