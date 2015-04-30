@@ -66,6 +66,7 @@ public class SetupMenu extends Menu {
 			if (input.left.clicked) localScale--;
 			if (input.right.clicked) localScale++;
 			if (localScale < 1) localScale = 1;
+			//if (localScale > EscalaAbsurda) localScale = EscalaNOabsurda
 		}
 
 		if (input.fire.clicked) {
@@ -96,19 +97,19 @@ public class SetupMenu extends Menu {
 			String msg = options[i]; 
 			if (i == selected) {
 				g.drawImage(cu, 
-						game.getWidth() / 2 - ((options[0].length() / 2) * font1.getTilesize() * scale + cu.getWidth(null) + 5),
+						game.getWidth() / 2 - ((options[0].length() / 2)*font1.getTilesize()*scale*3/2 + cu.getWidth(null) + 5),
 						game.getHeight() / 2 + (font1.getTilesize() * i) * 3/2 *  scale + font1.getTilesize() * scale * 33 / 10, null);
 				font1.render(g, msg,
-						game.getWidth() / 2 - (options[0].length() / 2) * font1.getTilesize() * scale, 
+						game.getWidth() / 2 - (options[0].length() / 2)*font1.getTilesize()*scale*3/2, 
 						game.getHeight() / 2 + (font1.getTilesize() * i) * 3/2 * scale + font1.getTilesize() * scale * 33/10);
 			} else {
 				font1.render(g, msg, 
-						game.getWidth() / 2 - (options[0].length() / 2) * font1.getTilesize() * scale, 
+						game.getWidth() / 2 - (options[0].length() / 2) * font1.getTilesize()*scale*3/2, 
 						game.getHeight() / 2 + (font1.getTilesize() * i) * 3/2 * scale + font1.getTilesize() * scale * 33/10);
 			}
 		}
-		font1.render(g, "<" + width*localScale + "x" + width*localScale + ">", 
-				game.getWidth()/2 + 50*scale, 
+		font1.render(g, "<" + width*localScale + "x" + height*localScale + ">", 
+				game.getWidth()/2 + 26*scale, 
 				game.getHeight()/2 + font1.getTilesize() * scale * 33/10);
 		
 		font2.render(g, copyright, 
