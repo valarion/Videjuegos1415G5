@@ -22,12 +22,13 @@ public class Main {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 		frame.add(game, BorderLayout.CENTER);
-		frame.pack();
+		//frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
 		game.start();
+		frame.pack();
 	}
 	
 	public static void pack() {

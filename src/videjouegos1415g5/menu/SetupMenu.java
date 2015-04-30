@@ -74,7 +74,7 @@ public class SetupMenu extends Menu {
 				scale = localScale;
 				resize(scale);
 				menu.resize(scale);
-				game.setPreferredSize(new Dimension(256*localScale, 232*localScale));
+				game.setPreferredSize(new Dimension(width*localScale, height*localScale));
 				game.setBounds(0, 0, width*localScale, height*localScale);
 				Main.pack();
 			}

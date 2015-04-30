@@ -12,7 +12,6 @@ import videjouegos1415g5.Main;
 import videjouegos1415g5.cutscenes.InitScene;
 import videjouegos1415g5.gfx.Font;
 import videjouegos1415g5.sound.MP3Player;
-import videjouegos1415g5.sound.Sound;
 
 public class TitleMenu extends Menu {
 	private int selected = 0;
