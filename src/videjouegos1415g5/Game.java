@@ -6,7 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.Bomberman;
+import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.menu.Menu;
@@ -27,6 +29,8 @@ public class Game extends Canvas implements Runnable {
 	private GenerateObstacles obstacles;
 	private Menu menu;
 	private Bomberman player;
+	private Entity ball;
+
 	
 	public void start() {
 		running = true;
@@ -47,6 +51,7 @@ public class Game extends Canvas implements Runnable {
 		map = Map.map1_1;
 		obstacles = new GenerateObstacles(map);
 		player = new Bomberman(input);
+		ball = new Balloon();
 		
 		setMenu(new TitleMenu());
 
@@ -105,6 +110,7 @@ public class Game extends Canvas implements Runnable {
 			menu.tick();
 		} else {
 			player.tick();
+			ball.tick();
 		}
 	}
 
@@ -127,6 +133,7 @@ public class Game extends Canvas implements Runnable {
 			map.renderMap(g);
 			obstacles.draw(g);
 			player.render(g);
+			ball.render(g);
 		}
 
 		//g.drawImage(bomberman, x, y, this);
