@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.Bomberman;
+import videjouegos1415g5.entity.Boss;
 import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
@@ -29,7 +31,7 @@ public class Game extends Canvas implements Runnable {
 	private GenerateObstacles obstacles;
 	private Menu menu;
 	private Bomberman player;
-	private Entity ball;
+	private ArrayList<Entity> enemies = new ArrayList<Entity>();
 
 	
 	public void start() {
@@ -51,7 +53,8 @@ public class Game extends Canvas implements Runnable {
 		map = Map.map1_1;
 		obstacles = new GenerateObstacles(map);
 		player = new Bomberman(input);
-		ball = new Balloon();
+		enemies.add(new Balloon());
+		enemies.add(new Boss(input));
 		
 		setMenu(new TitleMenu());
 
@@ -110,7 +113,9 @@ public class Game extends Canvas implements Runnable {
 			menu.tick();
 		} else {
 			player.tick();
-			ball.tick();
+			for (int i = 0; i < enemies.size(); i++) {
+				enemies.get(i).tick();
+			}	
 		}
 	}
 
@@ -133,7 +138,9 @@ public class Game extends Canvas implements Runnable {
 			map.renderMap(g);
 			obstacles.draw(g);
 			player.render(g);
-			ball.render(g);
+			for (int i = 0; i < enemies.size(); i++) {
+				enemies.get(i).render(g);;
+			}	
 		}
 
 		//g.drawImage(bomberman, x, y, this);
