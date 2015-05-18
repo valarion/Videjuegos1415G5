@@ -25,7 +25,7 @@ public class Obstacle extends GameObject {
 	}
 
 	public void update(long ms) {
-		animation.update(ms);
+		//animation.update(ms);
 	}
 
 	public void draw(Graphics2D g) {

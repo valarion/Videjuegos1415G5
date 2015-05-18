@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import videjouegos1415g5.animation.Animation;
+import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
@@ -24,8 +25,8 @@ public class Balloon extends Mob {
 	private Animation move, death;
 
 	public Balloon() {
-		x = random.nextInt(64);
-		y = random.nextInt(64);
+		position.x = random.nextInt(64);
+		position.y = random.nextInt(64);
 		health = maxHealth = 10;
 		
 		this.sl = new SpriteLoader();	    
@@ -45,8 +46,8 @@ public class Balloon extends Mob {
 				ss.obtenerSprite(5*w*scale, 0, w*scale, h*scale), 
 				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale)};
 		
-		this.move = new Animation(mov, 10);
-		this.death = new Animation(die, 10);
+		this.move = new Animation(mov, 10, Direction.DOWN);
+		this.death = new Animation(die, 10, Direction.DOWN);
 		
 		// Animacion inicial
 		animation = move;
@@ -57,15 +58,15 @@ public class Balloon extends Mob {
 	public void tick() {
 		super.tick();
 		int speed = tickTime & 1;
-		if (x < 0) x++;
-		if (x > 200) x--;
+		if (position.x < 0) position.x++;
+		if (position.x > 200) position.x--;
 		if (tickTime > 60*5) die();
 		if (randomWalkTime > 0) randomWalkTime--;
 		animation.tick();
 	}
 
 	public void render(Graphics2D g) {
-		g.drawImage(animation.getSprite(), x, y, null);
+		g.drawImage(animation.getSprite(), position.x, position.y, null);
 	}
 
 	protected void die() {
@@ -74,7 +75,7 @@ public class Balloon extends Mob {
 		animation.start();	
 	}
 	
-	protected void touchedBy(Entity entity) {
+	public void touchedBy(Entity entity) {
 		if (entity instanceof Bomberman) {
 			entity.hurt(this, 10);
 		}

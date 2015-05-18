@@ -1,6 +1,9 @@
 package videjouegos1415g5.map;
 
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -9,7 +12,7 @@ public class GenerateObstacles {
 	//private final int MAX_OBSTACLES = 300;
 	private final double LIMIT = 0.8;
 
-	private Obstacle[] obstacles;
+	private ArrayList<Obstacle> obstacles;
 	private int num_obstacles;
 	private int currentX;
 	private int currentY;
@@ -23,10 +26,11 @@ public class GenerateObstacles {
 		int finY = map.getmapHeight();
 		this.num_obstacles = 0;
 		this.tileSize *= map.getScale();
-		this.obstacles = new Obstacle[finX*finY];
+		
+		obstacles = new ArrayList<Obstacle>();
 
 		Random rn = new Random();
-		for (int i = 0; i < obstacles.length; i++) {
+		while(true) {
 			if (currentX >= (finX - offsetX * 2)) {
 				currentY++;
 				currentX = 0;
@@ -50,10 +54,10 @@ public class GenerateObstacles {
 				}
 
 				if (canPlace) {
-					obstacles[num_obstacles] = new Obstacle(
+					obstacles.add(new Obstacle(
 							currentX * tileSize + offsetX * tileSize, 
 							currentY * tileSize + offsetY * tileSize, 
-							tileSize, null, map.getSpriteSheet(), map.getScale());
+							tileSize, null, map.getSpriteSheet(), map.getScale()));
 
 					canPlace = false;
 					num_obstacles++;
@@ -64,10 +68,12 @@ public class GenerateObstacles {
 	}
 
 	public void draw(Graphics2D g) {
-		for (int i = 0; i < obstacles.length; i++) {
-			if (obstacles[i] != null) {
-				obstacles[i].draw(g);
-			}
+		for (int i = 0; i < obstacles.size(); i++) {
+			obstacles.get(i).draw(g);
 		}
+	}
+	
+	public ArrayList<Obstacle> getList() {
+		return obstacles;
 	}
 }

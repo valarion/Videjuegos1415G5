@@ -13,6 +13,7 @@ import videjouegos1415g5.entity.Boss;
 import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
+import videjouegos1415g5.map.Obstacle;
 import videjouegos1415g5.menu.Menu;
 import videjouegos1415g5.menu.TitleMenu;
 
@@ -32,6 +33,8 @@ public class Game extends Canvas implements Runnable {
 	private Menu menu;
 	private Bomberman player;
 	private ArrayList<Entity> enemies = new ArrayList<Entity>();
+	private ArrayList<Entity> flares = new ArrayList<Entity>();
+	private ArrayList<Entity> bombs = new ArrayList<Entity>();
 
 	
 	public void start() {
@@ -138,14 +141,72 @@ public class Game extends Canvas implements Runnable {
 			map.renderMap(g);
 			obstacles.draw(g);
 			player.render(g);
-			for (int i = 0; i < enemies.size(); i++) {
-				enemies.get(i).render(g);;
-			}	
+			for (Entity e : enemies) {
+				e.render(g);
+			}
+			for (Entity e : flares) {
+				e.render(g);
+			}
+			for (Entity e : bombs) {
+				e.render(g);
+			}
+		}
+		
+		if(menu == null) {
+			checkCollisions();
 		}
 
 		//g.drawImage(bomberman, x, y, this);
 
 		g.dispose();
 		bs.show();
+	}
+	
+	public void checkCollisions() {
+		// los enemigos con las llamas
+		for(Entity enemy : enemies) {
+			for(Entity flare : flares) {
+				if(flare.intersects(enemy)) {
+					enemy.touchedBy(flare);
+					break;
+				}
+			}
+		}
+		
+		// el jugador con las llamas
+		for(Entity flare : flares) {
+			if(flare.intersects(player)) {
+				player.touchedBy(flare);
+				break;
+			}
+		}
+		
+		// las bombas con las llamas
+				for(Entity bomb : bombs) {
+					for(Entity flare : flares) {
+						if(flare.intersects(bomb)) {
+							bomb.touchedBy(flare);
+							break;
+						}
+					}
+				}
+		
+		// los enemigos con los obstaculos
+		for (Entity enemy : enemies) {
+			for (Obstacle obs : obstacles.getList()) {
+				if (obs != null && obs.intersects(enemy)) {
+					enemy.collide(obs);
+					break;
+				}
+			}
+		}
+		
+		// el jugador con los obstaculos
+		for (Obstacle obs : obstacles.getList()) {
+			if (obs != null && obs.intersects(player)) {
+				player.collide(obs);
+				break;
+			}
+		}
 	}
 }

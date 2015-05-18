@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import videjouegos1415g5.InputHandler;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
+import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
@@ -28,8 +29,8 @@ public class Bomberman extends Mob {
 		super();
 		this.input = input;
 		this.scale = Main.ESCALA;
-		this.x = 100; 
-		this.y = 100;
+		this.position.x = 100; 
+		this.position.y = 100;
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
@@ -58,11 +59,11 @@ public class Bomberman extends Mob {
 				ss.obtenerSprite(8*w*scale, h*scale, w*scale, h*scale),
 				ss.obtenerSprite(9*w*scale, h*scale, w*scale, h*scale)};
 
-		this.walkL = new Animation(walkingLeft, 10);
-		this.walkR = new Animation(walkingRight, 10);
-		this.walkU = new Animation(walkingUp, 10);
-		this.walkD = new Animation(walkingDown, 10);
-		this.death = new Animation(die, 10);
+		this.walkL = new Animation(walkingLeft, 10, Direction.LEFT);
+		this.walkR = new Animation(walkingRight, 10, Direction.RIGHT);
+		this.walkU = new Animation(walkingUp, 10, Direction.UP);
+		this.walkD = new Animation(walkingDown, 10, Direction.DOWN);
+		this.death = new Animation(die, 10, Direction.DOWN);
 		
 		// Animacion inicial
 		Bomberman.animation = walkD;
@@ -71,25 +72,25 @@ public class Bomberman extends Mob {
 	public void tick() {
 
 		if (input.left.down) {
-			x--; 
+			position.x--; 
 			animation = walkL; 
 			animation.start();
 		}
 		
 		else if (input.right.down) {
-			x++;  
+			position.x++;  
 			animation = walkR; 
 			animation.start();
 		}
 
 		else if (input.up.down) {
-			y--; 
+			position.y--; 
 			animation = walkU; 
 			animation.start();
 		}
 
 		else if (input.down.down) {
-			y++; 
+			position.y++; 
 			animation = walkD; 
 			animation.start();
 		}
@@ -103,7 +104,7 @@ public class Bomberman extends Mob {
 	}
 	
 	public void render(Graphics2D g) {
-		g.drawImage(animation.getSprite(), x, y, null);
+		g.drawImage(animation.getSprite(), position.x, position.y, null);
 	}
 	
 	protected void die() {
@@ -113,7 +114,7 @@ public class Bomberman extends Mob {
 		//Sound.playerDeath.play();
 	}
 	
-	protected void touchedBy(Entity entity) {
+	public void touchedBy(Entity entity) {
 		if (!(entity instanceof Bomberman)) {
 			entity.touchedBy(this);
 		}

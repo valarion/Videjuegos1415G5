@@ -46,7 +46,7 @@ public class MP3Player {
 	}
 	
 	public void stop() {
-		if (clip.isRunning()) clip.stop();
+		if (clip != null && clip.isRunning()) clip.stop();
 	}
 	
 	public void close() {

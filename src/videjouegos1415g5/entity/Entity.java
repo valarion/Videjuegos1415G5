@@ -3,9 +3,17 @@ package videjouegos1415g5.entity;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-public class Entity {
+import videjouegos1415g5.GameObject;
+import videjouegos1415g5.animation.Animation.Direction;
+import videjouegos1415g5.map.Obstacle;
+
+public class Entity extends GameObject {
+	public Entity() {
+		super(0, 0, 0, 0, null);
+	}
+
 	protected final Random random = new Random();
-	public int x, y;
+	//public int x, y;
 	public int xr = 6;
 	public int yr = 6;
 	public boolean removed;
@@ -21,7 +29,8 @@ public class Entity {
 	}
 
 	public boolean intersects(int x0, int y0, int x1, int y1) {
-		return !(x + xr < x0 || y + yr < y0 || x - xr > x1 || y - yr > y1);
+		return super.intersects(new GameObject(x0,y0,x1-x0,y1-y0,null));
+		//return !(position.x + xr < x0 || position.y + yr < y0 || position.x - xr > x1 || position.y - yr > y1);
 	}
 
 	public boolean blocks(Entity e) {
@@ -31,10 +40,38 @@ public class Entity {
 	public void hurt(Mob mob, int dmg) {
 	}
 
-	protected void touchedBy(Entity entity) {
+	public void touchedBy(Entity entity) {
 	}
 
 	public boolean isBlockableBy(Mob mob) {
 		return true;
+	}
+	
+	public void collide(Obstacle obs) {
+		switch(animation.getAnimationDirection()) {
+		case UP:
+		case DOWN:
+			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= 3)
+				this.position.x = (obs.position.x+obs.position.width) + 1;
+			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= 3)
+				this.position.x = (obs.position.x-this.position.width) - 1;
+			else if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= 3)
+				this.position.y = (obs.position.y+obs.position.height) + 1;
+			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= 3)
+				this.position.y = (obs.position.y-this.position.height) - 1;
+			break;
+		case LEFT:
+		case RIGHT:
+			if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= 3)
+				this.position.y = (obs.position.y+obs.position.height) + 1;
+			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= 3)
+				this.position.y = (obs.position.y-this.position.height) - 1;
+			else if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= 3)
+				this.position.x = (obs.position.x+obs.position.width) + 1;
+			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= 3)
+				this.position.x = (obs.position.x-this.position.width) - 1;
+			break;
+			
+		}
 	}
 }

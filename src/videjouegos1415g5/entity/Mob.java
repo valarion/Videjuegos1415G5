@@ -13,7 +13,7 @@ public class Mob extends Entity {
 	public int scale;
 
 	public Mob() {
-		x = y = 8;
+		position.x = position.y = 8;
 		xr = 4;
 		yr = 3;
 		scale = Main.ESCALA;
