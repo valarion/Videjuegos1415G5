@@ -1,10 +1,13 @@
 package videjouegos1415g5.entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import videjouegos1415g5.GameObject;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.gfx.ScaleImg;
+import videjouegos1415g5.gfx.Score;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
 
@@ -13,12 +16,15 @@ import videjouegos1415g5.gfx.SpriteSheet;
 public class Balloon extends Mob {
 	
 	private final String ANIMATION = "/balloon.png"; 
-	private final static int w = 16;
-	private final static int h = 18;
 	private static Animation animation;
 	
 	private int xa, ya;
 	private int randomWalkTime = 0;
+	private int score = 100;
+	private final static int w = 16;
+	private final static int h = 18;
+	public static int x;
+	public static int y;
 	private SpriteLoader sl;
 	private SpriteSheet ss;
 	private Animation move, death;
@@ -43,10 +49,11 @@ public class Balloon extends Mob {
 				ss.obtenerSprite(3*w*scale, 0, w*scale, h*scale), 
 				ss.obtenerSprite(4*w*scale, 0, w*scale, h*scale),
 				ss.obtenerSprite(5*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale)};
+				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale),
+				new Score(score, w, h).getImage()};
 		
 		this.move = new Animation(mov, 10);
-		this.death = new Animation(die, 10);
+		this.death = new Animation(die, 14);
 		
 		// Animacion inicial
 		animation = move;
@@ -59,8 +66,10 @@ public class Balloon extends Mob {
 		int speed = tickTime & 1;
 		if (x < 0) x++;
 		if (x > 200) x--;
-		if (tickTime > 60*5) die();
+		if (health <= 0) die(); 
+		//if (tickTime > 60*5) die();
 		if (randomWalkTime > 0) randomWalkTime--;
+		System.out.println(health);
 		animation.tick();
 	}
 
@@ -69,14 +78,19 @@ public class Balloon extends Mob {
 	}
 
 	protected void die() {
-		super.die();
 		animation = death;
-		animation.start();	
+		animation.start();
+		if (animation.finalFrame())
+			super.die();
 	}
 	
-	protected void touchedBy(Entity entity) {
-		if (entity instanceof Bomberman) {
-			entity.hurt(this, 10);
+	protected void touchedBy(GameObject go) {
+		if (go instanceof Bomberman) {
+			go.hurt(this, 10); // BIEN
 		}
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, w, h);
 	}
 }

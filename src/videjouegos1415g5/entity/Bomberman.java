@@ -1,8 +1,10 @@
 package videjouegos1415g5.entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import videjouegos1415g5.GameObject;
 import videjouegos1415g5.InputHandler;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
@@ -13,19 +15,22 @@ import videjouegos1415g5.gfx.SpriteSheet;
 public class Bomberman extends Mob {
 	
 	private final String ANIMATION = "/bomberman.png"; 
-	private final static int w = 24;
-	private final static int h = 22;
 	private static Animation animation;
 	
 	private InputHandler input;
 	private int scale;
+	private final static int w = 24;
+	private final static int h = 22;
+	public static int x;
+	public static int y;
+	
 	private Animation walkR, walkL, walkU, walkD, death;
 	private SpriteLoader sl;
 	private SpriteSheet ss;
 
 	
 	public Bomberman(InputHandler input) {
-		super();
+		//super(x, y, w, h);
 		this.input = input;
 		this.scale = Main.ESCALA;
 		this.x = 100; 
@@ -113,9 +118,16 @@ public class Bomberman extends Mob {
 		//Sound.playerDeath.play();
 	}
 	
-	protected void touchedBy(Entity entity) {
-		if (!(entity instanceof Bomberman)) {
-			entity.touchedBy(this);
+	public void touchedBy(GameObject go) {
+//		if (!(go instanceof Bomberman)) {
+//			go.touchedBy(this);
+//		}
+		if (go instanceof Balloon) {
+			go.hurt(this, 10); // PARA PROBAR
 		}
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, w, h);
 	}
 }

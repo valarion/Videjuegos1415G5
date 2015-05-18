@@ -64,10 +64,13 @@ public class Animation {
         this.frameCount = 0;
         this.currentFrame = 0;
     }
+    
+    public boolean finalFrame() {
+        return currentFrame == totalFrames - 1 && frameCount == frameDelay;
+    }
 
     private void addFrame(BufferedImage frame, int duration) {
         if (duration <= 0) {
-            System.err.println("Invalid duration: " + duration);
             throw new RuntimeException("Invalid duration: " + duration);
         }
 

@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
 	private GenerateObstacles obstacles;
 	private Menu menu;
 	private Bomberman player;
-	private ArrayList<Entity> enemies = new ArrayList<Entity>();
+	private ArrayList<GameObject> enemies = new ArrayList<GameObject>();
 
 	
 	public void start() {
@@ -115,6 +115,11 @@ public class Game extends Canvas implements Runnable {
 			player.tick();
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).tick();
+				if (enemies.get(i).removed || enemies.get(i).getBounds().intersects(player.getBounds())) {
+					System.out.println("INTERSECTS");
+					player.touchedBy(enemies.get(i));
+					//enemies.remove(i);
+				}
 			}	
 		}
 	}
@@ -139,7 +144,9 @@ public class Game extends Canvas implements Runnable {
 			obstacles.draw(g);
 			player.render(g);
 			for (int i = 0; i < enemies.size(); i++) {
-				enemies.get(i).render(g);;
+				enemies.get(i).render(g);
+				if (enemies.get(i).removed)
+					enemies.remove(i);
 			}	
 		}
 
