@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import videjouegos1415g5.GameObject;
 import videjouegos1415g5.animation.Animation;
+import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.Score;
 import videjouegos1415g5.gfx.SpriteLoader;
@@ -16,22 +16,21 @@ import videjouegos1415g5.gfx.SpriteSheet;
 public class Balloon extends Mob {
 	
 	private final String ANIMATION = "/balloon.png"; 
+	private final static int w = 16;
+	private final static int h = 18;
 	private static Animation animation;
 	
 	private int xa, ya;
 	private int randomWalkTime = 0;
-	private int score = 100;
-	private final static int w = 16;
-	private final static int h = 18;
-	public static int x;
-	public static int y;
 	private SpriteLoader sl;
 	private SpriteSheet ss;
 	private Animation move, death;
+	private int score = 100;
+
 
 	public Balloon() {
-		x = random.nextInt(64);
-		y = random.nextInt(64);
+		position.x = random.nextInt(64);
+		position.y = random.nextInt(64);
 		health = maxHealth = 10;
 		
 		this.sl = new SpriteLoader();	    
@@ -52,8 +51,8 @@ public class Balloon extends Mob {
 				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale),
 				new Score(score, w, h).getImage()};
 		
-		this.move = new Animation(mov, 10);
-		this.death = new Animation(die, 14);
+		this.move = new Animation(mov, 10, Direction.DOWN);
+		this.death = new Animation(die, 14, Direction.DOWN);
 		
 		// Animacion inicial
 		animation = move;
@@ -64,17 +63,16 @@ public class Balloon extends Mob {
 	public void tick() {
 		super.tick();
 		int speed = tickTime & 1;
-		if (x < 0) x++;
-		if (x > 200) x--;
+		if (position.x < 0) position.x++;
+		if (position.x > 200) position.x--;
 		if (health <= 0) die(); 
 		//if (tickTime > 60*5) die();
 		if (randomWalkTime > 0) randomWalkTime--;
-		System.out.println(health);
 		animation.tick();
 	}
 
 	public void render(Graphics2D g) {
-		g.drawImage(animation.getSprite(), x, y, null);
+		g.drawImage(animation.getSprite(), position.x, position.y, null);
 	}
 
 	protected void die() {
@@ -84,13 +82,13 @@ public class Balloon extends Mob {
 			super.die();
 	}
 	
-	protected void touchedBy(GameObject go) {
-		if (go instanceof Bomberman) {
-			go.hurt(this, 10); // BIEN
+	public void touchedBy(Entity entity) {
+		if (entity instanceof Bomberman) {
+			entity.hurt(this, 10); // BIEN
 		}
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, w, h);
+		return new Rectangle(position.x, position.y, w, h);
 	}
 }

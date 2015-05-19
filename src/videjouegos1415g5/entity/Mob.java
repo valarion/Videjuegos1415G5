@@ -1,24 +1,19 @@
 package videjouegos1415g5.entity;
 
-import videjouegos1415g5.GameObject;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.map.Map;
 
 
-public class Mob extends GameObject {
+public class Mob extends Entity {
 	protected int walkDist = 0;
 	protected int xKnockback, yKnockback;
 	public int maxHealth = 10;
 	public int health = maxHealth;
-	public static int w;
-	public static int h;
-
 	public int tickTime = 0;
 	public int scale;
 
 	public Mob() {
-		super(0, 0, w, h, null);
-		//x = y = 8;
+		position.x = position.y = 8;
 		xr = 4;
 		yr = 3;
 		scale = Main.ESCALA;
