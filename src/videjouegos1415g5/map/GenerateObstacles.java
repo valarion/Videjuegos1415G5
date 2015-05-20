@@ -2,8 +2,6 @@ package videjouegos1415g5.map;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
 import java.util.Random;
 
 
@@ -50,19 +48,25 @@ public class GenerateObstacles {
 				} else {
 					if (currentX % 2 == 0) { // Si la columna es par puedo colocar
 						canPlace = true;
-					}
+					} 
 				}
 
 				if (canPlace) {
 					obstacles.add(new Obstacle(
 							currentX*tileSize + offsetX*tileSize, 
 							currentY*tileSize + offsetY*tileSize, 
-							tileSize, null, map.getSpriteSheet(), map.getScale()));
+							tileSize, null, map.getSpriteSheet(), map.getScale(), true));
 
 					canPlace = false;
 					num_obstacles++;
 				}
 			}
+			// Obstaculos fijos
+			if (currentY%2 != 0 && currentX%2 != 0)
+				obstacles.add(new Obstacle(
+						currentX*tileSize + offsetX*tileSize, 
+						currentY*tileSize + offsetY*tileSize, 
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
 			currentX++;
 		}
 	}

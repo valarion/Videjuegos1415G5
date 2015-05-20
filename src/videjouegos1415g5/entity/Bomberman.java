@@ -30,10 +30,10 @@ public class Bomberman extends Mob {
 		super();
 		this.input = input;
 		this.scale = Main.ESCALA;
-		this.position.x = 30; 
-		this.position.y = 40;
-		this.position.width = 18*scale;
-		this.position.height = h*scale;
+		this.position.x = 50; 
+		this.position.y = 90;
+		this.position.width = 14*scale;
+		this.position.height = 11*scale;
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
@@ -107,8 +107,12 @@ public class Bomberman extends Mob {
 	}
 	
 	public void render(Graphics2D g) {
-		g.fillRect(position.x, position.y, w*scale, h*scale);
-		g.drawImage(animation.getSprite(), position.x, position.y, null);
+		g.fillRect(position.x, position.y, 14*scale, 11*scale);
+		BufferedImage f = animation.getSprite();
+		//g.fillRect(position.x+position.width/2-f.getWidth()/2, position.y+position.height/2-f.getHeight()/2, w*scale, h*scale);
+		g.drawImage(animation.getSprite(), 
+				position.x+position.width/2 - (f.getWidth()-1*scale)/2, 
+				position.y+position.height/2 - (f.getHeight()+11*scale)/2, null);
 
 	}
 	
