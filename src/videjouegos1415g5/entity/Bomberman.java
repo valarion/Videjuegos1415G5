@@ -107,8 +107,9 @@ public class Bomberman extends Mob {
 	}
 	
 	public void render(Graphics2D g) {
-		g.fillRect(position.x, position.y, w*scale, h*scale);
-		g.drawImage(animation.getSprite(), position.x, position.y, null);
+		BufferedImage f = animation.getSprite();
+		//g.fillRect(position.x+position.width/2-f.getWidth()/2, position.y+position.height/2-f.getHeight()/2, w*scale, h*scale);
+		g.drawImage(animation.getSprite(), position.x+position.width/2-f.getWidth()/2, position.y+position.height/2-f.getHeight()/2, null);
 
 	}
 	
