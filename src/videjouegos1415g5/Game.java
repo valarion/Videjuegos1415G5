@@ -23,6 +23,8 @@ public class Game extends Canvas implements Runnable {
 	
 	private BufferedImage imagen;
 	private int tickCount;
+	int offsetX = 0;
+	int offsetY = 0;
 	
 	private boolean running = true;
 	//private KeyInput input = new KeyInput(this);
@@ -52,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 		imagen = new BufferedImage(Main.ANCHURA, Main.ALTURA, BufferedImage.TYPE_INT_RGB);
 		
 		// Mapa de prueba
-		map = Map.map1_1;
+		map = Map.map1_5;
 		obstacles = new GenerateObstacles(map);
 		player = new Bomberman(input);
 		enemies.add(new Balloon());
@@ -138,6 +140,10 @@ public class Game extends Canvas implements Runnable {
 			menu.render(g);
 		}
 		else {
+			scroll();
+			g.translate(offsetX, offsetY);
+
+			
 			map.renderMap(g);
 			obstacles.draw(g);
 			player.render(g);
@@ -209,4 +215,17 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 	}
+		
+		private void scroll() {
+			if (player.position.x > getWidth()/2 && 
+					player.position.x < map.getmapWidth()*map.getTileSize()*Main.ESCALA 
+					- (getWidth()/2 + map.getTileSize()*Main.ESCALA)) {
+				offsetX = -player.position.x + getWidth()/2;
+			}
+			if (player.position.y > getHeight()/2 && 
+					player.position.y < map.getmapHeight()*map.getTileSize()*Main.ESCALA
+					- getHeight()/2) {
+				offsetY = -player.position.y + getHeight()/2;
+			}
+		}
 }

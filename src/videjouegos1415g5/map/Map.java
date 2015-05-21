@@ -31,14 +31,14 @@ public class Map {
 	public static final Map map1_8 = new Map("map1_2_square", TILESIZE);
 	
 	// Level 2
-	public static final Map map2_1 = new Map("map1_2_square", TILESIZE);
-	public static final Map map2_2 = new Map("map1_2_square", TILESIZE);
-	public static final Map map2_3 = new Map("map1_2_height", TILESIZE);
-	public static final Map map2_4 = new Map("map1_2_height", TILESIZE);
-	public static final Map map2_5 = new Map("map1_2_square", TILESIZE);
-	public static final Map map2_6 = new Map("map1_2_square", TILESIZE);
-	public static final Map map2_7 = new Map("map1_2_height", TILESIZE);
-	public static final Map map2_8 = new Map("map1_2_square", TILESIZE);
+	public static final Map map2_1 = new Map("map2_square", TILESIZE);
+	public static final Map map2_2 = new Map("map2_square", TILESIZE);
+	public static final Map map2_3 = new Map("map2_height", TILESIZE);
+	public static final Map map2_4 = new Map("map2_height", TILESIZE);
+	public static final Map map2_5 = new Map("map2_square", TILESIZE);
+	public static final Map map2_6 = new Map("map2_square", TILESIZE);
+	public static final Map map2_7 = new Map("map2_height", TILESIZE);
+	public static final Map map2_8 = new Map("map2_square", TILESIZE);
 	
 	// Level 3
 	public static final Map map3_1 = new Map("map3_height", TILESIZE);
@@ -156,7 +156,7 @@ public class Map {
 			case "map1_2_square": case "map1_2_height":
 				map = "/maps/map1.png";
 				break;
-			case "map2_width":
+			case "map2_width": case "map2_square": case "map2_height":
 				map = "/maps/map2.png";
 				break;
 			case "map3_width": case "map3_height":
