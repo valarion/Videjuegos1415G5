@@ -25,6 +25,8 @@ public class GenerateObstacles {
 		this.num_obstacles = 0;
 		this.tileSize *= map.getScale();
 		
+		if (finY > finX) finY--;
+		
 		obstacles = new ArrayList<Obstacle>();
 
 		Random rn = new Random();
@@ -67,6 +69,33 @@ public class GenerateObstacles {
 						currentX*tileSize + offsetX*tileSize, 
 						currentY*tileSize + offsetY*tileSize, 
 						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+			
+			// Paredes laterales
+			// Pared izquierda
+			if (currentX == 1)
+				obstacles.add(new Obstacle(
+						currentX*tileSize, 
+						currentY*tileSize + offsetY*tileSize, 
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+			// Pared Derecha
+			if (currentX == ((finX - offsetX*2) - 1))
+				obstacles.add(new Obstacle(
+						currentX*tileSize + (offsetX+1)*tileSize, 
+						currentY*tileSize + offsetY*tileSize, 
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+			// Pared superior
+			if (currentY == 0)
+				obstacles.add(new Obstacle(
+						currentX*tileSize + offsetX*tileSize, 
+						currentY*tileSize, 
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+			// Pared inferior
+			if (currentY == (finY - offsetY*2) - 1)
+				obstacles.add(new Obstacle(
+						currentX*tileSize + offsetX*tileSize, 
+						currentY*tileSize + (offsetY+1)*tileSize, 
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+			
 			currentX++;
 		}
 	}

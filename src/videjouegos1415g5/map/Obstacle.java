@@ -37,5 +37,7 @@ public class Obstacle extends GameObject {
 	public void draw(Graphics2D g) {
 		if (solid)
 			g.drawImage(obstacle, position.x, position.y, null);
+//		else
+//			g.fillRect(position.x, position.y, position.width, position.height);
 	}
 }
