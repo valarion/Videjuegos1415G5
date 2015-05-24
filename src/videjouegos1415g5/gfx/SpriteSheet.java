@@ -30,4 +30,8 @@ public class SpriteSheet {
 	public BufferedImage getImage() {
 		return this.imagen;
 	}
+	
+	public void setImage(BufferedImage img) {
+		this.imagen = img;
+	}
 }

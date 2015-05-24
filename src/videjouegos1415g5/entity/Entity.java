@@ -49,7 +49,7 @@ public class Entity extends GameObject {
 	}
 	
 	public void collide(Obstacle obs) {
-		System.out.println("collision!" + animation.getAnimationDirection());
+		//System.out.println("collision!" + animation.getAnimationDirection());
 		switch(animation.getAnimationDirection()) {
 		case UP:
 		case DOWN:

@@ -30,8 +30,8 @@ public class Bomberman extends Mob {
 		super();
 		this.input = input;
 		this.scale = Main.ESCALA;
-		this.position.x = 50; 
-		this.position.y = 90;
+		this.position.x = 25*scale; 
+		this.position.y = 45*scale;
 		this.position.width = 14*scale;
 		this.position.height = 11*scale;
 		
@@ -75,25 +75,25 @@ public class Bomberman extends Mob {
 	public void tick() {
 
 		if (input.left.down) {
-			position.x--; 
+			position.x -= scale; 
 			animation = walkL; 
 			animation.start();
 		}
 		
 		else if (input.right.down) {
-			position.x++;  
+			position.x += scale; 
 			animation = walkR; 
 			animation.start();
 		}
 
 		else if (input.up.down) {
-			position.y--; 
+			position.y -= scale; 
 			animation = walkU; 
 			animation.start();
 		}
 
 		else if (input.down.down) {
-			position.y++; 
+			position.y += scale; 
 			animation = walkD; 
 			animation.start();
 		}

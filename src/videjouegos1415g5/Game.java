@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 		imagen = new BufferedImage(Main.ANCHURA, Main.ALTURA, BufferedImage.TYPE_INT_RGB);
 		
 		// Mapa de prueba
-		map = Map.map1_5;
+		map = Map.map8_5;
 		obstacles = new GenerateObstacles(map);
 		player = new Bomberman(input);
 		enemies.add(new Balloon());
@@ -119,6 +119,11 @@ public class Game extends Canvas implements Runnable {
 			player.tick();
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).tick();
+			}
+			for (int i = 0; i < obstacles.getList().size(); i++) {
+				obstacles.getList().get(i).tick();
+				if (obstacles.getList().get(i).removed) 
+					obstacles.getList().remove(obstacles.getList().get(i));
 			}
 			checkCollisions();
 		}
@@ -210,6 +215,7 @@ public class Game extends Canvas implements Runnable {
 		// el jugador con los obstaculos
 		for (Obstacle obs : obstacles.getList()) {
 			if (obs != null && obs.intersects(player)) {
+				if (obs.isSolid()) obs.die();
 				player.collide(obs);
 				break;
 			}
