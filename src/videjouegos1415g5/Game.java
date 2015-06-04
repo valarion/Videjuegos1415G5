@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.Bomberman;
+import videjouegos1415g5.entity.Enemy;
 import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.entity.PowerUps;
 import videjouegos1415g5.gfx.Font;
@@ -44,7 +45,7 @@ public class Game extends Canvas implements Runnable {
 	private GenerateObstacles obstacles;
 	private Menu menu;
 	private Bomberman player;
-	private ArrayList<Entity> enemies = new ArrayList<Entity>();
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Entity> flares = new ArrayList<Entity>();
 	private ArrayList<Entity> bombs = new ArrayList<Entity>();
 	private ArrayList<Entity> powerups = new ArrayList<Entity>();
@@ -247,10 +248,11 @@ public class Game extends Canvas implements Runnable {
 				}
 		
 		// los enemigos con los obstaculos
-		for (Entity enemy : enemies) {
+		for (Enemy enemy : enemies) {
 			for (Obstacle obs : obstacles.getList()) {
 				if (obs != null && obs.intersects(enemy)) {
-					//enemy.collide(obs);
+					enemy.collide(obs);
+					enemy.collide = true;
 					break;
 				}
 			}

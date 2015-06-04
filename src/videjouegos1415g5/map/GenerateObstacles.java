@@ -113,11 +113,11 @@ public class GenerateObstacles {
 		return obstacles;
 	}
 	
-	public boolean obstacleAt(GameObject go, int x, int y) {
-		x = x*tileSize + offsetX*tileSize;
-		y = y*tileSize + offsetX*tileSize;
-		for(Obstacle obs: obstacles) {
-			if (new Rectangle(x, y, go.position.width, go.position.height).intersects(obs.position))
+	public boolean obstacleAt(int x, int y, int scale) {
+		x = x*tileSize + offsetX*tileSize - 8*scale;
+		y = y*tileSize + offsetY*tileSize + 24*scale;
+		for (Obstacle obs: obstacles) {
+			if (new Rectangle(x, y, tileSize, tileSize).intersects(obs.position))
 				return true;
 		}
 		return false;

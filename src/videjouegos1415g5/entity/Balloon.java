@@ -68,7 +68,7 @@ public class Balloon extends Enemy {
 	}
 
 	public void tick() {
-		//super.tick();
+		super.tick();
 		int speed = tickTime & 1;
 //		if (position.x < 0) position.x++;
 //		if (position.x > 200) position.x--;
