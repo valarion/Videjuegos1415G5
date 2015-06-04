@@ -34,7 +34,7 @@ public class MapMenu extends Menu {
 	public void tick() {
 		count++;
 		if (count > 60 * 3 || input.fire.clicked) { // 3 segundos
-			game.setMenu(new GameOverMenu(1));
+			game.setMenu(null);
 			MP3Player.map_start.stop();
 			//game.setMenu(null);
 		}

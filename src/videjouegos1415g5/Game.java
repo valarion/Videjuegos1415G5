@@ -20,6 +20,7 @@ import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.map.Obstacle;
+import videjouegos1415g5.menu.GameOverMenu;
 import videjouegos1415g5.menu.Menu;
 import videjouegos1415g5.menu.TitleMenu;
 
@@ -31,9 +32,7 @@ public class Game extends Canvas implements Runnable {
 	private int tickCount;
 	int offsetX = 0;
 	int offsetY = 0;
-	int score = 0;
-	int lives = 1;
-	int time = 240; // 4 minutos
+	int time; // 4 minutos
 	
 	private boolean running = true;
 	private boolean playing = false;
@@ -138,6 +137,14 @@ public class Game extends Canvas implements Runnable {
 	public void tick() {
 		tickCount++;
 		input.tick();
+		
+		if (time <= 0 && playing) {
+			// Tiempo acabado, Game Over
+			player.setLives(player.getLives() - 1);
+			setMenu(new GameOverMenu(player.getLives()));
+			time = 240;
+		}
+		
 		if (menu != null) {
 			menu.tick();
 			playing = false;
@@ -251,7 +258,7 @@ public class Game extends Canvas implements Runnable {
 			if (obs != null && obs.intersects(player)) {
 				if (obs.isSolid()) {
 					obs.die();
-					score += 100;
+					player.setScore(player.getScore() + 100);
 				}
 				player.collide(obs);
 
@@ -299,15 +306,15 @@ public class Game extends Canvas implements Runnable {
 			g.drawImage(gui, -offsetX, -offsetY, null);
 			
 			// Score
-			x = 80 - 8*(new Integer(score).toString().length() - 1);
+			x = 80 - 8*(new Integer(player.getScore()).toString().length() - 1);
 			y = 8;
-			font.render(g, String.valueOf(score), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
-			x = 241 - 8*(new Integer(score).toString().length() - 1);
-			font.render(g, String.valueOf(score), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
+			font.render(g, String.valueOf(player.getScore()), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
+			x = 241 - 8*(new Integer(player.getScore()).toString().length() - 1);
+			font.render(g, String.valueOf(player.getScore()), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
 			
 			// Lives
 			x = 153;
-			font.render(g, String.valueOf(lives), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
+			font.render(g, String.valueOf(player.getLives()), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
 			
 			// Time
 			int minutes = time/60;

@@ -24,6 +24,9 @@ public class Bomberman extends Mob {
 	private Animation walkR, walkL, walkU, walkD, death;
 	private SpriteLoader sl;
 	private SpriteSheet ss;
+	
+	private int score;
+	private int lives;
 
 	
 	public Bomberman(InputHandler input) {
@@ -34,6 +37,9 @@ public class Bomberman extends Mob {
 		this.position.y = 45*scale;
 		this.position.width = 14*scale;
 		this.position.height = 11*scale;
+		
+		this.score = 0;
+		this.lives = 1;
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
@@ -140,5 +146,21 @@ public class Bomberman extends Mob {
 		// Añadir mejoras del power up
 		System.out.println("PowerUp");
 		powerup.remove();
+	}
+	
+	public int getLives() {
+		return this.lives;
+	}
+	
+	public int getScore() {
+		return this.score;
+	}
+	
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public void setLives(int lives) {
+		this.lives = lives;
 	}
 }
