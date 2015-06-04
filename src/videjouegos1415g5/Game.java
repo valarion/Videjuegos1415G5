@@ -5,13 +5,18 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.entity.Boss;
 import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.entity.PowerUps;
+import videjouegos1415g5.gfx.Font;
+import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.map.Obstacle;
@@ -26,10 +31,16 @@ public class Game extends Canvas implements Runnable {
 	private int tickCount;
 	int offsetX = 0;
 	int offsetY = 0;
+	int score = 0;
+	int lives = 1;
+	int time = 240; // 4 minutos
 	
 	private boolean running = true;
+	private boolean playing = false;
 	//private KeyInput input = new KeyInput(this);
 	private InputHandler input = new InputHandler(this);
+	private Font font;
+	BufferedImage gui = null;
 	
 	private Map map;
 	private GenerateObstacles obstacles;
@@ -64,6 +75,14 @@ public class Game extends Canvas implements Runnable {
 		//enemies.add(new Boss(input));
 		
 		powerups.add(new PowerUps(5, obstacles.getList()));
+		
+		font = new Font(Color.WHITE, false);
+		try {
+			gui = ScaleImg.scale(ImageIO.read(this.getClass().getResource("/hud.png")), Main.ESCALA);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		time = 240;
 		
 		setMenu(new TitleMenu());
 
@@ -105,6 +124,7 @@ public class Game extends Canvas implements Runnable {
 				System.out.println("FPS: " + frames + " - Ticks: " + ticks);
 				frames = 0;
 				ticks = 0;
+				if (playing) time -= 1;
 			}
 			
 			try { 
@@ -120,7 +140,9 @@ public class Game extends Canvas implements Runnable {
 		input.tick();
 		if (menu != null) {
 			menu.tick();
+			playing = false;
 		} else {
+			playing = true;
 			player.tick();
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).tick();
@@ -156,7 +178,6 @@ public class Game extends Canvas implements Runnable {
 			scroll();
 			g.translate(offsetX, offsetY);
 
-			
 			map.renderMap(g);
 			obstacles.draw(g);
 			player.render(g);
@@ -172,7 +193,9 @@ public class Game extends Canvas implements Runnable {
 			for (Entity e : powerups) {
 				e.render(g);
 			}	
+			renderGui(g);
 		}
+
 		
 		if (menu == null) {
 			//checkCollisions();
@@ -226,8 +249,12 @@ public class Game extends Canvas implements Runnable {
 		// el jugador con los obstaculos
 		for (Obstacle obs : obstacles.getList()) {
 			if (obs != null && obs.intersects(player)) {
-				if (obs.isSolid()) obs.die();
+				if (obs.isSolid()) {
+					obs.die();
+					score += 100;
+				}
 				player.collide(obs);
+
 				break;
 			}
 		}
@@ -235,7 +262,6 @@ public class Game extends Canvas implements Runnable {
 		// el jugador con los enemigos
 		for (Entity enemy : enemies) {
 			if (enemy != null && enemy.intersects(player)) {
-				System.out.println("AAA");
 				enemy.touchedBy(player);
 				break;
 			}
@@ -263,5 +289,35 @@ public class Game extends Canvas implements Runnable {
 					- getHeight()/2) {
 				offsetY = -player.position.y + getHeight()/2;
 			}
+		}
+		
+		private void renderGui(Graphics2D g) {
+			
+			int x = 0;
+			int y = 0;
+
+			g.drawImage(gui, -offsetX, -offsetY, null);
+			
+			// Score
+			x = 80 - 8*(new Integer(score).toString().length() - 1);
+			y = 8;
+			font.render(g, String.valueOf(score), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
+			x = 241 - 8*(new Integer(score).toString().length() - 1);
+			font.render(g, String.valueOf(score), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
+			
+			// Lives
+			x = 153;
+			font.render(g, String.valueOf(lives), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
+			
+			// Time
+			int minutes = time/60;
+			int seconds = time - minutes*60;
+			String seg = String.valueOf(seconds);
+			if (seconds < 10) seg = "0" + seconds;
+			
+			x = 106;
+			font.render(g, String.valueOf(minutes), -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
+			x = 120;
+			font.render(g, seg, -offsetX + x*Main.ESCALA, -offsetY +  y*Main.ESCALA);
 		}
 }
