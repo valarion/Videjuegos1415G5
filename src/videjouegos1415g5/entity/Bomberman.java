@@ -135,4 +135,10 @@ public class Bomberman extends Mob {
 	public Rectangle getBounds() {
 		return new Rectangle(position.x+5*scale, position.y+10*scale, 14*scale, 11*scale);
 	}
+
+	public void addPowerUp(Entity powerup) {
+		// Añadir mejoras del power up
+		System.out.println("PowerUp");
+		powerup.remove();
+	}
 }

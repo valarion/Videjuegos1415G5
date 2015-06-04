@@ -20,6 +20,7 @@ public class Entity extends GameObject {
 	public boolean removed;
 
 	public void tick() {
+		animation.tick();
 	}
 	
 	public void render(Graphics2D g) {

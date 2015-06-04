@@ -11,6 +11,7 @@ import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.entity.Boss;
 import videjouegos1415g5.entity.Entity;
+import videjouegos1415g5.entity.PowerUps;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.map.Obstacle;
@@ -37,6 +38,8 @@ public class Game extends Canvas implements Runnable {
 	private ArrayList<Entity> enemies = new ArrayList<Entity>();
 	private ArrayList<Entity> flares = new ArrayList<Entity>();
 	private ArrayList<Entity> bombs = new ArrayList<Entity>();
+	private ArrayList<Entity> powerups = new ArrayList<Entity>();
+	//PowerUps pu;
 	
 	public void start() {
 		running = true;
@@ -57,8 +60,10 @@ public class Game extends Canvas implements Runnable {
 		map = Map.map8_5;
 		obstacles = new GenerateObstacles(map);
 		player = new Bomberman(input);
-		enemies.add(new Balloon());
-		enemies.add(new Boss(input));
+		enemies.add(new Balloon(obstacles, map));
+		//enemies.add(new Boss(input));
+		
+		powerups.add(new PowerUps(5, obstacles.getList()));
 		
 		setMenu(new TitleMenu());
 
@@ -120,6 +125,9 @@ public class Game extends Canvas implements Runnable {
 			for (int i = 0; i < enemies.size(); i++) {
 				enemies.get(i).tick();
 			}
+			for (Entity e : powerups) {
+				e.tick();
+			}
 			for (int i = 0; i < obstacles.getList().size(); i++) {
 				obstacles.getList().get(i).tick();
 				if (obstacles.getList().get(i).removed) 
@@ -159,6 +167,9 @@ public class Game extends Canvas implements Runnable {
 				e.render(g);
 			}
 			for (Entity e : bombs) {
+				e.render(g);
+			}	
+			for (Entity e : powerups) {
 				e.render(g);
 			}	
 		}
@@ -206,7 +217,7 @@ public class Game extends Canvas implements Runnable {
 		for (Entity enemy : enemies) {
 			for (Obstacle obs : obstacles.getList()) {
 				if (obs != null && obs.intersects(enemy)) {
-					enemy.collide(obs);
+					//enemy.collide(obs);
 					break;
 				}
 			}
@@ -217,6 +228,25 @@ public class Game extends Canvas implements Runnable {
 			if (obs != null && obs.intersects(player)) {
 				if (obs.isSolid()) obs.die();
 				player.collide(obs);
+				break;
+			}
+		}
+		
+		// el jugador con los enemigos
+		for (Entity enemy : enemies) {
+			if (enemy != null && enemy.intersects(player)) {
+				System.out.println("AAA");
+				enemy.touchedBy(player);
+				break;
+			}
+		}
+		
+		// el jugador con los power ups
+		for (Entity powerup : powerups) {
+			if (powerup != null && powerup.intersects(player)) {
+				player.addPowerUp(powerup);
+				if (powerup.removed)
+					powerups.remove(powerup);
 				break;
 			}
 		}

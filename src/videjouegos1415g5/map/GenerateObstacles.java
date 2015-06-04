@@ -1,8 +1,11 @@
 package videjouegos1415g5.map;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
+
+import videjouegos1415g5.GameObject;
 
 
 public class GenerateObstacles {
@@ -108,5 +111,27 @@ public class GenerateObstacles {
 	
 	public ArrayList<Obstacle> getList() {
 		return obstacles;
+	}
+	
+	public boolean obstacleAt(GameObject go, int x, int y) {
+		x = x*tileSize + offsetX*tileSize;
+		y = y*tileSize + offsetX*tileSize;
+		for(Obstacle obs: obstacles) {
+			if (new Rectangle(x, y, go.position.width, go.position.height).intersects(obs.position))
+				return true;
+		}
+		return false;
+	}
+	
+	public int getOffsetX() {
+		return offsetX;
+	}
+	
+	public int getOffsetY() {
+		return offsetY;
+	}
+	
+	public int tileSize() {
+		return tileSize;
 	}
 }
