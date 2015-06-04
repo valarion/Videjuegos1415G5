@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 
 import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.Bomberman;
-import videjouegos1415g5.entity.Boss;
 import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.entity.PowerUps;
 import videjouegos1415g5.gfx.Font;
@@ -71,6 +70,10 @@ public class Game extends Canvas implements Runnable {
 		obstacles = new GenerateObstacles(map);
 		player = new Bomberman(input);
 		enemies.add(new Balloon(obstacles, map));
+		enemies.add(new Balloon(obstacles, map));
+		enemies.add(new Balloon(obstacles, map));
+
+
 		//enemies.add(new Boss(input));
 		
 		powerups.add(new PowerUps(5, obstacles.getList()));
@@ -151,8 +154,8 @@ public class Game extends Canvas implements Runnable {
 		} else {
 			playing = true;
 			player.tick();
-			for (int i = 0; i < enemies.size(); i++) {
-				enemies.get(i).tick();
+			for (Entity enemy : enemies) {
+				enemy.tick();
 			}
 			for (Entity e : powerups) {
 				e.tick();

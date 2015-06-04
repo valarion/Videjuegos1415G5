@@ -44,11 +44,6 @@ public class Mob extends Entity {
 	}
 
 	public boolean findStartPos(Map map) {
-		int x = random.nextInt(map.getmapWidth());
-		int y = random.nextInt(map.getmapHeight());
-		int xx = x * 16 + 8;
-		int yy = y * 16 + 8;
-
 		return false;
 	}
 }

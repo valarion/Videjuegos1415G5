@@ -21,7 +21,6 @@ public class Balloon extends Enemy {
 	private final String ANIMATION = "/balloon.png"; 
 	private final static int w = 16;
 	private final static int h = 18;
-	private static Animation animation;
 	
 	private int xa, ya;
 	private int randomWalkTime = 0;
@@ -69,7 +68,7 @@ public class Balloon extends Enemy {
 	}
 
 	public void tick() {
-		super.tick();
+		//super.tick();
 		int speed = tickTime & 1;
 //		if (position.x < 0) position.x++;
 //		if (position.x > 200) position.x--;
@@ -80,7 +79,7 @@ public class Balloon extends Enemy {
 	}
 
 	public void render(Graphics2D g) {
-		g.setColor(Color.CYAN);
+		//g.setColor(Color.CYAN);
 		//g.drawImage(animation.getSprite(), position.x, position.y, null);
 		BufferedImage f = animation.getSprite();
 		g.drawImage(animation.getSprite(), 
