@@ -7,6 +7,7 @@ public class Enemy extends Mob {
 
 	private GenerateObstacles obs;
 	public boolean collide = false;
+	protected boolean located = false;
 
 	public Enemy(GenerateObstacles obs) {
 		this.obs = obs;
@@ -23,6 +24,12 @@ public class Enemy extends Mob {
 //			position.y++;
 //		}
 	}
+	
+	public void touchedBy(Entity entity) {
+		if (entity instanceof Bomberman) {
+			entity.hurt(this, 10); // BIEN
+		}
+	}
 
 	public boolean findStartPos(Map map) {
 		located: for (int y = 0; y < map.getmapHeight() - obs.getOffsetY()*2; y++) {
@@ -31,6 +38,7 @@ public class Enemy extends Mob {
 					if (!obs.obstacleAt(x, y, scale) && random.nextDouble() >= 0.99) {
 						this.position.x = x*obs.tileSize() + obs.getOffsetX()*obs.tileSize() - 8*scale;
 						this.position.y = y*obs.tileSize() + obs.getOffsetY()*obs.tileSize() + 24*scale;
+						located = true;
 						break located;
 					}
 				}

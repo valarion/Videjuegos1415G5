@@ -1,6 +1,5 @@
 package videjouegos1415g5.entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -22,7 +21,6 @@ public class Balloon extends Enemy {
 	private final static int w = 16;
 	private final static int h = 18;
 	
-	private int xa, ya;
 	private int randomWalkTime = 0;
 	private SpriteLoader sl;
 	private SpriteSheet ss;
@@ -38,7 +36,8 @@ public class Balloon extends Enemy {
 		this.position.height = 14*scale;
 		health = maxHealth = 10;
 		
-		findStartPos(map);
+		
+		while (!located) findStartPos(map);
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
@@ -75,7 +74,7 @@ public class Balloon extends Enemy {
 		if (health <= 0) die(); 
 		//if (tickTime > 60*5) die();
 		if (randomWalkTime > 0) randomWalkTime--;
-		animation.tick();
+		if (!removed) animation.tick();
 	}
 
 	public void render(Graphics2D g) {
@@ -96,12 +95,7 @@ public class Balloon extends Enemy {
 		if (animation.finalFrame())
 			super.die();
 	}
-	
-	public void touchedBy(Entity entity) {
-		if (entity instanceof Bomberman) {
-			entity.hurt(this, 10); // BIEN
-		}
-	}
+
 	
 	public Rectangle getBounds() {
 		return new Rectangle(position.x, position.y, w, h);

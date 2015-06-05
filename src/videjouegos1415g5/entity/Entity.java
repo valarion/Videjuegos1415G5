@@ -17,8 +17,7 @@ public class Entity extends GameObject {
 	//public int x, y;
 	public int xr = 6;
 	public int yr = 6;
-	public boolean removed;
-
+	
 	public void tick() {
 		animation.tick();
 	}

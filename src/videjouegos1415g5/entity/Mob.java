@@ -21,10 +21,7 @@ public class Mob extends Entity {
 
 	public void tick() {
 		tickTime++;
-
-		if (health <= 0) {
-			die();
-		}
+		if (health <= 0) die();
 	}
 
 	protected void die() {
