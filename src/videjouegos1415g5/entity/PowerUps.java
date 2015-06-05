@@ -1,6 +1,5 @@
 package videjouegos1415g5.entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class PowerUps extends Entity {
 					ss.obtenerSprite(type*w*scale, h*scale, w*scale, h*scale)};
 			
 		
-		findStartPos(obs);
+		while (!located) findStartPos(obs);
 		this.animation = new Animation(powerup, 10, Direction.DOWN);
 		this.animation.start();
 		
@@ -64,6 +63,7 @@ public class PowerUps extends Entity {
 			if (obs.get(i).isSolid() && random.nextDouble() >= 0.9) {
 				this.position.x = obs.get(i).position.x;
 				this.position.y = obs.get(i).position.y;
+				located = true;
 				break;
 			}
 		}

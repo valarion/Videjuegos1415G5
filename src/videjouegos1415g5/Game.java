@@ -89,7 +89,7 @@ public class Game extends Canvas implements Runnable {
 		int powerUpCount = 0;
 		switch (level) {
 		case 1:
-			map = Map.map1_1;
+			map = Map.map8_5;
 			level = 2;
 			break;
 		case 2:
@@ -309,7 +309,6 @@ public class Game extends Canvas implements Runnable {
 			for (Obstacle obs : obstacles.getList()) {
 				if (obs != null && obs.intersects(enemy)) {
 					enemy.collide(obs);
-					enemy.collide = true;
 					break;
 				}
 			}
@@ -320,7 +319,6 @@ public class Game extends Canvas implements Runnable {
 			if (obs != null && obs.intersects(player)) {
 				if (obs.isSolid()) {
 					obs.die();
-					player.setScore(player.getScore() + 100);
 				}
 				player.collide(obs);
 
@@ -329,10 +327,11 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		// el jugador con los enemigos
-		for (Entity enemy : enemies) {
+		for (Enemy enemy : enemies) {
 			if (enemy != null && enemy.intersects(player)) {
 				//enemy.touchedBy(player); // Normal
 				player.touchedBy(enemy); // Bomberman se carga a todos
+				player.setScore(player.getScore() + enemy.getScore());
 				break;
 			}
 		}

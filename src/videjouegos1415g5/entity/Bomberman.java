@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import videjouegos1415g5.Game;
 import videjouegos1415g5.InputHandler;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
@@ -12,7 +11,6 @@ import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
-import videjouegos1415g5.menu.GameOverMenu;
 
 public class Bomberman extends Mob {
 

@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 import videjouegos1415g5.animation.Animation;
-import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.entity.Mob;
 
 public class GameObject {

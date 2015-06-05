@@ -6,12 +6,12 @@ import videjouegos1415g5.map.Map;
 public class Enemy extends Mob {
 
 	private GenerateObstacles obs;
-	public boolean collide = false;
-	protected boolean located = false;
+	protected int score;
 
-	public Enemy(GenerateObstacles obs) {
+
+	public Enemy(GenerateObstacles obs, Map map) {
 		this.obs = obs;
-
+		while (!located) findStartPos(map);
 	}
 	
 	public void tick() {
@@ -45,6 +45,10 @@ public class Enemy extends Mob {
 			}
 		}
 		return true;
+	}
+	
+	public int getScore() {
+		return score;
 	}
 
 }

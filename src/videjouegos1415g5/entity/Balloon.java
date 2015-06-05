@@ -21,23 +21,18 @@ public class Balloon extends Enemy {
 	private final static int w = 16;
 	private final static int h = 18;
 	
-	private int randomWalkTime = 0;
 	private SpriteLoader sl;
 	private SpriteSheet ss;
 	private Animation move, death;
-	private int score = 100;
 
 
 	public Balloon(GenerateObstacles obs, Map map) {
-		super(obs);
-		this.position.x = random.nextInt(64);
-		this.position.y = random.nextInt(64);
+		super(obs, map);
+
 		this.position.width = 12*scale;
 		this.position.height = 14*scale;
-		health = maxHealth = 10;
-		
-		
-		while (!located) findStartPos(map);
+		this.health = 10;
+		this.score = 100;
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
@@ -68,12 +63,7 @@ public class Balloon extends Enemy {
 
 	public void tick() {
 		super.tick();
-		int speed = tickTime & 1;
-//		if (position.x < 0) position.x++;
-//		if (position.x > 200) position.x--;
 		if (health <= 0) die(); 
-		//if (tickTime > 60*5) die();
-		if (randomWalkTime > 0) randomWalkTime--;
 		if (!removed) animation.tick();
 	}
 

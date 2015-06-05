@@ -34,7 +34,7 @@ public class Exit extends Entity {
 		BufferedImage[] exit = new BufferedImage[]{ss.obtenerSprite(0, 0, w*scale, h*scale),
 					ss.obtenerSprite(w*scale, 0, w*scale, h*scale)};
 		
-		findStartPos(obs);
+		while (!located) findStartPos(obs);
 		this.animation = new Animation(exit, 10, Direction.DOWN);
 		
 	}
@@ -55,6 +55,7 @@ public class Exit extends Entity {
 			if (obs.get(i).isSolid() && random.nextDouble() >= 0.9) {
 				this.position.x = obs.get(i).position.x;
 				this.position.y = obs.get(i).position.y;
+				located = true;
 				break;
 			}
 		}

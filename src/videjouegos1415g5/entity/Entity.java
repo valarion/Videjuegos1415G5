@@ -4,10 +4,11 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import videjouegos1415g5.GameObject;
-import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.map.Obstacle;
 
 public class Entity extends GameObject {
+	
+	protected boolean located = false;
 	
 	public Entity() {
 		super(0, 0, 0, 0, null);
