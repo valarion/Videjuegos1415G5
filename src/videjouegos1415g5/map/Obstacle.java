@@ -1,5 +1,6 @@
 package videjouegos1415g5.map;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -67,9 +68,14 @@ public class Obstacle extends GameObject {
 	}
 
 	public void draw(Graphics2D g) {
-		if (solid)
+		if (solid) {
 			g.drawImage(animation.getSprite(), position.x, position.y, null);
-//		 else
-//			 g.fillRect(position.x, position.y, position.width, position.height);
+//			g.setColor(Color.BLACK);
+//		 	g.fillRect(position.x, position.y, position.width, position.height);
+		}
+//		else {
+//			g.setColor(Color.ORANGE);
+//			g.fillRect(position.x, position.y, position.width, position.height);
+//		}
 	}
 }

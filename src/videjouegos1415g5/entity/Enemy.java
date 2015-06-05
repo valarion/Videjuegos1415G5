@@ -7,22 +7,27 @@ public class Enemy extends Mob {
 
 	private GenerateObstacles obs;
 	protected int score;
+	Bomberman player;
 
-
-	public Enemy(GenerateObstacles obs, Map map) {
+	public Enemy(GenerateObstacles obs, Map map, Bomberman player) {
 		this.obs = obs;
+		this.player = player;
 		while (!located) findStartPos(map);
 	}
 	
 	public void tick() {
-//		position.y++;
-//		if (collide) {
-//			position.x++;
-//		}
-//		position.x--;
-//		if (collide) {
-//			position.y++;
-//		}
+		// IA muy rudimentaria
+		if (player.position.x > this.position.x) {
+			this.position.x++;
+		} else {
+			this.position.x--;
+		}
+		
+		if (player.position.y > this.position.y) {
+			this.position.y++;
+		} else {
+			this.position.y--;
+		}
 	}
 	
 	public void touchedBy(Entity entity) {

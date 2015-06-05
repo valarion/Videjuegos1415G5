@@ -26,8 +26,8 @@ public class Balloon extends Enemy {
 	private Animation move, death;
 
 
-	public Balloon(GenerateObstacles obs, Map map) {
-		super(obs, map);
+	public Balloon(GenerateObstacles obs, Map map, Bomberman player) {
+		super(obs, map, player);
 
 		this.position.width = 12*scale;
 		this.position.height = 14*scale;
