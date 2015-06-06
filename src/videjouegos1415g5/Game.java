@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
@@ -289,7 +290,7 @@ public class Game extends Canvas implements Runnable {
 			for (Entity flare : flares) {
 				if (flare.intersects(enemy)) {
 					enemy.touchedBy(flare);
-					break;
+					//break;
 				}
 			}
 		}
@@ -298,7 +299,7 @@ public class Game extends Canvas implements Runnable {
 		for (Entity flare : flares) {
 			if (flare.intersects(player)) {
 				player.touchedBy(flare);
-				break;
+				//break;
 			}
 		}
 
@@ -307,7 +308,7 @@ public class Game extends Canvas implements Runnable {
 			for (Entity flare : flares) {
 				if (flare.intersects(bomb)) {
 					bomb.touchedBy(flare);
-					break;
+					//break;
 				}
 			}
 		}
@@ -317,7 +318,7 @@ public class Game extends Canvas implements Runnable {
 			for (Obstacle obs : obstacles.getList()) {
 				if (obs != null && obs.intersects(enemy)) {
 					enemy.collide(obs);
-					break;
+					//break;
 				}
 			}
 		}
@@ -330,7 +331,7 @@ public class Game extends Canvas implements Runnable {
 				}
 				player.collide(obs);
 
-				break;
+				//break;
 			}
 		}
 
@@ -340,17 +341,18 @@ public class Game extends Canvas implements Runnable {
 				//enemy.touchedBy(player); // Normal
 				player.touchedBy(enemy); // Bomberman se carga a todos
 				player.setScore(player.getScore() + enemy.getScore());
-				break;
+				//break;
 			}
 		}
 
 		// el jugador con los power ups
-		for (Entity powerup : powerups) {
+		for (Iterator<Entity> it = powerups.iterator(); it.hasNext();) {
+			Entity powerup = it.next();
 			if (powerup != null && powerup.intersects(player)) {
 				player.addPowerUp(powerup);
 				if (powerup.removed)
-					powerups.remove(powerup);
-				break;
+					it.remove();
+				//break;
 			}
 		}
 		
