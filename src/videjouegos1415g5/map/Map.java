@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -17,7 +18,7 @@ import videjouegos1415g5.map.tile.Tile;
 
 public class Map {
 	private final static int TILESIZE = 16;
-	private final static String path1 = "res/maps/";
+	private final static String path1 = "/maps/";
 	private final static String path2 = ".txt";
 
 	// Level 1
@@ -126,7 +127,8 @@ public class Map {
 
 			try {
 
-				BufferedReader br = new BufferedReader(new FileReader(mapPath));
+				BufferedReader br = new BufferedReader(
+						new InputStreamReader(this.getClass().getResourceAsStream(mapPath)));
 
 				mapWidth = Integer.parseInt(br.readLine());
 				mapHeight = Integer.parseInt(br.readLine());

@@ -105,7 +105,7 @@ public class Game extends Canvas implements Runnable {
 			enemies.add(new Balloon(obstacles, map, player));
 		}
 		for (int i = 0; i < powerUpCount; i++) {
-			powerups.add(new PowerUps(3, obstacles.getList()));
+			powerups.add(new PowerUps((int)(Math.random()*15), obstacles.getList()));
 		}
 		exit = new Exit(obstacles.getList(), enemies);
 	}
