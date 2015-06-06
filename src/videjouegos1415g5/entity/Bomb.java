@@ -26,6 +26,8 @@ public class Bomb extends Entity {
 	
 	private Set<Entity> out = new HashSet<Entity>();
 	
+	private int potency;
+	
 	//private Animation animation;
 
 	public Bomb(Bomberman player) {
@@ -36,6 +38,8 @@ public class Bomb extends Entity {
 
 		this.position.width = 12*scale;
 		this.position.height = 14*scale;
+		
+		this.potency = player.getPotency();
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
@@ -89,6 +93,10 @@ public class Bomb extends Entity {
 			return new Rectangle(position.x, position.y, w, h);
 		else
 			return new Rectangle(0, 0, 0, 0);
+	}
+
+	public int getPotency() {
+		return potency;
 	}
 	
 }

@@ -17,6 +17,7 @@ import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.entity.Enemy;
 import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.entity.Exit;
+import videjouegos1415g5.entity.Flare;
 import videjouegos1415g5.entity.PowerUps;
 import videjouegos1415g5.gfx.Font;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -53,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 	private Bomberman player;
 	private Entity exit;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	private ArrayList<Entity> flares = new ArrayList<Entity>();
+	private ArrayList<Flare> flares = new ArrayList<Flare>();
 	private ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 	private ArrayList<Entity> powerups = new ArrayList<Entity>();
 
@@ -214,12 +215,20 @@ public class Game extends Canvas implements Runnable {
 					e.tick();
 				}
 				for(Iterator<Bomb> it = bombs.iterator(); it.hasNext();) {
-					Entity bomb = it.next();
+					Bomb bomb = it.next();
 					if(bomb.removed) {
 						it.remove();
+						addFlares(bomb);
 					}
 					else
 						bomb.tick();
+				}
+				for(Iterator<Flare> it = flares.iterator(); it.hasNext();) {
+					Flare flare = it.next();
+					if(flare.removed) 
+						it.remove();
+					else
+						flare.tick();
 				}
 				for (int i = 0; i < obstacles.getList().size(); i++) {
 					obstacles.getList().get(i).tick();
@@ -462,6 +471,77 @@ public class Game extends Canvas implements Runnable {
 			x = 120;
 			font.render(g, seg, -offsetX + x * Main.ESCALA, -offsetY + y
 					* Main.ESCALA);
+		}
+	}
+	
+	private void addFlares(Bomb bomb) {
+		flares.add(new Flare(bomb,0,0));
+		flaresloop: for(int i=1; i <= bomb.getPotency(); i++) {
+			Flare flare = new Flare(bomb,i,0);
+			for (Obstacle obs : obstacles.getList()) {
+				if (obs != null && obs.intersects(flare)) {
+					if (obs.isSolid()) {
+						flare.setAsFinal();
+						break;
+					}
+					else
+						break flaresloop;
+				}
+			}
+			flares.add(flare);
+			if(flare.isFinal())
+				break;
+		}
+		
+		flaresloop: for(int i=-1; i >= -bomb.getPotency(); i++) {
+			Flare flare = new Flare(bomb,i,0);
+			for (Obstacle obs : obstacles.getList()) {
+				if (obs != null && obs.intersects(flare)) {
+					if (obs.isSolid()) {
+						flare.setAsFinal();
+						break;
+					}
+					else
+						break flaresloop;
+				}
+			}
+			flares.add(flare);
+			if(flare.isFinal())
+				break;
+		}
+		
+		flaresloop: for(int i=1; i <= bomb.getPotency(); i++) {
+			Flare flare = new Flare(bomb,0,i);
+			for (Obstacle obs : obstacles.getList()) {
+				if (obs != null && obs.intersects(flare)) {
+					if (obs.isSolid()) {
+						flare.setAsFinal();
+						break;
+					}
+					else
+						break flaresloop;
+				}
+			}
+			flares.add(flare);
+			if(flare.isFinal())
+				break;
+		}
+		
+		flaresloop: for(int i=-1; i >= -bomb.getPotency(); i++) {
+			Flare flare = new Flare(bomb,0,i);
+			for (Obstacle obs : obstacles.getList()) {
+				if (obs != null && obs.intersects(flare)) {
+					if (obs.isSolid()) {
+						flare.setAsFinal();
+						break;
+					}
+					else
+						break flaresloop;
+				}
+			}
+			flares.add(flare);
+			if(flare.isFinal())
+				break;
 		}
 	}
 }
