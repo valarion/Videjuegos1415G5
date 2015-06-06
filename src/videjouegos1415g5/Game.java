@@ -508,7 +508,7 @@ public class Game extends Canvas implements Runnable {
 				break;
 		}
 		
-		flaresloop: for(int i=-1; i >= -bomb.getPotency(); i++) {
+		flaresloop: for(int i=-1; i >= -bomb.getPotency(); i--) {
 			Flare flare = new Flare(bomb,i,0);
 			for (Obstacle obs : obstacles.getList()) {
 				if (obs != null && obs.intersects(flare)) {
@@ -545,7 +545,7 @@ public class Game extends Canvas implements Runnable {
 				break;
 		}
 		
-		flaresloop: for(int i=-1; i >= -bomb.getPotency(); i++) {
+		flaresloop: for(int i=-1; i >= -bomb.getPotency(); i--) {
 			Flare flare = new Flare(bomb,0,i);
 			for (Obstacle obs : obstacles.getList()) {
 				if (obs != null && obs.intersects(flare)) {
