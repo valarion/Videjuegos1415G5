@@ -4,14 +4,21 @@ import java.awt.Graphics2D;
 import java.util.Random;
 
 import videjouegos1415g5.GameObject;
+import videjouegos1415g5.Main;
+import videjouegos1415g5.gfx.SpriteLoader;
+import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.Obstacle;
 
 public class Entity extends GameObject {
 	
 	protected boolean located = false;
+	protected int scale;
+	protected SpriteLoader sl;
+	protected SpriteSheet ss;
 	
 	public Entity() {
 		super(0, 0, 0, 0, null);
+		this.scale = Main.ESCALA;
 	}
 
 	protected final Random random = new Random();

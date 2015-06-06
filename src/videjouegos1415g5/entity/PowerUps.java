@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -17,15 +16,11 @@ public class PowerUps extends Entity {
 	private final String POWERUPS = "/powerups.png"; 
 	private final static int w = 16;
 	private final static int h = 16;
-	
-	private int scale;	
+		
 	private int type;
-	private SpriteLoader sl;
-	private SpriteSheet ss;
 	
 	public PowerUps(int type, ArrayList<Obstacle> obs) {
 		
-		this.scale = Main.ESCALA;
 		this.type = type;
 		this.position.width = w;
 		this.position.height = h;
@@ -35,7 +30,6 @@ public class PowerUps extends Entity {
 		
 		BufferedImage[] powerup = new BufferedImage[]{ss.obtenerSprite(type*w*scale, 0, w*scale, h*scale),
 					ss.obtenerSprite(type*w*scale, h*scale, w*scale, h*scale)};
-			
 		
 		while (!located) findStartPos(obs);
 		this.animation = new Animation(powerup, 10, Direction.DOWN);

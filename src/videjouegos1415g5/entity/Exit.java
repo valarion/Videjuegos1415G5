@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -19,14 +18,10 @@ public class Exit extends Entity {
 	private final static int h = 16;
 	
 	private boolean activated;
-	private int scale;	
-	private SpriteLoader sl;
-	private SpriteSheet ss;
 	
 	private ArrayList<Enemy> enemies;
 	
 	public Exit(ArrayList<Obstacle> obs, ArrayList<Enemy> enemies) {
-		this.scale = Main.ESCALA;
 		this.enemies = enemies;
 		this.activated = false;
 		

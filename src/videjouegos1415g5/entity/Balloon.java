@@ -20,11 +20,6 @@ public class Balloon extends Enemy {
 	private final String ANIMATION = "/balloon.png"; 
 	private final static int w = 16;
 	private final static int h = 18;
-	
-	private SpriteLoader sl;
-	private SpriteSheet ss;
-	private Animation move, death;
-
 
 	public Balloon(GenerateObstacles obs, Map map, Bomberman player) {
 		super(obs, map, player);
@@ -52,11 +47,15 @@ public class Balloon extends Enemy {
 				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale),
 				new Score(score, w, h).getImage()};
 		
-		this.move = new Animation(mov, 10, Direction.DOWN);
+		this.down = new Animation(mov, 10, Direction.DOWN);
+//		this.up = new Animation(mov, 10, Direction.UP);
+//		this.left = new Animation(mov, 10, Direction.LEFT);
+//		this.right = new Animation(mov, 10, Direction.RIGHT);
+
 		this.death = new Animation(die, 14, Direction.DOWN);
 		
 		// Animacion inicial
-		animation = move;
+		animation = down;
 		animation.start();
 
 	}

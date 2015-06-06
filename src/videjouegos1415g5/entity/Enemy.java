@@ -1,5 +1,6 @@
 package videjouegos1415g5.entity;
 
+import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 
@@ -18,15 +19,27 @@ public class Enemy extends Mob {
 	public void tick() {
 		// IA muy rudimentaria
 		if (player.position.x > this.position.x) {
+			//animation.setAnimationDirection(Direction.RIGHT	);
 			this.position.x++;
+//			animation = right;
+//			animation.start();
 		} else {
+			//animation.setAnimationDirection(Direction.LEFT);
 			this.position.x--;
+//			animation = left;
+//			animation.start();
 		}
 		
 		if (player.position.y > this.position.y) {
+			//animation.setAnimationDirection(Direction.DOWN);
 			this.position.y++;
+//			animation = down;
+//			animation.start();
 		} else {
+			//animation.setAnimationDirection(Direction.UP);
 			this.position.y--;
+//			animation = up;
+//			animation.start();
 		}
 	}
 	

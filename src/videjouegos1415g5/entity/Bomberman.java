@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import videjouegos1415g5.InputHandler;
-import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -17,13 +16,8 @@ public class Bomberman extends Mob {
 	private final String ANIMATION = "/bomberman.png";
 	private final static int w = 24;
 	private final static int h = 22;
-	// private static Animation animation;
 
 	private InputHandler input;
-	private int scale;
-	private Animation walkR, walkL, walkU, walkD, death;
-	private SpriteLoader sl;
-	private SpriteSheet ss;
 
 	private int score;
 	private int lives;
@@ -31,9 +25,8 @@ public class Bomberman extends Mob {
 	private int max_velocity;
 
 	public Bomberman(InputHandler input) {
-		super();
+		
 		this.input = input;
-		this.scale = Main.ESCALA;
 		this.position.x = 25 * scale;
 		this.position.y = 45 * scale;
 		this.position.width = 14 * scale;
@@ -77,14 +70,14 @@ public class Bomberman extends Mob {
 				ss.obtenerSprite(8 * w * scale, h * scale, w * scale, h * scale),
 				ss.obtenerSprite(9 * w * scale, h * scale, w * scale, h * scale) };
 
-		this.walkL = new Animation(walkingLeft, 10, Direction.LEFT);
-		this.walkR = new Animation(walkingRight, 10, Direction.RIGHT);
-		this.walkU = new Animation(walkingUp, 10, Direction.UP);
-		this.walkD = new Animation(walkingDown, 10, Direction.DOWN);
+		this.left = new Animation(walkingLeft, 10, Direction.LEFT);
+		this.right = new Animation(walkingRight, 10, Direction.RIGHT);
+		this.up = new Animation(walkingUp, 10, Direction.UP);
+		this.down = new Animation(walkingDown, 10, Direction.DOWN);
 		this.death = new Animation(die, 10, Direction.DOWN);
 
 		// Animacion inicial
-		this.animation = walkD;
+		this.animation = down;
 	}
 
 	public void tick() {
@@ -96,25 +89,25 @@ public class Bomberman extends Mob {
 
 			if (input.left.down) {
 				position.x -= (scale + velocity);
-				animation = walkL;
+				animation = left;
 				animation.start();
 			}
 
 			else if (input.right.down) {
 				position.x += (scale + velocity);
-				animation = walkR;
+				animation = right;
 				animation.start();
 			}
 
 			else if (input.up.down) {
 				position.y -= (scale + velocity);
-				animation = walkU;
+				animation = up;
 				animation.start();
 			}
 
 			else if (input.down.down) {
 				position.y += (scale + velocity);
-				animation = walkD;
+				animation = down;
 				animation.start();
 			}
 

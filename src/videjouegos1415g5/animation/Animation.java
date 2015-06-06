@@ -103,8 +103,12 @@ public class Animation {
         return frames.get(currentFrame).getImg();
     }
     
-        public Direction getAnimationDirection() {
+    public Direction getAnimationDirection() {
 		return animationDirection;
+	}
+    
+    public void setAnimationDirection(Direction d) {
+    	animationDirection = d;
 	}
 
     public void tick() {

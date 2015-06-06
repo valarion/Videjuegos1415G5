@@ -1,22 +1,15 @@
 package videjouegos1415g5.entity;
 
-import videjouegos1415g5.Main;
+import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.map.Map;
 
 
 public class Mob extends Entity {
-	protected int walkDist = 0;
-	protected int xKnockback, yKnockback;
-	public int maxHealth = 10;
-	public int health = maxHealth;
+	public int health = 10;
 	public int tickTime = 0;
-	public int scale;
+	protected Animation up, down, left, right, death;
 
 	public Mob() {
-		position.x = position.y = 8;
-		xr = 4;
-		yr = 3;
-		scale = Main.ESCALA;
 	}
 
 	public void tick() {
