@@ -25,7 +25,7 @@ public class Mob extends Entity {
 		return e.isBlockableBy(this);
 	}
 
-	public void hurt(Mob mob, int damage) {
+	public void hurt(Entity mob, int damage) {
 		doHurt(damage);
 	}
 

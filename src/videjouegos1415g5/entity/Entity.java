@@ -49,7 +49,7 @@ public class Entity extends GameObject {
 		return false;
 	}
 
-	public void hurt(Mob mob, int dmg) {
+	public void hurt(Entity mob, int dmg) {
 	}
 
 	public void touchedBy(Entity entity) {

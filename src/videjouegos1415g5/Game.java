@@ -310,10 +310,12 @@ public class Game extends Canvas implements Runnable {
 
 	public void checkCollisions() {
 		// los enemigos con las llamas
-		for (Entity enemy : enemies) {
+		for (Enemy enemy : enemies) {
 			for (Entity flare : flares) {
 				if (flare.intersects(enemy)) {
-					enemy.touchedBy(flare);
+					enemy.hurt(flare, 10);
+					//enemy.hurt(flare, 10);
+					//enemy.touchedBy(flare);
 					//break;
 				}
 			}
@@ -352,7 +354,7 @@ public class Game extends Canvas implements Runnable {
 			for (Bomb bomb : bombs) {
 				if (bomb != null) {
 					if (bomb.intersects(enemy)) {
-						if (!bomb.isOut(enemy)) {
+						if (bomb.isOut(enemy)) {
 							enemy.collide(bomb);
 						}
 					}

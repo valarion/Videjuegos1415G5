@@ -147,7 +147,7 @@ public class Bomberman extends Mob {
 		// go.touchedBy(this);
 		// }
 		if (go instanceof Balloon) {
-			go.hurt(this, 10); // PARA PROBAR
+			//go.hurt(this, 10); // PARA PROBAR
 		}
 	}
 
