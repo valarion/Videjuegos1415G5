@@ -241,8 +241,7 @@ public class Game extends Canvas implements Runnable {
 			map.renderMap(g);
 			
 			
-			// Pintar obstaculos
-			obstacles.draw(g);
+			
 			
 			// Pintar enemigos
 			for (Entity e : enemies) {
@@ -266,6 +265,9 @@ public class Game extends Canvas implements Runnable {
 			for (Entity e : powerups) {
 				e.render(g);
 			}
+			
+			// Pintar obstaculos
+			obstacles.draw(g);
 			
 			// Pintar bomberman
 			player.render(g);
