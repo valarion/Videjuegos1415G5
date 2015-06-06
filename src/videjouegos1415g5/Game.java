@@ -287,9 +287,20 @@ public class Game extends Canvas implements Runnable {
 			// Pintar obstaculos
 			obstacles.draw(g);
 
-			// Pintar llamas
-			for (Entity e : flares) {
-				e.render(g);
+			// Pintar llamas finales
+			for (Flare e : flares) {
+				if(e.isFinal())
+					e.render(g);
+			}
+			// Pintar llamas intermedias
+			for (Flare e : flares) {
+				if(!e.isFinal() && !e.isMid())
+					e.render(g);
+			}
+			// Pintar llamas iniciales
+			for (Flare e : flares) {
+				if(e.isMid())
+					e.render(g);
 			}
 			// Pintar bomberman
 			player.render(g);

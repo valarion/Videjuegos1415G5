@@ -38,7 +38,7 @@ public class Bomberman extends Mob {
 		this.lives = 1;
 		this.velocity = 0;
 		this.max_velocity = 1;
-		this.bombs = 1;
+		this.bombs = 2;
 		this.potency = 1;
 
 		this.sl = new SpriteLoader();

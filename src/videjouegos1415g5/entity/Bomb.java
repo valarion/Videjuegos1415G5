@@ -101,8 +101,7 @@ public class Bomb extends Entity {
 	
 	public void touchedBy(Entity entity) {
 		if(entity instanceof Flare) {
-			while(!animation.finalFrame())
-				animation.tick();
+			removed = true;
 		}
 	}
 	

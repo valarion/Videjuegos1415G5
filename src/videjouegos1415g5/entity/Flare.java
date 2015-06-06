@@ -159,4 +159,8 @@ public class Flare extends Entity {
 	public boolean isFinal() {
 		return ANIMATION == FINALANIMATION;
 	}
+	
+	public boolean isMid() {
+		return ANIMATION == midflare;
+	}
 }
