@@ -204,4 +204,8 @@ public class Bomberman extends Mob {
 	public int getPotency() {
 		return potency;
 	}
+
+	public int getBombs() {
+		return bombs;
+	}
 }

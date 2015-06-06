@@ -195,7 +195,7 @@ public class Game extends Canvas implements Runnable {
 			if (!pause) {
 				playing = true;
 				player.tick();
-				if(input.fire.clicked) {
+				if(input.fire.clicked && bombs.size() < player.getBombs()) {
 					bombs.add(new Bomb(player));
 				}
 				exit.tick();
