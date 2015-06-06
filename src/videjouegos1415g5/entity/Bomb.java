@@ -33,8 +33,8 @@ public class Bomb extends Entity {
 	public Bomb(Bomberman player) {
 		//super(obs, map, player);
 		
-		this.position.x = -(w*scale)/2 + (int)Math.round(((float)(player.position.x+w*scale/2) / (w*scale))) * (w*scale);
-		this.position.y = -(h*scale)/2 + (int)Math.round(((float)(player.position.y+h*scale/2) / (h*scale))) * (h*scale);
+		this.position.x = 2-(w*scale)/2 + (int)Math.round(((float)(player.position.x+(float)w*scale/2) / (w*scale))) * (w*scale);
+		this.position.y = -(h*scale)/2 + (int)Math.round(((float)(player.position.y+(float)h*scale/2) / (h*scale))) * (h*scale);
 
 		this.position.width = 12*scale;
 		this.position.height = 14*scale;
