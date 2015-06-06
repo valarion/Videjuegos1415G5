@@ -102,7 +102,7 @@ public class Flare extends Entity {
 		}
 		
 		// Animacion inicial
-		animation = new Animation(anim, 10, Direction.DOWN);
+		animation = new Animation(anim, 3, Direction.DOWN);
 		animation.start();
 
 	}
@@ -152,7 +152,7 @@ public class Flare extends Entity {
 
 		
 		// Animacion inicial
-		animation = new Animation(anim, 10, Direction.DOWN);
+		animation = new Animation(anim, 3, Direction.DOWN);
 		animation.start();
 	}
 	
