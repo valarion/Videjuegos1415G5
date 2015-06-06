@@ -56,7 +56,7 @@ public class Game extends Canvas implements Runnable {
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Flare> flares = new ArrayList<Flare>();
 	private ArrayList<Bomb> bombs = new ArrayList<Bomb>();
-	private ArrayList<Entity> powerups = new ArrayList<Entity>();
+	private ArrayList<PowerUps> powerups = new ArrayList<PowerUps>();
 
 
 	public void start() {
@@ -413,8 +413,8 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		// el jugador con los power ups
-		for (Iterator<Entity> it = powerups.iterator(); it.hasNext();) {
-			Entity powerup = it.next();
+		for (Iterator<PowerUps> it = powerups.iterator(); it.hasNext();) {
+			PowerUps powerup = it.next();
 			if (powerup != null && powerup.intersects(player)) {
 				player.addPowerUp(powerup);
 				if (powerup.removed)
@@ -489,7 +489,10 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void addFlares(Bomb bomb) {
+		boolean obstaclefound;
 		flares.add(new Flare(bomb,0,0));
+		
+		obstaclefound = false;
 		flaresloop: for(int i=1; i <= bomb.getPotency(); i++) {
 			Flare flare = new Flare(bomb,i,0);
 			for (Obstacle obs : obstacles.getList()) {
@@ -497,28 +500,58 @@ public class Game extends Canvas implements Runnable {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
 						obs.die();
+						obstaclefound = true;
 						break;
 					}
 					else
 						break flaresloop;
 				}
 			}
+			
+			if(!obstaclefound) {
+				for (Iterator<PowerUps> it = powerups.iterator(); it.hasNext();) {
+					PowerUps pu = it.next();
+					if (pu != null && pu.intersects(flare)) {
+						flare.setAsFinal();
+						pu.remove();
+						it.remove();
+						break;
+					}
+				}
+			}
+			
 			flares.add(flare);
 			if(flare.isFinal())
 				break;
 		}
 		
+		obstaclefound = false;
 		flaresloop: for(int i=-1; i >= -bomb.getPotency(); i--) {
+			
 			Flare flare = new Flare(bomb,i,0);
+			
 			for (Obstacle obs : obstacles.getList()) {
 				if (obs != null && obs.intersects(flare)) {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
 						obs.die();
+						obstaclefound = true;
 						break;
 					}
 					else
 						break flaresloop;
+				}
+			}
+			
+			if(!obstaclefound) {
+				for (Iterator<PowerUps> it = powerups.iterator(); it.hasNext();) {
+					PowerUps pu = it.next();
+					if (pu != null && pu.intersects(flare)) {
+						flare.setAsFinal();
+						pu.remove();
+						it.remove();
+						break;
+					}
 				}
 			}
 
@@ -527,6 +560,7 @@ public class Game extends Canvas implements Runnable {
 				break;
 		}
 		
+		obstaclefound = false;
 		flaresloop: for(int i=1; i <= bomb.getPotency(); i++) {
 			Flare flare = new Flare(bomb,0,i);
 			for (Obstacle obs : obstacles.getList()) {
@@ -534,17 +568,32 @@ public class Game extends Canvas implements Runnable {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
 						obs.die();
+						obstaclefound = true;
 						break;
 					}
 					else
 						break flaresloop;
 				}
 			}
+			
+			if(!obstaclefound) {
+				for (Iterator<PowerUps> it = powerups.iterator(); it.hasNext();) {
+					PowerUps pu = it.next();
+					if (pu != null && pu.intersects(flare)) {
+						flare.setAsFinal();
+						pu.remove();
+						it.remove();
+						break;
+					}
+				}
+			}
+			
 			flares.add(flare);
 			if(flare.isFinal())
 				break;
 		}
 		
+		obstaclefound = false;
 		flaresloop: for(int i=-1; i >= -bomb.getPotency(); i--) {
 			Flare flare = new Flare(bomb,0,i);
 			for (Obstacle obs : obstacles.getList()) {
@@ -552,12 +601,26 @@ public class Game extends Canvas implements Runnable {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
 						obs.die();
+						obstaclefound = true;
 						break;
 					}
 					else
 						break flaresloop;
 				}
 			}
+			
+			if(!obstaclefound) {
+				for (Iterator<PowerUps> it = powerups.iterator(); it.hasNext();) {
+					PowerUps pu = it.next();
+					if (pu != null && pu.intersects(flare)) {
+						flare.setAsFinal();
+						pu.remove();
+						it.remove();
+						break;
+					}
+				}
+			}
+			
 			flares.add(flare);
 			if(flare.isFinal())
 				break;
