@@ -11,10 +11,13 @@ import videjouegos1415g5.map.Obstacle;
 
 public class Entity extends GameObject {
 	
+	private final int colisionlimit = 5;
+	
 	protected boolean located = false;
 	protected int scale;
 	protected SpriteLoader sl;
 	protected SpriteSheet ss;
+	
 	
 	public Entity() {
 		super(0, 0, 0, 0, null);
@@ -56,29 +59,29 @@ public class Entity extends GameObject {
 		return true;
 	}
 	
-	public void collide(Obstacle obs) {
+	public void collide(GameObject obs) {
 		//System.out.println("collision!" + animation.getAnimationDirection());
 		switch(animation.getAnimationDirection()) {
 		case UP:
 		case DOWN:
-			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= 3)
+			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= colisionlimit)
 				this.position.x = (obs.position.x+obs.position.width) ;
-			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= 3)
+			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= colisionlimit)
 				this.position.x = (obs.position.x-this.position.width) ;
-			else if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= 3)
+			else if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= colisionlimit)
 				this.position.y = (obs.position.y+obs.position.height) ;
-			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= 3)
+			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= colisionlimit)
 				this.position.y = (obs.position.y-this.position.height) ;
 			break;
 		case LEFT:
 		case RIGHT:
-			if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= 3)
+			if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= colisionlimit)
 				this.position.y = (obs.position.y+obs.position.height) ;
-			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= 3)
+			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= colisionlimit)
 				this.position.y = (obs.position.y-this.position.height) ;
-			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= 3)
+			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= colisionlimit)
 				this.position.x = (obs.position.x+obs.position.width) ;
-			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= 3)
+			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= colisionlimit)
 				this.position.x = (obs.position.x-this.position.width) ;
 			break;
 			

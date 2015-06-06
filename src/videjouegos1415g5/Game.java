@@ -12,6 +12,7 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 
 import videjouegos1415g5.entity.Balloon;
+import videjouegos1415g5.entity.Bomb;
 import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.entity.Enemy;
 import videjouegos1415g5.entity.Entity;
@@ -53,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 	private Entity exit;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Entity> flares = new ArrayList<Entity>();
-	private ArrayList<Entity> bombs = new ArrayList<Entity>();
+	private ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 	private ArrayList<Entity> powerups = new ArrayList<Entity>();
 
 
@@ -193,6 +194,9 @@ public class Game extends Canvas implements Runnable {
 			if (!pause) {
 				playing = true;
 				player.tick();
+				if(input.fire.clicked) {
+					bombs.add(new Bomb(player));
+				}
 				exit.tick();
 				// Comprobar si el jugador ha muerto
 				if (player.removed) {
@@ -208,6 +212,14 @@ public class Game extends Canvas implements Runnable {
 				}
 				for (Entity e : powerups) {
 					e.tick();
+				}
+				for(Iterator<Bomb> it = bombs.iterator(); it.hasNext();) {
+					Entity bomb = it.next();
+					if(bomb.removed) {
+						it.remove();
+					}
+					else
+						bomb.tick();
 				}
 				for (int i = 0; i < obstacles.getList().size(); i++) {
 					obstacles.getList().get(i).tick();
@@ -324,6 +336,22 @@ public class Game extends Canvas implements Runnable {
 				}
 			}
 		}
+		
+		// los enemigos con las bombas
+		for (Enemy enemy : enemies) {
+			for (Bomb bomb : bombs) {
+				if (bomb != null) {
+					if (bomb.intersects(enemy)) {
+						if (!bomb.isOut(enemy)) {
+							enemy.collide(bomb);
+						}
+					}
+					else {
+						bomb.setOut(enemy);
+					}
+				}
+			}
+		}
 
 		// el jugador con los obstaculos
 		for (Obstacle obs : obstacles.getList()) {
@@ -334,6 +362,20 @@ public class Game extends Canvas implements Runnable {
 				player.collide(obs);
 
 				//break;
+			}
+		}
+
+		// el jugador con las bombas
+		for (Bomb bomb : bombs) {
+			if (bomb != null) {
+				if (bomb.intersects(player)) {
+					if (!bomb.isOut(player)) {
+						player.collide(bomb);
+					}
+					else {
+						bomb.setOut(player);
+					}
+				}
 			}
 		}
 
