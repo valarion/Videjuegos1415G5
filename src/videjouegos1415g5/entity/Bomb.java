@@ -99,4 +99,11 @@ public class Bomb extends Entity {
 		return potency;
 	}
 	
+	public void touchedBy(Entity entity) {
+		if(entity instanceof Flare) {
+			while(!animation.finalFrame())
+				animation.tick();
+		}
+	}
+	
 }

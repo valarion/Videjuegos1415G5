@@ -269,10 +269,7 @@ public class Game extends Canvas implements Runnable {
 				e.render(g);
 			}
 			
-			// Pintar llamas
-			for (Entity e : flares) {
-				e.render(g);
-			}
+			
 			
 			// Pintar bombas
 			for (Entity e : bombs) {
@@ -289,7 +286,11 @@ public class Game extends Canvas implements Runnable {
 			
 			// Pintar obstaculos
 			obstacles.draw(g);
-			
+
+			// Pintar llamas
+			for (Entity e : flares) {
+				e.render(g);
+			}
 			// Pintar bomberman
 			player.render(g);
 			
@@ -365,9 +366,9 @@ public class Game extends Canvas implements Runnable {
 		// el jugador con los obstaculos
 		for (Obstacle obs : obstacles.getList()) {
 			if (obs != null && obs.intersects(player)) {
-				if (obs.isSolid()) {
+				/*if (obs.isSolid()) {
 					obs.die();
-				}
+				}*/
 				player.collide(obs);
 
 				//break;
@@ -482,6 +483,7 @@ public class Game extends Canvas implements Runnable {
 				if (obs != null && obs.intersects(flare)) {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
+						obs.die();
 						break;
 					}
 					else
@@ -499,12 +501,14 @@ public class Game extends Canvas implements Runnable {
 				if (obs != null && obs.intersects(flare)) {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
+						obs.die();
 						break;
 					}
 					else
 						break flaresloop;
 				}
 			}
+
 			flares.add(flare);
 			if(flare.isFinal())
 				break;
@@ -516,6 +520,7 @@ public class Game extends Canvas implements Runnable {
 				if (obs != null && obs.intersects(flare)) {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
+						obs.die();
 						break;
 					}
 					else
@@ -533,6 +538,7 @@ public class Game extends Canvas implements Runnable {
 				if (obs != null && obs.intersects(flare)) {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
+						obs.die();
 						break;
 					}
 					else

@@ -161,8 +161,10 @@ public class Bomberman extends Mob {
 		System.out.println("PowerUp");
 		switch (powerup.getType()) {
 		case 0:
+			potency += 1;
 			break;
 		case 1:
+			bombs += 1;
 			break;
 		case 2:
 			lives += 1;
