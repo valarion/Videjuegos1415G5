@@ -60,7 +60,7 @@ public class PowerUps extends Entity {
 	
 	private boolean findStartPos(ArrayList<Obstacle> obs) {
 		for (int i = 0; i < obs.size(); i++) {
-			if (obs.get(i).isSolid() && random.nextDouble() >= 0.9) {
+			if (obs.get(i).isSolid() && random.nextDouble() >= 0.95) {
 				this.position.x = obs.get(i).position.x;
 				this.position.y = obs.get(i).position.y;
 				located = true;

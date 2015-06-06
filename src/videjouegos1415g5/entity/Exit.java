@@ -18,6 +18,7 @@ public class Exit extends Entity {
 	private final static int w = 16;
 	private final static int h = 16;
 	
+	private boolean activated;
 	private int scale;	
 	private SpriteLoader sl;
 	private SpriteSheet ss;
@@ -27,6 +28,10 @@ public class Exit extends Entity {
 	public Exit(ArrayList<Obstacle> obs, ArrayList<Enemy> enemies) {
 		this.scale = Main.ESCALA;
 		this.enemies = enemies;
+		this.activated = false;
+		
+		this.position.width = w;
+		this.position.height = h;
 		
 		this.sl = new SpriteLoader();	    
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(EXIT), scale));
@@ -42,6 +47,7 @@ public class Exit extends Entity {
 	public void tick() {
 		this.animation.tick();
 		if (enemies.size() <= 0) {
+			activated = true;
 			if (!animation.finalFrame()) animation.start();
 		}
 	}
@@ -61,5 +67,9 @@ public class Exit extends Entity {
 		}
 		return true;
 		
+	}
+	
+	public boolean isActive() {
+		return activated;
 	}
 }

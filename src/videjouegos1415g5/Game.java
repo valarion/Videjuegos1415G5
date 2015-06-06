@@ -86,7 +86,7 @@ public class Game extends Canvas implements Runnable {
 		player = new Bomberman(input);
 		
 		int enemiesCount = 5;
-		int powerUpCount = 0;
+		int powerUpCount = 10;
 		switch (level) {
 		case 1:
 			map = Map.map8_5;
@@ -101,7 +101,9 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < enemiesCount; i++) {
 			enemies.add(new Balloon(obstacles, map, player));
 		}
-		powerups.add(new PowerUps(1, obstacles.getList()));
+		for (int i = 0; i < powerUpCount; i++) {
+			powerups.add(new PowerUps(3, obstacles.getList()));
+		}
 		exit = new Exit(obstacles.getList(), enemies);
 	}
  	
@@ -179,6 +181,11 @@ public class Game extends Canvas implements Runnable {
 			menu.tick();
 			playing = false;
 		} else {
+			if (input.exit.clicked) {
+				playing = false;
+				initLevel();
+				setMenu(new TitleMenu());
+			}
 			if (input.pause.clicked) {
 				pause = !pause;
 			}
@@ -232,10 +239,6 @@ public class Game extends Canvas implements Runnable {
 			// Pintar mapa
 			map.renderMap(g);
 			
-			// Pintar PowerUps
-			for (Entity e : powerups) {
-				e.render(g);
-			}
 			
 			// Pintar obstaculos
 			obstacles.draw(g);
@@ -257,6 +260,11 @@ public class Game extends Canvas implements Runnable {
 
 			// Pintar salida
 			exit.render(g);
+			
+			// Pintar PowerUps
+			for (Entity e : powerups) {
+				e.render(g);
+			}
 			
 			// Pintar bomberman
 			player.render(g);
@@ -344,6 +352,11 @@ public class Game extends Canvas implements Runnable {
 					powerups.remove(powerup);
 				break;
 			}
+		}
+		
+		// el jugador con la salida
+		if (player.intersects(exit) && ((Exit) exit).isActive()) {
+			System.out.println("Level Complete");
 		}
 	}
 

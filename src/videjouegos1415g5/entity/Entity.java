@@ -77,4 +77,8 @@ public class Entity extends GameObject {
 			
 		}
 	}
+
+	public int getType() {
+		return 0;
+	}
 }

@@ -27,6 +27,8 @@ public class Bomberman extends Mob {
 
 	private int score;
 	private int lives;
+	private int velocity;
+	private int max_velocity;
 
 	public Bomberman(InputHandler input) {
 		super();
@@ -39,6 +41,8 @@ public class Bomberman extends Mob {
 
 		this.score = 0;
 		this.lives = 1;
+		this.velocity = 0;
+		this.max_velocity = 1;
 
 		this.sl = new SpriteLoader();
 		// Escalamos la secuencia de sprites
@@ -91,25 +95,25 @@ public class Bomberman extends Mob {
 		} else {
 
 			if (input.left.down) {
-				position.x -= scale;
+				position.x -= (scale + velocity);
 				animation = walkL;
 				animation.start();
 			}
 
 			else if (input.right.down) {
-				position.x += scale;
+				position.x += (scale + velocity);
 				animation = walkR;
 				animation.start();
 			}
 
 			else if (input.up.down) {
-				position.y -= scale;
+				position.y -= (scale + velocity);
 				animation = walkU;
 				animation.start();
 			}
 
 			else if (input.down.down) {
-				position.y += scale;
+				position.y += (scale + velocity);
 				animation = walkD;
 				animation.start();
 			}
@@ -119,7 +123,6 @@ public class Bomberman extends Mob {
 				animation.reset();
 			}
 		}
-
 		animation.tick();
 	}
 
@@ -159,6 +162,29 @@ public class Bomberman extends Mob {
 	public void addPowerUp(Entity powerup) {
 		// Añadir mejoras del power up
 		System.out.println("PowerUp");
+		switch (powerup.getType()) {
+		case 0:
+			break;
+		case 1:
+			break;
+		case 2:
+			lives += 1;
+			break;
+		case 3:
+			if (velocity < max_velocity) velocity += 1;
+			System.out.println(velocity);
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 7:
+			break;
+		case 8:
+			break;
+		}
 		powerup.remove();
 	}
 
