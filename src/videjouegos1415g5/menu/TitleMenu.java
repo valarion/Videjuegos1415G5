@@ -51,28 +51,41 @@ public class TitleMenu extends Menu {
 	}
 
 	public void tick() {
-		if (input.up.clicked) selected--;
-		if (input.down.clicked) selected++;
-
-		int len = options.length;
-		if (selected < 0) selected += len;
-		if (selected >= len) selected -= len;
-
-		if (input.fire.clicked) {
-			if (selected == 0) {
-				//game.resetGame();
-				//game.setMenu(new TransitionMenu(null));
-				MP3Player.title.stop();;
-				game.setMenu(new InitScene());
-			}
-			if (selected == 1) game.setMenu(new BattleMenu(this));
-			if (selected == 2) game.setMenu(new SetupMenu(this));
-			if (selected == 3) game.setMenu(new PasswordMenu(this));
-		}
-		
 		// Transicion vertical
 		if (game.getHeight() - ybg >= 87 * scale) {
 			ybg = ybg + 1 * scale;
+			if (input.fire.clicked) {
+				ybg = game.getHeight()-87*scale;
+			}
+		}
+		else {
+			if (input.up.clicked)
+				selected--;
+			if (input.down.clicked)
+				selected++;
+
+			int len = options.length;
+			if (selected < 0)
+				selected += len;
+			if (selected >= len)
+				selected -= len;
+
+			if (input.fire.clicked) {
+				if (selected == 0) {
+					// game.resetGame();
+					// game.setMenu(new TransitionMenu(null));
+					MP3Player.title.stop();
+					;
+					game.setMenu(new InitScene());
+				}
+				if (selected == 1)
+					game.setMenu(new BattleMenu(this));
+				if (selected == 2)
+					game.setMenu(new SetupMenu(this));
+				if (selected == 3)
+					game.setMenu(new PasswordMenu(this));
+			}
+
 		}
 	}
 
