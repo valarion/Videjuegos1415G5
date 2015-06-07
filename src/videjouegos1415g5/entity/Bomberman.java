@@ -251,4 +251,12 @@ public class Bomberman extends Mob {
 	public int getBombs() {
 		return bombs;
 	}
+	
+	public boolean endLvl() {
+		return animation == teleport && animation.finalFrame();
+	}
+	
+	public void resetAnim() {
+		this.animation = down;
+	}
 }

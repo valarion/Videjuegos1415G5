@@ -205,6 +205,12 @@ public class Game extends Canvas implements Runnable {
 			if (!pause) {
 				playing = true;
 				player.tick();
+				if(player.endLvl()) {
+					bombs.clear();
+					player.resetAnim();
+					map = Map.map1_4; // cambiar de mapa
+					return;
+				}
 				if(input.fire.clicked && bombs.size() < player.getBombs()) {
 					bombs.add(new Bomb(player));
 				}
