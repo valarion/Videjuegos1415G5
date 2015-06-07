@@ -31,6 +31,8 @@ public class Flare extends Entity {
 	private String ANIMATION;
 	private String FINALANIMATION;
 	
+	private boolean draw;
+	
 	//private Animation animation;
 
 	public Flare(Bomb bomb, int xdif, int ydif) {
@@ -43,6 +45,8 @@ public class Flare extends Entity {
 		this.position.height = 14*scale;
 		
 		this.sl = new SpriteLoader();	
+		
+		this.draw = true;
 		
 		
 		if(xdif == 0 && ydif == 0) {
@@ -111,7 +115,7 @@ public class Flare extends Entity {
 	}
 
 	public void render(Graphics2D g) {
-		if(!removed) {
+		if(!removed && draw) {
 			BufferedImage f = animation.getSprite();
 			g.drawImage(animation.getSprite(), 
 					position.x+position.width/2 - (f.getWidth()-2*scale)/2, 
@@ -136,6 +140,7 @@ public class Flare extends Entity {
 	}
 	
 	public void setAsFinal() {
+		draw = false;
 		ANIMATION = FINALANIMATION;
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(ANIMATION), scale));
 		BufferedImage[] anim;

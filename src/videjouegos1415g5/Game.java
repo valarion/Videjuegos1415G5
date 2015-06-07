@@ -509,7 +509,7 @@ public class Game extends Canvas implements Runnable {
 						flare.setAsFinal();
 						obs.die();
 						obstaclefound = true;
-						break flaresloop;
+						break;
 					}
 					else
 						break flaresloop;
@@ -527,7 +527,6 @@ public class Game extends Canvas implements Runnable {
 					}
 				}
 			}
-			
 			flares.add(flare);
 			if(flare.isFinal())
 				break;
@@ -544,7 +543,7 @@ public class Game extends Canvas implements Runnable {
 						flare.setAsFinal();
 						obs.die();
 						obstaclefound = true;
-						break flaresloop;
+						break;
 					}
 					else
 						break flaresloop;
@@ -562,7 +561,6 @@ public class Game extends Canvas implements Runnable {
 					}
 				}
 			}
-
 			flares.add(flare);
 			if(flare.isFinal())
 				break;
@@ -577,7 +575,7 @@ public class Game extends Canvas implements Runnable {
 						flare.setAsFinal();
 						obs.die();
 						obstaclefound = true;
-						break flaresloop;
+						break;
 					}
 					else
 						break flaresloop;
@@ -594,8 +592,8 @@ public class Game extends Canvas implements Runnable {
 						break;
 					}
 				}
+				
 			}
-			
 			flares.add(flare);
 			if(flare.isFinal())
 				break;
@@ -610,7 +608,7 @@ public class Game extends Canvas implements Runnable {
 						flare.setAsFinal();
 						obs.die();
 						obstaclefound = true;
-						break flaresloop;
+						break;
 					}
 					else
 						break flaresloop;
@@ -627,8 +625,8 @@ public class Game extends Canvas implements Runnable {
 						break;
 					}
 				}
+				
 			}
-			
 			flares.add(flare);
 			if(flare.isFinal())
 				break;
