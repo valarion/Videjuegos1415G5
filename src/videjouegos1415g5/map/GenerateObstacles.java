@@ -5,8 +5,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
-import videjouegos1415g5.GameObject;
-
 
 public class GenerateObstacles {
 
@@ -14,7 +12,6 @@ public class GenerateObstacles {
 	private final double LIMIT = 0.8;
 
 	private ArrayList<Obstacle> obstacles;
-	private int num_obstacles;
 	private int currentX;
 	private int currentY;
 	private int offsetX = 2;
@@ -25,7 +22,6 @@ public class GenerateObstacles {
 	public GenerateObstacles(Map map) {
 		int finX = map.getmapWidth();
 		int finY = map.getmapHeight();
-		this.num_obstacles = 0;
 		this.tileSize *= map.getScale();
 		
 		if (finY > finX) finY--;
@@ -63,7 +59,6 @@ public class GenerateObstacles {
 							tileSize, null, map.getSpriteSheet(), map.getScale(), true));
 
 					canPlace = false;
-					num_obstacles++;
 				}
 			}
 			// Obstaculos fijos

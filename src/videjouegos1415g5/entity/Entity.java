@@ -1,13 +1,11 @@
 package videjouegos1415g5.entity;
 
 import java.awt.Graphics2D;
-import java.util.Random;
 
 import videjouegos1415g5.GameObject;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
-import videjouegos1415g5.map.Obstacle;
 
 public class Entity extends GameObject {
 	
@@ -24,11 +22,6 @@ public class Entity extends GameObject {
 		this.scale = Main.ESCALA;
 	}
 
-	protected final Random random = new Random();
-	//public int x, y;
-	public int xr = 6;
-	public int yr = 6;
-	
 	public void tick() {
 		animation.tick();
 	}

@@ -133,30 +133,23 @@ public class Bomberman extends Mob {
 
 	}
 
-//	protected void die() {
-//		super.die();
-//		animation = death;
-//		animation.start();
-//		// Sound.playerDeath.play();
-//	}
 
 	public void touchedBy(Entity go) {
 		// if (!(go instanceof Bomberman)) {
 		// go.touchedBy(this);
 		// }
-		if (go instanceof Balloon) {
+		if (go instanceof Enemy) {
 			//go.hurt(this, 10); // PARA PROBAR
 		}
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(position.x + 5 * scale, position.y + 10 * scale,
-				14 * scale, 11 * scale);
+		return new Rectangle(position.x + 5*scale, position.y + 10*scale,
+				14*scale, 11*scale);
 	}
 
 	public void addPowerUp(Entity powerup) {
 		// Añadir mejoras del power up
-		System.out.println("PowerUp");
 		switch (powerup.getType()) {
 		case 0:
 			potency += 1;
@@ -169,7 +162,6 @@ public class Bomberman extends Mob {
 			break;
 		case 3:
 			if (velocity < max_velocity) velocity += 1;
-			System.out.println(velocity);
 			break;
 		case 4:
 			break;

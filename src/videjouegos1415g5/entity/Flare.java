@@ -9,12 +9,8 @@ import java.util.Set;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
-import videjouegos1415g5.gfx.Score;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
-import videjouegos1415g5.map.GenerateObstacles;
-import videjouegos1415g5.map.Map;
-import videjouegos1415g5.map.Obstacle;
 
 
 

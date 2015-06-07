@@ -25,7 +25,6 @@ import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.map.Obstacle;
 import videjouegos1415g5.menu.GameOverMenu;
-import videjouegos1415g5.menu.LevelMenu;
 import videjouegos1415g5.menu.MapMenu;
 import videjouegos1415g5.menu.Menu;
 import videjouegos1415g5.menu.TitleMenu;
@@ -212,6 +211,7 @@ public class Game extends Canvas implements Runnable {
 						initLevel();
 					}
 				}
+				// Comprobar si los enemigos han muerto
 				for (Entity enemy : enemies) {
 					if (enemy.removed) {
 						player.setScore(player.getScore() + enemy.getScore());

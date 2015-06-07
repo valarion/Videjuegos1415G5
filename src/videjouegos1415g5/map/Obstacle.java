@@ -1,6 +1,5 @@
 package videjouegos1415g5.map;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
