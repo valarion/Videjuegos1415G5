@@ -365,6 +365,26 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void checkCollisions() {
+		// el jugador con los obstaculos
+		for (Obstacle obs : obstacles.getList()) {
+			if (obs != null && obs.intersects(player)) {
+				/*
+				 * if (obs.isSolid()) { obs.die(); }
+				 */
+				player.collide(obs);
+
+				// break;
+			}
+		}
+		// los enemigos con los obstaculos
+		for (Enemy enemy : enemies) {
+			for (Obstacle obs : obstacles.getList()) {
+				if (obs != null && obs.intersects(enemy)) {
+					enemy.collide(obs);
+					// break;
+				}
+			}
+		}
 		// los enemigos con las llamas
 		for (Enemy enemy : enemies) {
 			for (Entity flare : flares) {
@@ -395,15 +415,7 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 
-		// los enemigos con los obstaculos
-		for (Enemy enemy : enemies) {
-			for (Obstacle obs : obstacles.getList()) {
-				if (obs != null && obs.intersects(enemy)) {
-					enemy.collide(obs);
-					//break;
-				}
-			}
-		}
+		
 		
 		// los enemigos con las bombas
 		for (Enemy enemy : enemies) {
@@ -418,18 +430,6 @@ public class Game extends Canvas implements Runnable {
 						bomb.setOut(enemy);
 					}
 				}
-			}
-		}
-
-		// el jugador con los obstaculos
-		for (Obstacle obs : obstacles.getList()) {
-			if (obs != null && obs.intersects(player)) {
-				/*if (obs.isSolid()) {
-					obs.die();
-				}*/
-				player.collide(obs);
-
-				//break;
 			}
 		}
 
