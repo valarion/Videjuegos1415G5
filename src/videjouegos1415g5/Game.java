@@ -12,12 +12,16 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 
 import videjouegos1415g5.entity.Balloon;
+import videjouegos1415g5.entity.BalloonBlue;
+import videjouegos1415g5.entity.BalloonPurple;
+import videjouegos1415g5.entity.BalloonRed;
 import videjouegos1415g5.entity.Bomb;
 import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.entity.Enemy;
 import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.entity.Exit;
 import videjouegos1415g5.entity.Flare;
+import videjouegos1415g5.entity.GhostYellow;
 import videjouegos1415g5.entity.PowerUps;
 import videjouegos1415g5.gfx.Font;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -104,6 +108,11 @@ public class Game extends Canvas implements Runnable {
 		obstacles = new GenerateObstacles(map);
 		for (int i = 0; i < enemiesCount; i++) {
 			enemies.add(new Balloon(obstacles, map, player));
+			//enemies.add(new BalloonPurple(obstacles, map, player));
+			//enemies.add(new BalloonBlue(obstacles, map, player));
+			enemies.add(new GhostYellow(obstacles, map, player));
+
+
 		}
 		for (int i = 0; i < powerUpCount; i++) {
 			powerups.add(new PowerUps((int)(Math.random()*15), obstacles.getList()));

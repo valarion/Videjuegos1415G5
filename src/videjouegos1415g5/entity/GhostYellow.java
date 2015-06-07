@@ -13,39 +13,38 @@ import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 
-public class Balloon extends Enemy {
+public class GhostYellow extends Enemy {
 	
-	private final String ANIMATION = "/enemies/balloon.png"; 
+	private final String ANIMATION = "/enemies/ghost_yellow.png"; 
 	private final static int w = 16;
 	private final static int h = 18;
 
-	public Balloon(GenerateObstacles obs, Map map, Bomberman player) {
+	public GhostYellow(GenerateObstacles obs, Map map, Bomberman player) {
 		super(obs, map, player);
 
 		this.position.width = 12*scale;
 		this.position.height = 14*scale;
 		this.health = 10;
-		this.score = 100;
+		this.score = 2000;
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(ANIMATION), scale));
 		
-		BufferedImage[] mov = {ss.obtenerSprite(7*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(8*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(9*w*scale, 0, w*scale, h*scale)};
-		BufferedImage[] die = {ss.obtenerSprite(10*w*scale, 0, w*scale, h*scale),
-				ss.obtenerSprite(11*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(0*w*scale, 0, w*scale, h*scale),
+		BufferedImage[] mov = {ss.obtenerSprite(0*w*scale, 0, w*scale, h*scale), 
 				ss.obtenerSprite(1*w*scale, 0, w*scale, h*scale), 
 				ss.obtenerSprite(2*w*scale, 0, w*scale, h*scale),
-				ss.obtenerSprite(3*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(4*w*scale, 0, w*scale, h*scale),
-				ss.obtenerSprite(5*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale),
+				ss.obtenerSprite(1*w*scale, 0, w*scale, h*scale)};
+		BufferedImage[] die = {ss.obtenerSprite(3*w*scale, 0, w*scale, h*scale),
+				ss.obtenerSprite(4*w*scale, 0, w*scale, h*scale), 
+				ss.obtenerSprite(5*w*scale, 0, w*scale, h*scale),
+				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale), 
+				ss.obtenerSprite(7*w*scale, 0, w*scale, h*scale),
+				ss.obtenerSprite(8*w*scale, 0, w*scale, h*scale), 
+				ss.obtenerSprite(9*w*scale, 0, w*scale, h*scale),
 				new Score(score, w, h).getImage()};
 		
-		this.down = new Animation(mov, 10, Direction.DOWN);
+		this.down = new Animation(mov, 8, Direction.DOWN);
 		this.death = new Animation(die, 14, Direction.DOWN);
 		
 		// Animacion inicial
