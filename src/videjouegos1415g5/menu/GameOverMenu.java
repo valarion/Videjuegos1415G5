@@ -27,10 +27,23 @@ public class GameOverMenu extends Menu {
 	private Image cu;
 	private Font font, passfont;
 	private String password;
+	private int lives;
 	
 	public GameOverMenu(int lives) {
-		this.scale = Main.ESCALA;
+		this.lives = lives;
 		this.options[0] += " " + lives;
+		this.font = new Font(null, true);
+
+		if (lives == -1) {
+			options[0] = "Continue last";
+			this.font = new Font(Color.RED, true);
+		}
+		
+		if (lives == -2) {
+			options = new String[]{"End"};
+		}
+		
+		this.scale = Main.ESCALA;
 		this.bgColor = new Color(0, 97, 146);
 		this.password = "Password";
 		
@@ -46,7 +59,6 @@ public class GameOverMenu extends Menu {
 		}
 		cu = bi.getScaledInstance(bi.getWidth() * scale, bi.getHeight() * scale, Image.SCALE_SMOOTH);
 		
-		this.font = new Font(null, true);
 		this.passfont = new Font(null, false);
 	}
 	
@@ -59,7 +71,8 @@ public class GameOverMenu extends Menu {
 		if (selected >= len) selected -= len;
 
 		if (input.fire.clicked) {
-			if (selected == 0) game.setMenu(null);
+			if (selected == 0  && lives > -2) game.setMenu(null);
+			else game.setMenu(new TitleMenu());
 			if (selected == 1) game.setMenu(new TitleMenu());
 				
 		}

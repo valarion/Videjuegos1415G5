@@ -262,7 +262,15 @@ public class Bomberman extends Mob {
 		return animation == teleport && animation.finalFrame();
 	}
 	
+	public void reset() {
+		this.position.x = 25 * scale;
+		this.position.y = 45 * scale;
+		this.removed = false;
+		this.health = 10;
+   		this.animation = down;
+	}
+	
 	public void resetAnim() {
-		this.animation = down;
+   		this.animation = down;
 	}
 }

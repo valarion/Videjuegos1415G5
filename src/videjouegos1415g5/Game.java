@@ -31,9 +31,11 @@ import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.map.Obstacle;
 import videjouegos1415g5.menu.GameOverMenu;
+import videjouegos1415g5.menu.LevelMenu;
 import videjouegos1415g5.menu.MapMenu;
 import videjouegos1415g5.menu.Menu;
 import videjouegos1415g5.menu.TitleMenu;
+import videjouegos1415g5.sound.MP3Player;
 
 public class Game extends Canvas implements Runnable {
 
@@ -47,19 +49,20 @@ public class Game extends Canvas implements Runnable {
 	
 	private int level = 1;
 	private int levelmap = 1;
+	private int continues = 2;
 
 	private boolean running = true;
 	private boolean playing = false;
 	private boolean pause = false;
 	// private KeyInput input = new KeyInput(this);
 	private InputHandler input = new InputHandler(this);
-	private Font font;
-	BufferedImage gui = null;
+	public Font font;
+	public BufferedImage gui = null;
 
 	private Map map;
 	private GenerateObstacles obstacles;
 	private Menu menu;
-	private Bomberman player;
+	public Bomberman player;
 	private Entity exit;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Flare> flares = new ArrayList<Flare>();
@@ -82,34 +85,17 @@ public class Game extends Canvas implements Runnable {
 		setFocusable(true);
 
 		imagen = new BufferedImage(Main.ANCHURA, Main.ALTURA,BufferedImage.TYPE_INT_RGB);
-		font = new Font(Color.WHITE, false);
-		try {
-			gui = ScaleImg.scale(ImageIO.read(this.getClass().getResource("/hud.png")),Main.ESCALA);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		setMenu(new TitleMenu());
 	}
 	
-	private void initLevel() {
+	public void initLevel() {
 		clear();
-		player = new Bomberman(input);
 		
 		int enemiesCount = 5;
 		int powerUpCount = 10;
 		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/"+level+"/"+level+"_"+levelmap+".txt"));
 		map = new Map(in.nextLine(), Map.TILESIZE);
-		/*switch (level) {
-		case 1:
-			map = Map.map8_5;
-			level = 2;
-			break;
-		case 2:
-			map = Map.map1_5;
-			level = 1;
-			break;
-		}*/
 		obstacles = new GenerateObstacles(map);
 		
 		while(in.hasNext()) {
@@ -118,12 +104,8 @@ public class Game extends Canvas implements Runnable {
 			for(int i = 0; i< count; i++)
 				enemies.add(Enemy.createEnemy(type, obstacles, map, player));
 		}
-		/*for (int i = 0; i < enemiesCount; i++) {
-			enemies.add(new Balloon(obstacles, map, player));
-			//enemies.add(new BalloonPurple(obstacles, map, player));
-			//enemies.add(new BalloonBlue(obstacles, map, player));
-			enemies.add(new GhostYellow(obstacles, map, player));
-		}*/
+		//in.close();
+
 		for (int i = 0; i < powerUpCount; i++) {
 			powerups.add(new PowerUps((int)(Math.random()*15), obstacles.getList()));
 		}
@@ -135,7 +117,8 @@ public class Game extends Canvas implements Runnable {
 		if (enemies != null) enemies.clear();
 		if (powerups != null) powerups.clear();
 		if (bombs != null) bombs.clear();
-		player = null;
+		if (flares != null) flares.clear();
+		if (player != null) player.reset();
 		time = 240;
 		offsetX = 0;
 		offsetY = 0;
@@ -153,7 +136,7 @@ public class Game extends Canvas implements Runnable {
 		boolean shouldRender;
 
 		init();
-		initLevel();
+		//initLevel();
 
 		while (running) {
 			now = System.nanoTime();
@@ -216,16 +199,16 @@ public class Game extends Canvas implements Runnable {
 			if (!pause) {
 				playing = true;
 				player.tick();
-				if(player.endLvl()) {
+				if (player.endLvl()) {
 					levelmap++;
-					if(levelmap > 8) {
+					if (levelmap > 8) {
 						levelmap = 0;
 						level++;
-						if(level > 8) {
+						if (level > 8) {
 							setMenu(new FinalScene());
 						}
 						else
-							setMenu(new MapMenu(level,levelmap));
+							setMenu(new LevelMenu(level));
 					}
 					else
 						setMenu(new MapMenu(level,levelmap));
@@ -238,13 +221,16 @@ public class Game extends Canvas implements Runnable {
 				exit.tick();
 				// Comprobar si el jugador ha muerto
 				if (player.removed) {
+					player.setLives(player.getLives() - 1);
 					if (player.getLives() < 0) {
-						setMenu(new GameOverMenu(player.getLives()));
 						initLevel();
+						player.setLives(2);
+						setMenu(new GameOverMenu(continues));
+						continues--;
 					}
 					else {
-						setMenu(new MapMenu(level, level));
 						initLevel();
+						setMenu(new MapMenu(level, levelmap));
 					}
 				}
 				// Comprobar si los enemigos han muerto

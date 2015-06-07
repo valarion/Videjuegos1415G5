@@ -89,7 +89,7 @@ public class LevelMenu extends Menu {
 			roundFlicker.stop();
 			levelFlicker.stop();
 			MP3Player.level_start.stop();
-			game.setMenu(new MapMenu(1, 2));
+			game.setMenu(new MapMenu(1, 1));
 			//game.setMenu(null);
 		}
 		head.tick();

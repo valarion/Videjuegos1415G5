@@ -10,7 +10,9 @@ import javax.imageio.ImageIO;
 
 import videjouegos1415g5.Main;
 import videjouegos1415g5.cutscenes.InitScene;
+import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.gfx.Font;
+import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.sound.MP3Player;
 
 public class TitleMenu extends Menu {
@@ -75,7 +77,14 @@ public class TitleMenu extends Menu {
 					// game.resetGame();
 					// game.setMenu(new TransitionMenu(null));
 					MP3Player.title.stop();
-					;
+					game.player = new Bomberman(input);
+					game.initLevel();
+					game.font = new Font(Color.WHITE, false);
+					try {
+						game.gui = ScaleImg.scale(ImageIO.read(this.getClass().getResource("/hud.png")),Main.ESCALA);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 					game.setMenu(new InitScene());
 				}
 				if (selected == 1)

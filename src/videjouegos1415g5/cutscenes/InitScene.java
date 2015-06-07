@@ -213,7 +213,7 @@ public class InitScene extends Menu {
 							oldAn = oldCalm;
 							if (count > 60*22) {
 								MP3Player.intro.stop();
-								game.setMenu(new LevelMenu(5));
+								game.setMenu(new LevelMenu(1));
 							}
 						}
 					}
@@ -224,7 +224,7 @@ public class InitScene extends Menu {
 		}
 		if (input.fire.clicked) {
 			MP3Player.intro.stop();
-			game.setMenu(new LevelMenu(5));
+			game.setMenu(new LevelMenu(1));
 		}
 		count++;
 	}
