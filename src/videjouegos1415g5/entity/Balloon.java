@@ -22,8 +22,8 @@ public class Balloon extends Enemy {
 	public Balloon(GenerateObstacles obs, Map map, Bomberman player) {
 		super(obs, map, player);
 
-		this.position.width = 12*scale;
-		this.position.height = 14*scale;
+		this.position.width = 16*scale;
+		this.position.height = 16*scale;
 		this.health = 10;
 		this.score = 100;
 		

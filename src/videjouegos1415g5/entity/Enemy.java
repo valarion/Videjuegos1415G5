@@ -62,7 +62,7 @@ public class Enemy extends Mob {
 		}
 		
 		if(isinsquare) {
-			switch(r.nextInt(15)) {
+			switch(r.nextInt(30)) {
 			case 0:
 				xdir = speed;
 				ydir = 0;
