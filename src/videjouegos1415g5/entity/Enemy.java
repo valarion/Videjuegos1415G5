@@ -1,14 +1,13 @@
 package videjouegos1415g5.entity;
 
-import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 
 public class Enemy extends Mob {
 
 	private GenerateObstacles obs;
+	private Bomberman player;
 	protected int score;
-	Bomberman player;
 
 	public Enemy(GenerateObstacles obs, Map map, Bomberman player) {
 		this.obs = obs;
@@ -17,29 +16,21 @@ public class Enemy extends Mob {
 	}
 	
 	public void tick() {
-		// IA muy rudimentaria
-		if (player.position.x > this.position.x) {
-			//animation.setAnimationDirection(Direction.RIGHT	);
-			this.position.x++;
-//			animation = right;
-//			animation.start();
-		} else {
-			//animation.setAnimationDirection(Direction.LEFT);
-			this.position.x--;
-//			animation = left;
-//			animation.start();
-		}
-		
-		if (player.position.y > this.position.y) {
-			//animation.setAnimationDirection(Direction.DOWN);
-			this.position.y++;
-//			animation = down;
-//			animation.start();
-		} else {
-			//animation.setAnimationDirection(Direction.UP);
-			this.position.y--;
-//			animation = up;
-//			animation.start();
+		if (!removed) animation.tick();
+		if (health <= 0) die(); 
+		else {
+			// IA muy rudimentaria
+			if (player.position.x > this.position.x) {
+				this.position.x++;
+			} else {
+				this.position.x--;
+			}
+			
+			if (player.position.y > this.position.y) {
+				this.position.y++;
+			} else {
+				this.position.y--;
+			}
 		}
 	}
 	
@@ -63,6 +54,13 @@ public class Enemy extends Mob {
 			}
 		}
 		return true;
+	}
+	
+	public void die() {
+		animation = death;
+		animation.start();
+		if (animation.finalFrame())
+			super.die();
 	}
 	
 	public int getScore() {

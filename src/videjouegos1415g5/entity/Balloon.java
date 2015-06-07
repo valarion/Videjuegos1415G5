@@ -13,8 +13,6 @@ import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 
-
-
 public class Balloon extends Enemy {
 	
 	private final String ANIMATION = "/balloon.png"; 
@@ -48,10 +46,6 @@ public class Balloon extends Enemy {
 				new Score(score, w, h).getImage()};
 		
 		this.down = new Animation(mov, 10, Direction.DOWN);
-//		this.up = new Animation(mov, 10, Direction.UP);
-//		this.left = new Animation(mov, 10, Direction.LEFT);
-//		this.right = new Animation(mov, 10, Direction.RIGHT);
-
 		this.death = new Animation(die, 14, Direction.DOWN);
 		
 		// Animacion inicial
@@ -62,29 +56,16 @@ public class Balloon extends Enemy {
 
 	public void tick() {
 		super.tick();
-		if (health <= 0) die(); 
-		if (!removed) animation.tick();
 	}
 
 	public void render(Graphics2D g) {
-		//g.setColor(Color.CYAN);
-		//g.drawImage(animation.getSprite(), position.x, position.y, null);
 		BufferedImage f = animation.getSprite();
 		g.drawImage(animation.getSprite(), 
 				position.x+position.width/2 - (f.getWidth()-2*scale)/2, 
 				position.y+position.height/2 - (f.getHeight()-2*scale)/2, null);
+		//g.setColor(Color.CYAN);
 		//g.fillRect(position.x, position.y, 12*scale, 14*scale);
-
-
 	}
-
-	protected void die() {
-		animation = death;
-		animation.start();
-		if (animation.finalFrame())
-			super.die();
-	}
-
 	
 	public Rectangle getBounds() {
 		return new Rectangle(position.x, position.y, w, h);

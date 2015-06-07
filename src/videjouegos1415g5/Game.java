@@ -497,7 +497,7 @@ public class Game extends Canvas implements Runnable {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
 						obs.die();
-						break;
+						break flaresloop;
 					}
 					else
 						break flaresloop;
@@ -515,7 +515,7 @@ public class Game extends Canvas implements Runnable {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
 						obs.die();
-						break;
+						break flaresloop;
 					}
 					else
 						break flaresloop;
@@ -534,7 +534,7 @@ public class Game extends Canvas implements Runnable {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
 						obs.die();
-						break;
+						break flaresloop;
 					}
 					else
 						break flaresloop;
@@ -552,7 +552,7 @@ public class Game extends Canvas implements Runnable {
 					if (obs.isSolid()) {
 						flare.setAsFinal();
 						obs.die();
-						break;
+						break flaresloop;
 					}
 					else
 						break flaresloop;
