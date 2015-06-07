@@ -1,24 +1,87 @@
 package videjouegos1415g5.entity;
 
+import java.awt.Rectangle;
+import java.util.Random;
+
+import videjouegos1415g5.Main;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
+import videjouegos1415g5.map.Obstacle;
 
 public class Enemy extends Mob {
+	
+	int xdir, ydir, speed = 1;
 
 	private GenerateObstacles obs;
 	private Bomberman player;
 	protected int score;
+	
+	private static Random r = new Random();
+	
+	protected Rectangle lastpos;
 
 	public Enemy(GenerateObstacles obs, Map map, Bomberman player) {
 		this.obs = obs;
 		this.player = player;
 		while (!located) findStartPos(map);
+		
+		switch(r.nextInt(3)) {
+		case 0:
+			xdir = speed;
+			ydir = 0;
+			break;
+		case 1:
+			xdir = -speed;
+			ydir = 0;
+			break;
+		case 2:
+			xdir = 0;
+			ydir = speed;
+			break;
+		case 3:
+			xdir = 0;
+			ydir = -speed;
+			break;
+		}
 	}
 	
 	public void tick() {
 		if (!removed) animation.tick();
 		if (health <= 0) die(); 
-		else {
+		
+		this.position.x += xdir;
+		this.position.y += ydir;
+		
+		boolean isinsquare = position.equals(lastpos);
+		lastpos = new Rectangle(position);
+		if(!isinsquare) for(Obstacle rect : obs.getPath()) {
+			if(rect.getBounds().contains(position)) {
+				isinsquare = true;
+				break;
+			}
+		}
+		
+		if(isinsquare) {
+			switch(r.nextInt(15)) {
+			case 0:
+				xdir = speed;
+				ydir = 0;
+				break;
+			case 1:
+				xdir = -speed;
+				ydir = 0;
+				break;
+			case 2:
+				xdir = 0;
+				ydir = speed;
+				break;
+			case 3:
+				xdir = 0;
+				ydir = -speed;
+				break;
+			}
+		}
+		/*else {
 			// IA muy rudimentaria
 			if (player.position.x > this.position.x) {
 				this.position.x++;
@@ -31,7 +94,7 @@ public class Enemy extends Mob {
 			} else {
 				this.position.y--;
 			}
-		}
+		}*/
 	}
 	
 	public void touchedBy(Entity entity) {

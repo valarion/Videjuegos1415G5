@@ -2,4 +2,3 @@ map2_square
 2 2
 7 2
 8 2
-//7 pruple dragons come out from the end when discovered
