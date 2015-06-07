@@ -16,7 +16,7 @@ import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.tile.Tile;
 
 public class Map {
-	private final static int TILESIZE = 16;
+	public final static int TILESIZE = 16;
 	private final static String path1 = "/maps/";
 	private final static String path2 = ".txt";
 

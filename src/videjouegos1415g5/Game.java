@@ -8,9 +8,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
+import videjouegos1415g5.cutscenes.FinalScene;
 import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.BalloonBlue;
 import videjouegos1415g5.entity.BalloonPurple;
@@ -44,6 +46,7 @@ public class Game extends Canvas implements Runnable {
 	int time; // 4 minutos
 	
 	private int level = 1;
+	private int levelmap = 1;
 
 	private boolean running = true;
 	private boolean playing = false;
@@ -95,7 +98,9 @@ public class Game extends Canvas implements Runnable {
 		
 		int enemiesCount = 5;
 		int powerUpCount = 10;
-		switch (level) {
+		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/"+level+"/"+level+"_"+levelmap+".txt"));
+		map = new Map(in.nextLine(), Map.TILESIZE);
+		/*switch (level) {
 		case 1:
 			map = Map.map8_5;
 			level = 2;
@@ -104,7 +109,7 @@ public class Game extends Canvas implements Runnable {
 			map = Map.map1_5;
 			level = 1;
 			break;
-		}
+		}*/
 		obstacles = new GenerateObstacles(map);
 		for (int i = 0; i < enemiesCount; i++) {
 			enemies.add(new Balloon(obstacles, map, player));
@@ -124,6 +129,7 @@ public class Game extends Canvas implements Runnable {
 		if (obstacles != null) obstacles.getList().clear();
 		if (enemies != null) enemies.clear();
 		if (powerups != null) powerups.clear();
+		if (bombs != null) bombs.clear();
 		player = null;
 		time = 240;
 		offsetX = 0;
@@ -206,9 +212,19 @@ public class Game extends Canvas implements Runnable {
 				playing = true;
 				player.tick();
 				if(player.endLvl()) {
-					bombs.clear();
-					player.resetAnim();
-					map = Map.map1_4; // cambiar de mapa
+					levelmap++;
+					if(levelmap > 8) {
+						levelmap = 0;
+						level++;
+						if(level > 8) {
+							setMenu(new FinalScene());
+						}
+						else
+							setMenu(new MapMenu(level,levelmap));
+					}
+					else
+						setMenu(new MapMenu(level,levelmap));
+					initLevel();
 					return;
 				}
 				if(input.fire.clicked && bombs.size() < player.getBombs()) {
@@ -449,7 +465,7 @@ public class Game extends Canvas implements Runnable {
 		// el jugador con la salida
 		if (player.intersects(exit) && ((Exit) exit).isActive()) {
 			player.touchedBy(exit);
-			System.out.println("Level Complete");
+			//System.out.println("Level Complete");
 		}
 	}
 
