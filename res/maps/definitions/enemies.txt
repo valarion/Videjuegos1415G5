@@ -1,0 +1,8 @@
+Purely explanatory file about the enemy indexes
+0 orange balloon
+1 purple balloon
+2 blue balloon
+3 red balloon
+4 purple dragon // flies over boxes
+5 yellow ghost
+6 blue snake
