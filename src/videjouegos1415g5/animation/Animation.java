@@ -130,6 +130,10 @@ public class Animation {
 
     }
 
+	public int getCurrentFrame() {
+		return currentFrame;
+	}
+
 }
 //
 //import java.awt.Graphics2D;

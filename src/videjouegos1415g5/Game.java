@@ -442,6 +442,7 @@ public class Game extends Canvas implements Runnable {
 		
 		// el jugador con la salida
 		if (player.intersects(exit) && ((Exit) exit).isActive()) {
+			player.touchedBy(exit);
 			System.out.println("Level Complete");
 		}
 	}

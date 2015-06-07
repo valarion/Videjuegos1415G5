@@ -25,6 +25,8 @@ public class Bomberman extends Mob {
 	private int max_velocity;
 	private int bombs;
 	private int potency;
+	
+	Animation teleport, sparks;
 
 	public Bomberman(InputHandler input) {
 		
@@ -45,6 +47,8 @@ public class Bomberman extends Mob {
 		// Escalamos la secuencia de sprites
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(ANIMATION),
 				scale));
+		
+		
 
 		BufferedImage[] walkingLeft = {
 				ss.obtenerSprite(6 * w * scale, 0, w * scale, h * scale),
@@ -73,79 +77,125 @@ public class Bomberman extends Mob {
 				ss.obtenerSprite(7 * w * scale, h * scale, w * scale, h * scale),
 				ss.obtenerSprite(8 * w * scale, h * scale, w * scale, h * scale),
 				ss.obtenerSprite(9 * w * scale, h * scale, w * scale, h * scale) };
+		
+		BufferedImage[] tp = new BufferedImage[h*scale];
+		for(int i=0; i<h*scale/4; i++) {
+			tp[i*4] = ss.obtenerSprite(6 * w * scale, i*4, w * scale, h * scale-i*4);
+			tp[i*4+1] = ss.obtenerSprite(9 * w * scale, i*4, w * scale, h * scale-i*4);
+			tp[i*4+2] = ss.obtenerSprite(3 * w * scale, i*4, w * scale, h * scale-i*4);
+			tp[i*4+3] = ss.obtenerSprite(0 * w * scale, i*4, w * scale, h * scale-i*4);
+		}
+
+		BufferedImage[] sp = new BufferedImage[h * scale];
+
+		for (int i = 0; i < h * scale / 4; i++) {
+			sp[i*4] = ss.obtenerSprite(8 * w * scale, h * scale, w * scale, h * scale);
+			sp[i*4+1] = ss.obtenerSprite(9 * w * scale, h * scale, w * scale, h * scale);
+			sp[i*4+2] = ss.obtenerSprite(10 * w * scale, h * scale, w * scale, h * scale);
+			sp[i*4+3] = ss.obtenerSprite(11 * w * scale, h * scale, w * scale, h * scale);
+		}
 
 		this.left = new Animation(walkingLeft, 10, Direction.LEFT);
 		this.right = new Animation(walkingRight, 10, Direction.RIGHT);
 		this.up = new Animation(walkingUp, 10, Direction.UP);
 		this.down = new Animation(walkingDown, 10, Direction.DOWN);
 		this.death = new Animation(die, 10, Direction.DOWN);
+		
+		this.teleport = new Animation(tp,4,Direction.DOWN);
+		this.sparks = new Animation(sp,15,Direction.DOWN);
 
 		// Animacion inicial
 		this.animation = down;
 	}
 
 	public void tick() {
-		if (health <= 0) {
-			die();
-		} else {
-
-			if (input.left.down) {
-				position.x -= (scale + velocity);
-				animation = left;
-				animation.start();
+		if(animation != teleport) {
+			if (health <= 0) {
+				die();
+			} else {
+	
+				if (input.left.down) {
+					position.x -= (scale + velocity);
+					animation = left;
+					animation.start();
+				}
+	
+				else if (input.right.down) {
+					position.x += (scale + velocity);
+					animation = right;
+					animation.start();
+				}
+	
+				else if (input.up.down) {
+					position.y -= (scale + velocity);
+					animation = up;
+					animation.start();
+				}
+	
+				else if (input.down.down) {
+					position.y += (scale + velocity);
+					animation = down;
+					animation.start();
+				}
+	
+				else {
+					animation.stop();
+					animation.reset();
+				}
 			}
-
-			else if (input.right.down) {
-				position.x += (scale + velocity);
-				animation = right;
-				animation.start();
-			}
-
-			else if (input.up.down) {
-				position.y -= (scale + velocity);
-				animation = up;
-				animation.start();
-			}
-
-			else if (input.down.down) {
-				position.y += (scale + velocity);
-				animation = down;
-				animation.start();
-			}
-
-			else {
-				animation.stop();
-				animation.reset();
-			}
+			animation.tick();
 		}
-		animation.tick();
+		else {
+			teleport.tick();
+			sparks.tick();
+		}
 	}
 
 	public void render(Graphics2D g) {
-		//g.fillRect(position.x, position.y, 14 * scale, 11 * scale);
-		BufferedImage f = animation.getSprite();
-		// g.fillRect(position.x+position.width/2-f.getWidth()/2,
-		// position.y+position.height/2-f.getHeight()/2, w*scale, h*scale);
-		g.drawImage(animation.getSprite(),
-				position.x + position.width / 2 - (f.getWidth() - 1 * scale)
-						/ 2, position.y + position.height / 2
-						- (f.getHeight() + 11 * scale) / 2, null);
+		if(animation != teleport) {
+			// g.fillRect(position.x, position.y, 14 * scale, 11 * scale);
+			BufferedImage f = animation.getSprite();
+			// g.fillRect(position.x+position.width/2-f.getWidth()/2,
+			// position.y+position.height/2-f.getHeight()/2, w*scale, h*scale);
+			g.drawImage(animation.getSprite(),
+					position.x + position.width / 2 - (f.getWidth() - 1 * scale)
+							/ 2, position.y + position.height / 2
+							- (f.getHeight() + 11 * scale) / 2, null);
+		}
+		else {
+			BufferedImage f = teleport.getSprite();
+			g.drawImage(f,
+					position.x + position.width / 2 - (f.getWidth() - 1 * scale)
+							/ 2, position.y + position.height / 2
+							- (f.getHeight() + 11 * scale) / 2 + teleport.getCurrentFrame()/scale, null);
+			f = sparks.getSprite();
+			g.drawImage(f,
+					position.x + position.width / 2 - (f.getWidth() - 1 * scale)
+							/ 2, position.y + position.height / 2
+							- (f.getHeight() + 11 * scale) / 2, null);
+		}
 
 	}
-
 
 	public void touchedBy(Entity go) {
 		// if (!(go instanceof Bomberman)) {
 		// go.touchedBy(this);
 		// }
 		if (go instanceof Enemy) {
-			//go.hurt(this, 10); // PARA PROBAR
+			// go.hurt(this, 10); // PARA PROBAR
+		}
+		if(go instanceof Exit) {
+			this.position.x = go.position.x;
+			this.position.y = go.position.y;
+			this.animation = teleport;
+			teleport.start();
+			sparks.start();
 		}
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(position.x + 5*scale, position.y + 10*scale,
-				14*scale, 11*scale);
+		return new Rectangle(position.x + 5 * scale, position.y + 10 * scale,
+				14 * scale, 11 * scale);
 	}
 
 	public void addPowerUp(Entity powerup) {
@@ -161,7 +211,8 @@ public class Bomberman extends Mob {
 			lives += 1;
 			break;
 		case 3:
-			if (velocity < max_velocity) velocity += 1;
+			if (velocity < max_velocity)
+				velocity += 1;
 			break;
 		case 4:
 			break;
