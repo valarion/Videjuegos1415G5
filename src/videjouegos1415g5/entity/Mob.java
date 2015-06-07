@@ -14,13 +14,8 @@ public class Mob extends Entity {
 
 	public void tick() {
 		tickTime++;
-		//if (health <= 0) die();
 		animation.tick();
 	}
-
-//	protected void die() {
-//		remove();
-//	}
 	
 	public void die() {
 		animation = death;

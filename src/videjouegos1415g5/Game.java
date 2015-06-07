@@ -214,6 +214,7 @@ public class Game extends Canvas implements Runnable {
 				}
 				for (Entity enemy : enemies) {
 					if (enemy.removed) {
+						player.setScore(player.getScore() + enemy.getScore());
 						enemies.remove(enemy);
 						break;
 					}
@@ -415,7 +416,6 @@ public class Game extends Canvas implements Runnable {
 			if (enemy != null && enemy.intersects(player)) {
 				enemy.touchedBy(player); // Normal
 				//player.touchedBy(enemy); // Bomberman se carga a todos
-				player.setScore(player.getScore() + enemy.getScore());
 				//break;
 			}
 		}

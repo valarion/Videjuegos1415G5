@@ -91,4 +91,8 @@ public class Entity extends GameObject {
 	public int getType() {
 		return 0;
 	}
+
+	public int getScore() {
+		return 0;
+	}
 }
