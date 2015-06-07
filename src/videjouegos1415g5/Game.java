@@ -111,14 +111,19 @@ public class Game extends Canvas implements Runnable {
 			break;
 		}*/
 		obstacles = new GenerateObstacles(map);
-		for (int i = 0; i < enemiesCount; i++) {
+		
+		while(in.hasNext()) {
+			int type = in.nextInt();
+			int count = in.nextInt();
+			for(int i = 0; i< count; i++)
+				enemies.add(Enemy.createEnemy(type, obstacles, map, player));
+		}
+		/*for (int i = 0; i < enemiesCount; i++) {
 			enemies.add(new Balloon(obstacles, map, player));
 			//enemies.add(new BalloonPurple(obstacles, map, player));
 			//enemies.add(new BalloonBlue(obstacles, map, player));
 			enemies.add(new GhostYellow(obstacles, map, player));
-
-
-		}
+		}*/
 		for (int i = 0; i < powerUpCount; i++) {
 			powerups.add(new PowerUps((int)(Math.random()*15), obstacles.getList()));
 		}

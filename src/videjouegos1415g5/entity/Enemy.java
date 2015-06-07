@@ -60,5 +60,18 @@ public class Enemy extends Mob {
 	public int getScore() {
 		return score;
 	}
-
+	
+	public static Enemy createEnemy(int type, GenerateObstacles obs, Map map, Bomberman player) {
+		switch(type) {
+		case 0:
+			return new Balloon(obs,map,player);
+		case 1:
+			return new BalloonPurple(obs,map,player);
+		case 2:
+			return new BalloonBlue(obs,map,player);
+		case 3:
+			return new BalloonRed(obs,map,player);
+		}
+		return null;
+	}
 }
