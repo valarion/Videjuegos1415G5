@@ -25,6 +25,8 @@ import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.map.Obstacle;
 import videjouegos1415g5.menu.GameOverMenu;
+import videjouegos1415g5.menu.LevelMenu;
+import videjouegos1415g5.menu.MapMenu;
 import videjouegos1415g5.menu.Menu;
 import videjouegos1415g5.menu.TitleMenu;
 
@@ -201,8 +203,14 @@ public class Game extends Canvas implements Runnable {
 				exit.tick();
 				// Comprobar si el jugador ha muerto
 				if (player.removed) {
-					this.setMenu(new GameOverMenu(player.getLives()));
-					initLevel();
+					if (player.getLives() < 0) {
+						setMenu(new GameOverMenu(player.getLives()));
+						initLevel();
+					}
+					else {
+						setMenu(new MapMenu(level, level));
+						initLevel();
+					}
 				}
 				for (Entity enemy : enemies) {
 					if (enemy.removed) {
@@ -405,8 +413,8 @@ public class Game extends Canvas implements Runnable {
 		// el jugador con los enemigos
 		for (Enemy enemy : enemies) {
 			if (enemy != null && enemy.intersects(player)) {
-				//enemy.touchedBy(player); // Normal
-				player.touchedBy(enemy); // Bomberman se carga a todos
+				enemy.touchedBy(player); // Normal
+				//player.touchedBy(enemy); // Bomberman se carga a todos
 				player.setScore(player.getScore() + enemy.getScore());
 				//break;
 			}

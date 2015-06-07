@@ -56,12 +56,6 @@ public class Enemy extends Mob {
 		return true;
 	}
 	
-	public void die() {
-		animation = death;
-		animation.start();
-		if (animation.finalFrame())
-			super.die();
-	}
 	
 	public int getScore() {
 		return score;

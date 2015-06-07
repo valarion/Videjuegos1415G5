@@ -86,9 +86,7 @@ public class Bomberman extends Mob {
 
 	public void tick() {
 		if (health <= 0) {
-			animation = death;
-			if (!animation.finalFrame()) animation.start();
-			else removed = true;
+			die();
 		} else {
 
 			if (input.left.down) {
@@ -135,12 +133,12 @@ public class Bomberman extends Mob {
 
 	}
 
-	protected void die() {
-		super.die();
-		animation = death;
-		animation.start();
-		// Sound.playerDeath.play();
-	}
+//	protected void die() {
+//		super.die();
+//		animation = death;
+//		animation.start();
+//		// Sound.playerDeath.play();
+//	}
 
 	public void touchedBy(Entity go) {
 		// if (!(go instanceof Bomberman)) {

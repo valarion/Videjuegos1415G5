@@ -14,11 +14,19 @@ public class Mob extends Entity {
 
 	public void tick() {
 		tickTime++;
-		if (health <= 0) die();
+		//if (health <= 0) die();
+		animation.tick();
 	}
 
-	protected void die() {
-		remove();
+//	protected void die() {
+//		remove();
+//	}
+	
+	public void die() {
+		animation = death;
+		animation.start();
+		if (animation.finalFrame())
+			remove();
 	}
 
 	public boolean blocks(Entity e) {

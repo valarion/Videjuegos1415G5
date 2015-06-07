@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 import videjouegos1415g5.animation.Animation;
+import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.entity.Mob;
 
 public class GameObject {
@@ -33,7 +34,7 @@ public class GameObject {
 		removed = true;
 	}
 	
-	public void hurt(Mob mob, int dmg) {
+	public void hurt(Entity mob, int dmg) {
 	}
 
 	protected void touchedBy(GameObject go) {
