@@ -1,5 +1,6 @@
 package videjouegos1415g5.map;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ public class GenerateObstacles {
 	private final double LIMIT = 0.8;
 
 	private ArrayList<Obstacle> obstacles;
+	private ArrayList<Obstacle> path;
+
 	private int currentX;
 	private int currentY;
 	private int offsetX = 2;
@@ -27,6 +30,8 @@ public class GenerateObstacles {
 		if (finY > finX) finY--;
 		
 		obstacles = new ArrayList<Obstacle>();
+		path = new ArrayList<Obstacle>();
+
 
 		Random rn = new Random();
 		while(true) {
@@ -61,6 +66,13 @@ public class GenerateObstacles {
 					canPlace = false;
 				}
 			}
+			else if (currentY % 2 == 0 || currentX % 2 == 0) {
+				// Camino libre
+				path.add(new Obstacle(
+							currentX*tileSize + offsetX*tileSize, 
+							currentY*tileSize + offsetY*tileSize, 
+							tileSize, null, map.getSpriteSheet(), map.getScale(), true));
+			}
 			// Obstaculos fijos
 			if (currentY%2 != 0 && currentX%2 != 0)
 				obstacles.add(new Obstacle(
@@ -70,30 +82,34 @@ public class GenerateObstacles {
 			
 			// Paredes laterales
 			// Pared izquierda
-			if (currentX == 1)
+			if (currentX == 1) 
 				obstacles.add(new Obstacle(
 						currentX*tileSize, 
 						currentY*tileSize + offsetY*tileSize, 
 						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+			
 			// Pared Derecha
-			if (currentX == ((finX - offsetX*2) - 1))
+			if (currentX == ((finX - offsetX*2) - 1)) 
 				obstacles.add(new Obstacle(
 						currentX*tileSize + (offsetX+1)*tileSize, 
 						currentY*tileSize + offsetY*tileSize, 
 						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+			
 			// Pared superior
-			if (currentY == 0)
+			if (currentY == 0) 
 				obstacles.add(new Obstacle(
 						currentX*tileSize + offsetX*tileSize, 
 						currentY*tileSize, 
 						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+			
 			// Pared inferior
-			if (currentY == (finY - offsetY*2) - 1)
+			if (currentY == (finY - offsetY*2) - 1) 
 				obstacles.add(new Obstacle(
 						currentX*tileSize + offsetX*tileSize, 
 						currentY*tileSize + (offsetY+1)*tileSize, 
 						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
 			
+
 			currentX++;
 		}
 	}
@@ -106,6 +122,10 @@ public class GenerateObstacles {
 	
 	public ArrayList<Obstacle> getList() {
 		return obstacles;
+	}
+	
+	public ArrayList<Obstacle> getPath() {
+		return path;
 	}
 	
 	public boolean obstacleAt(int x, int y, int scale) {
