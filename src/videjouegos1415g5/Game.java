@@ -3,6 +3,7 @@ package videjouegos1415g5;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -454,7 +455,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		// el jugador con la salida
-		if (player.intersects(exit) && ((Exit) exit).isActive()) {
+		if (player.intersects(exit) && ((Exit) exit).isActive() /*&& exit.getBounds().contains(player.getBounds()*/)) {
 			player.touchedBy(exit);
 			//System.out.println("Level Complete");
 		}
