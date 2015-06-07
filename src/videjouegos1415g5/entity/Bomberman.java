@@ -24,7 +24,9 @@ public class Bomberman extends Mob {
 	private int velocity;
 	private int max_velocity;
 	private int bombs;
+	private int max_bombs;
 	private int potency;
+	private int max_potency;
 	
 	Animation teleport, sparks;
 
@@ -40,8 +42,10 @@ public class Bomberman extends Mob {
 		this.lives = 1;
 		this.velocity = 0;
 		this.max_velocity = 1;
-		this.bombs = 2;
-		this.potency = 5;
+		this.bombs = 1;
+		this.max_bombs = 8;
+		this.potency = 1;
+		this.max_potency = 8;
 
 		this.sl = new SpriteLoader();
 		// Escalamos la secuencia de sprites
@@ -202,10 +206,12 @@ public class Bomberman extends Mob {
 		// Añadir mejoras del power up
 		switch (powerup.getType()) {
 		case 0:
-			potency += 1;
+			if(potency < max_potency)
+				potency += 1;
 			break;
 		case 1:
-			bombs += 1;
+			if(bombs < max_bombs)
+				bombs += 1;
 			break;
 		case 2:
 			lives += 1;
