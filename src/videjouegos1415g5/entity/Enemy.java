@@ -1,6 +1,9 @@
 package videjouegos1415g5.entity;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import videjouegos1415g5.Main;
@@ -94,6 +97,15 @@ public class Enemy extends Mob {
 		 * if (player.position.y > this.position.y) { this.position.y++; } else
 		 * { this.position.y--; } }
 		 */
+	}
+	
+	public void render(Graphics2D g) {
+		g.setColor(Color.CYAN);
+		g.fillRect(position.x, position.y, 12*scale, 14*scale);
+		BufferedImage f = animation.getSprite();
+		g.drawImage(animation.getSprite(), 
+				position.x+position.width/2 - (f.getWidth())/2, 
+				position.y+position.height/2 - (f.getHeight()+3*scale)/2, null);
 	}
 
 	public void touchedBy(Entity entity) {
