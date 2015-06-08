@@ -10,7 +10,7 @@ import videjouegos1415g5.map.Obstacle;
 
 public class Enemy extends Mob {
 
-	int xdir, ydir, speed = 1;
+	int xdir, ydir, speed;
 
 	private GenerateObstacles obs;
 	private Bomberman player;
@@ -23,6 +23,7 @@ public class Enemy extends Mob {
 	public Enemy(GenerateObstacles obs, Map map, Bomberman player) {
 		this.obs = obs;
 		this.player = player;
+		this.speed = 1*Main.ESCALA/2;
 		while (!located)
 			findStartPos(map);
 
