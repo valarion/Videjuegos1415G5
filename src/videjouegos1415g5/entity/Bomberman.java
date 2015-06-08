@@ -311,4 +311,6 @@ public class Bomberman extends Mob {
 	public boolean isInvincible() {
 		return invincible > 0;
 	}
+
+	
 }
