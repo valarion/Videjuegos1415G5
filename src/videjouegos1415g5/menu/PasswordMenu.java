@@ -2,6 +2,7 @@ package videjouegos1415g5.menu;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Scanner;
 
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
@@ -28,6 +29,8 @@ public class PasswordMenu extends Menu {
 	private SpriteSheet ss;
 	
 	private Menu menu;
+	
+	private String[][] passwords;
 
 	public PasswordMenu(TitleMenu titleMenu) {
 		this.menu = titleMenu;
@@ -42,6 +45,19 @@ public class PasswordMenu extends Menu {
 				ss.obtenerSprite(20*scale, 0, 20*scale, 23*scale), 
 				ss.obtenerSprite(40*scale, 0, 22*scale, 23*scale)};
 		this.bomb = new Animation(bomb, 10);
+		
+		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitionspasswords.txt"));
+		
+		passwords = new String[8][8];
+		
+		for(int i=0; i<8;i++) {
+			for(int j=0; j<8; j++) {
+				in.next();
+				in.next();
+				passwords[i][j] = in.next();
+			}
+		}
+		
 		this.bomb.start();
 	}
 	
