@@ -99,6 +99,8 @@ public class Game extends Canvas implements Runnable {
 		map = new Map(in.nextLine(), Map.TILESIZE);
 		obstacles = new GenerateObstacles(map);
 		
+		int poweruptype = in.nextInt();
+		
 		while(in.hasNext()) {
 			int type = in.nextInt();
 			int count = in.nextInt();
@@ -106,11 +108,13 @@ public class Game extends Canvas implements Runnable {
 				enemies.add(Enemy.createEnemy(type, obstacles, map, player));
 		}
 		//in.close();
-
-		for (int i = 0; i < powerUpCount; i++) {
-			powerups.add(new PowerUps((int)(Math.random()*15), obstacles.getList()));
-		}
-		exit = new Exit(obstacles.getList(), enemies);
+		
+		PowerUps powerup = new PowerUps(poweruptype, obstacles.getList());
+		powerups.add(powerup);
+		
+		do {
+			exit = new Exit(obstacles.getList(), enemies);
+		} while(exit.intersects(powerup));
 	}
  	
 	private void clear() {
@@ -456,6 +460,7 @@ public class Game extends Canvas implements Runnable {
 		
 		// el jugador con la salida
 		if (player.intersects(exit) && ((Exit) exit).isActive() /*&& exit.getBounds().contains(player.getBounds())*/) {
+			bombs.clear();
 			player.touchedBy(exit);
 			//System.out.println("Level Complete");
 		}
