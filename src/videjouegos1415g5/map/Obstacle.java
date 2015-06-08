@@ -12,7 +12,7 @@ import videjouegos1415g5.gfx.SpriteSheet;
 public class Obstacle extends GameObject {
 
 	private boolean solid;
-	private Animation a1, a2;
+	private Animation a1, a2, a3;
 
 	public Obstacle(int x, int y, int size, Animation animation,
 			SpriteSheet ss, int scale, boolean solid) {
@@ -33,7 +33,13 @@ public class Obstacle extends GameObject {
 				ss.obtenerSprite(size*11, size, size, size),
 				ss.obtenerSprite(size*12, size, size, size),
 				ss.obtenerSprite(size*13, size, size, size)};
+		
 		a2 = new Animation(explosion, 6, Direction.DOWN);
+		
+		BufferedImage[] blink = {ss.obtenerSprite(2*size, 0, size, size),
+				ss.obtenerSprite(size*7, size, size, size)};
+		
+		a3 = new Animation(blink, 20, Direction.DOWN);
 
 		this.animation = a1;
 	}
@@ -48,7 +54,7 @@ public class Obstacle extends GameObject {
 	
 	public void die() {
 		if (!removed) {
-			if (!animation.equals(a2)) {
+			if (!(animation == a2)) {
 				animation = a2;
 				animation.start();
 			}
@@ -68,6 +74,8 @@ public class Obstacle extends GameObject {
 
 	public void draw(Graphics2D g) {
 		if (solid) {
+			if(animation == a3)
+				g.drawImage(a1.getSprite(), position.x, position.y, null);
 			g.drawImage(animation.getSprite(), position.x, position.y, null);
 //			g.setColor(Color.BLACK);
 //		 	g.fillRect(position.x, position.y, position.width, position.height);
@@ -76,5 +84,12 @@ public class Obstacle extends GameObject {
 //			g.setColor(Color.ORANGE);
 //			g.fillRect(position.x, position.y, position.width, position.height);
 //		}
+	}
+	
+	public void blink() {
+		if(animation == a1) {
+			animation = a3;
+			a3.start();
+		}
 	}
 }

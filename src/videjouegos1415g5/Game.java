@@ -193,6 +193,14 @@ public class Game extends Canvas implements Runnable {
 			menu.tick();
 			playing = false;
 		} else {
+			if(((Exit) exit).isActive() && powerups.size() > 0) {
+				for(Obstacle obs : obstacles.getList()) {
+					if(obs.intersects(powerups.get(0))) {
+						obs.blink();
+						break;
+					}
+				}
+			}
 			if (input.exit.clicked) {
 				playing = false;
 				initLevel();
