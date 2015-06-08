@@ -11,6 +11,7 @@ import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.Sound;
 
 
 public class Bomb extends Entity {
@@ -65,6 +66,8 @@ public class Bomb extends Entity {
 		super.tick();
 		
 		if(explode && animation.finalFrame()) removed = true;
+		if (removed) Sound.boom.play();
+
 		//else if (!removed) animation.tick();
 	}
 

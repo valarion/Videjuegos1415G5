@@ -117,6 +117,7 @@ public class Game extends Canvas implements Runnable {
 		do {
 			exit = new Exit(obstacles.getList(), enemies);
 		} while(exit.intersects(powerup));
+		
 	}
  	
 	private void clear() {
@@ -126,6 +127,7 @@ public class Game extends Canvas implements Runnable {
 		if (bombs != null) bombs.clear();
 		if (flares != null) flares.clear();
 		if (player != null) player.reset();
+		if (powerups != null) powerups.clear();
 		time = 240;
 		offsetX = 0;
 		offsetY = 0;
@@ -204,14 +206,19 @@ public class Game extends Canvas implements Runnable {
 				}
 			}
 			if (input.exit.clicked) {
+				MP3Player.stage.stop();
 				playing = false;
 				initLevel();
+				level = 1;
+				levelmap = 1;
 				setMenu(new TitleMenu());
 			}
 			if (input.pause.clicked) {
+				MP3Player.stage.pause();
 				pause = !pause;
 			}
 			if (!pause) {
+				if (playing) MP3Player.stage.play();
 				playing = true;
 				player.tick();
 				if (player.endLvl()) {
@@ -248,6 +255,7 @@ public class Game extends Canvas implements Runnable {
 				exit.tick();
 				// Comprobar si el jugador ha muerto
 				if (player.removed) {
+					MP3Player.stage.stop();
 					player.setLives(player.getLives() - 1);
 					if (player.getLives() < 0) {
 						initLevel();
@@ -473,6 +481,8 @@ public class Game extends Canvas implements Runnable {
 		if (player.intersects(exit) && ((Exit) exit).isActive() /*&& exit.getBounds().contains(player.getBounds())*/) {
 			bombs.clear();
 			player.touchedBy(exit);
+			playing = false;
+			MP3Player.stage.stop();
 			//System.out.println("Level Complete");
 		}
 	}
