@@ -88,4 +88,16 @@ public class Entity extends GameObject {
 	public int getScore() {
 		return 0;
 	}
+	
+	public boolean canPassWalls() {
+		return false;
+	}
+	
+	public boolean canPassBombs() {
+		return false;
+	}
+	
+	public boolean isInvincible() {
+		return false;
+	}
 }

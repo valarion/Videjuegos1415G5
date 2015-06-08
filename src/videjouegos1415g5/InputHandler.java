@@ -41,6 +41,7 @@ public class InputHandler implements KeyListener {
 	public Key left = new Key();
 	public Key right = new Key();
 	public Key fire = new Key();
+	public Key remote = new Key();
 	public Key pause = new Key();
 	public Key exit = new Key();
 
@@ -87,6 +88,8 @@ public class InputHandler implements KeyListener {
 		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD0) fire.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_INSERT) fire.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_C) fire.toggle(pressed);
+		
+		if (ke.getKeyCode() == KeyEvent.VK_X) remote.toggle(pressed);
 		
 		if (ke.getKeyCode() == KeyEvent.VK_P) pause.toggle(pressed);
 		

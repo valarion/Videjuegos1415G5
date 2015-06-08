@@ -22,6 +22,7 @@ public class Bomb extends Entity {
 	private Set<Entity> out = new HashSet<Entity>();
 	
 	private int potency;
+	private boolean explode;
 	
 	//private Animation animation;
 
@@ -33,6 +34,8 @@ public class Bomb extends Entity {
 
 		this.position.width = 12*scale;
 		this.position.height = 14*scale;
+		
+		explode = !player.hasRemoteDetonator();
 		
 		this.potency = player.getPotency();
 		
@@ -61,7 +64,7 @@ public class Bomb extends Entity {
 	public void tick() {
 		super.tick();
 		
-		if(animation.finalFrame()) removed = true;
+		if(explode && animation.finalFrame()) removed = true;
 		//else if (!removed) animation.tick();
 	}
 

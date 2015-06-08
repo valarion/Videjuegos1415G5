@@ -220,6 +220,9 @@ public class Game extends Canvas implements Runnable {
 					initLevel();
 					return;
 				}
+				if(player.hasRemoteDetonator() && input.remote.clicked && bombs.size() > 0) {
+					bombs.get(0).removed = true;
+				}
 				if(input.fire.clicked && bombs.size() < player.getBombs()) {
 					bombs.add(new Bomb(player));
 				}
@@ -359,20 +362,16 @@ public class Game extends Canvas implements Runnable {
 		// el jugador con los obstaculos
 		for (Obstacle obs : obstacles.getList()) {
 			if (obs != null && obs.intersects(player)) {
-				/*
-				 * if (obs.isSolid()) { obs.die(); }
-				 */
-				player.collide(obs);
-
-				// break;
+				if(!(player.canPassWalls() && obs.isSolid()))
+					player.collide(obs);
 			}
 		}
 		// los enemigos con los obstaculos
 		for (Enemy enemy : enemies) {
 			for (Obstacle obs : obstacles.getList()) {
 				if (obs != null && obs.intersects(enemy)) {
-					enemy.collide(obs);
-					// break;
+					if(!(enemy.canPassWalls() && obs.isSolid()))
+						enemy.collide(obs);
 				}
 			}
 		}
@@ -381,9 +380,6 @@ public class Game extends Canvas implements Runnable {
 			for (Entity flare : flares) {
 				if (flare.intersects(enemy)) {
 					enemy.hurt(flare, 10);
-					//enemy.hurt(flare, 10);
-					//enemy.touchedBy(flare);
-					//break;
 				}
 			}
 		}
@@ -391,7 +387,8 @@ public class Game extends Canvas implements Runnable {
 		// el jugador con las llamas
 		for (Entity flare : flares) {
 			if (flare.intersects(player)) {
-				player.touchedBy(flare);
+				if(!player.isInvincible())
+					player.touchedBy(flare);
 				//break;
 			}
 		}
@@ -413,7 +410,7 @@ public class Game extends Canvas implements Runnable {
 			for (Bomb bomb : bombs) {
 				if (bomb != null) {
 					if (bomb.intersects(enemy)) {
-						if (bomb.isOut(enemy)) {
+						if (bomb.isOut(enemy) && !enemy.canPassBombs()) {
 							enemy.collide(bomb);
 						}
 					}
@@ -428,7 +425,7 @@ public class Game extends Canvas implements Runnable {
 		for (Bomb bomb : bombs) {
 			if (bomb != null) {
 				if (bomb.intersects(player)) {
-					if (!bomb.isOut(player)) {
+					if (!bomb.isOut(player) && ! player.canPassBombs()) {
 						player.collide(bomb);
 					}
 					else {

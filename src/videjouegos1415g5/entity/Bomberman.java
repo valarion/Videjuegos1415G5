@@ -28,7 +28,11 @@ public class Bomberman extends Mob {
 	private int potency;
 	private int max_potency;
 	
-	Animation teleport, sparks;
+	private boolean canPassWalls, canPassBombs, remoteDetonator;
+	
+	private int invincible;
+	
+	private Animation teleport, sparks;
 
 	public Bomberman(InputHandler input) {
 		
@@ -46,6 +50,10 @@ public class Bomberman extends Mob {
 		this.max_bombs = 8;
 		this.potency = 1;
 		this.max_potency = 8;
+		this.canPassWalls = false;
+		this.canPassBombs = false;
+		this.remoteDetonator = false;
+		this.invincible = 0;
 
 		this.sl = new SpriteLoader();
 		// Escalamos la secuencia de sprites
@@ -157,14 +165,16 @@ public class Bomberman extends Mob {
 
 	public void render(Graphics2D g) {
 		if(animation != teleport) {
-			// g.fillRect(position.x, position.y, 14 * scale, 11 * scale);
-			BufferedImage f = animation.getSprite();
-			// g.fillRect(position.x+position.width/2-f.getWidth()/2,
-			// position.y+position.height/2-f.getHeight()/2, w*scale, h*scale);
-			g.drawImage(animation.getSprite(),
-					position.x + position.width / 2 - (f.getWidth() - 1 * scale)
-							/ 2, position.y + position.height / 2
-							- (f.getHeight() + 11 * scale) / 2, null);
+			if(invincible / 30 % 2 == 0) {
+				// g.fillRect(position.x, position.y, 14 * scale, 11 * scale);
+				BufferedImage f = animation.getSprite();
+				// g.fillRect(position.x+position.width/2-f.getWidth()/2,
+				// position.y+position.height/2-f.getHeight()/2, w*scale, h*scale);
+				g.drawImage(animation.getSprite(),
+						position.x + position.width / 2 - (f.getWidth() - 1 * scale)
+								/ 2, position.y + position.height / 2
+								- (f.getHeight() + 11 * scale) / 2, null);
+			}
 		}
 		else {
 			BufferedImage f = teleport.getSprite();
@@ -214,19 +224,23 @@ public class Bomberman extends Mob {
 				bombs += 1;
 			break;
 		case 2:
-			lives += 1;
+			remoteDetonator = true;
 			break;
 		case 3:
 			if (velocity < max_velocity)
 				velocity += 1;
 			break;
 		case 4:
+			canPassBombs = true;
 			break;
 		case 5:
+			canPassWalls = true;
 			break;
 		case 6:
+			invincible = 300;
 			break;
 		case 7:
+			lives += 1;
 			break;
 		case 8:
 			break;
@@ -258,6 +272,10 @@ public class Bomberman extends Mob {
 		return bombs;
 	}
 	
+	public boolean isTeleporting() {
+		return animation == teleport;
+	}
+	
 	public boolean endLvl() {
 		return animation == teleport && animation.finalFrame();
 	}
@@ -272,5 +290,21 @@ public class Bomberman extends Mob {
 	
 	public void resetAnim() {
    		this.animation = down;
+	}
+	
+	public boolean canPassWalls() {
+		return canPassWalls;
+	}
+	
+	public boolean canPassBombs() {
+		return canPassBombs;
+	}
+	
+	public boolean hasRemoteDetonator() {
+		return remoteDetonator;
+	}
+	
+	public boolean isInvincible() {
+		return invincible > 0;
 	}
 }
