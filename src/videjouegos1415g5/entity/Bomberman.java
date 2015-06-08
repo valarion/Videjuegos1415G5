@@ -281,15 +281,17 @@ public class Bomberman extends Mob {
 	}
 	
 	public void reset() {
+		if(removed) {
+	   		this.canPassBombs = false;
+	   		this.canPassWalls = false;
+	   		this.remoteDetonator = false;
+   		}
 		this.position.x = 25 * scale;
 		this.position.y = 45 * scale;
 		this.removed = false;
 		this.health = 10;
    		this.animation = down;
    		this.invincible = 0;
-   		this.canPassBombs = false;
-   		this.canPassWalls = false;
-   		this.remoteDetonator = false;
 	}
 	
 	public void resetAnim() {

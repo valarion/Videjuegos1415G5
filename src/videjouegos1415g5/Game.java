@@ -110,7 +110,7 @@ public class Game extends Canvas implements Runnable {
 		}
 		//in.close();
 		PowerUps powerup = new PowerUps(poweruptype, obstacles.getList());
-		if(!dead){
+		if(levelmap != 8 && !dead){
 			powerups.add(powerup);
 		}
 		
