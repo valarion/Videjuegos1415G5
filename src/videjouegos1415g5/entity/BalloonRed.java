@@ -27,6 +27,8 @@ public class BalloonRed extends Enemy {
 		this.health = 10;
 		this.score = 4000;
 		
+		this.speed = 2;
+		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(ANIMATION), scale));
