@@ -309,15 +309,6 @@ public class Game extends Canvas implements Runnable {
 			map.renderMap(g);
 			
 			
-			
-			
-			// Pintar enemigos
-			for (Entity e : enemies) {
-				e.render(g);
-			}
-			
-			
-			
 			// Pintar bombas
 			for (Entity e : bombs) {
 				e.render(g);
@@ -333,6 +324,11 @@ public class Game extends Canvas implements Runnable {
 			
 			// Pintar obstaculos
 			obstacles.draw(g);
+			
+			// Pintar enemigos
+			for (Entity e : enemies) {
+				e.render(g);
+			}
 
 			// Pintar llamas finales
 			for (Flare e : flares) {

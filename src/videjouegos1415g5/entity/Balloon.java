@@ -1,5 +1,6 @@
 package videjouegos1415g5.entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -57,8 +58,8 @@ public class Balloon extends Enemy {
 	public void render(Graphics2D g) {
 		BufferedImage f = animation.getSprite();
 		g.drawImage(animation.getSprite(), 
-				position.x+position.width/2 - (f.getWidth()-2*scale)/2, 
-				position.y+position.height/2 - (f.getHeight()-2*scale)/2, null);
+				position.x+position.width/2 - (f.getWidth())/2, 
+				position.y+position.height/2 - (f.getHeight()+3*scale)/2, null);
 		//g.setColor(Color.CYAN);
 		//g.fillRect(position.x, position.y, 12*scale, 14*scale);
 	}
