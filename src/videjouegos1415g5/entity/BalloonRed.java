@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -27,7 +28,7 @@ public class BalloonRed extends Enemy {
 		this.health = 10;
 		this.score = 4000;
 		
-		this.speed = 2;
+		this.speed = 2*Main.ESCALA/2;
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
