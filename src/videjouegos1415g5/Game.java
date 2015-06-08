@@ -232,7 +232,16 @@ public class Game extends Canvas implements Runnable {
 					bombs.get(0).removed = true;
 				}
 				if(input.fire.clicked && bombs.size() < player.getBombs()) {
-					bombs.add(new Bomb(player));
+					Bomb bomb = new Bomb(player);
+					boolean found = false;
+					for(Bomb b : bombs) {
+						if(bomb.intersects(b)){
+							found = true;
+							break;
+						}
+					}
+					if(!found)
+						bombs.add(bomb);
 				}
 				exit.tick();
 				// Comprobar si el jugador ha muerto
