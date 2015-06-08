@@ -121,6 +121,8 @@ public class Bomberman extends Mob {
 	}
 
 	public void tick() {
+		if(isInvincible())
+			invincible--;
 		if(animation != teleport) {
 			if (health <= 0) {
 				die();
@@ -165,7 +167,7 @@ public class Bomberman extends Mob {
 
 	public void render(Graphics2D g) {
 		if(animation != teleport) {
-			if(invincible / 30 % 2 == 0) {
+			if(invincible / 5 % 2 == 0) {
 				// g.fillRect(position.x, position.y, 14 * scale, 11 * scale);
 				BufferedImage f = animation.getSprite();
 				// g.fillRect(position.x+position.width/2-f.getWidth()/2,
@@ -192,11 +194,9 @@ public class Bomberman extends Mob {
 	}
 
 	public void touchedBy(Entity go) {
-		// if (!(go instanceof Bomberman)) {
-		// go.touchedBy(this);
-		// }
-		if (go instanceof Enemy) {
-			// go.hurt(this, 10); // PARA PROBAR
+		if (go instanceof Flare) {
+			if(!isInvincible())
+				this.hurt(go, 10);
 		}
 		if(go instanceof Exit) {
 			this.position.x = go.position.x;
@@ -237,7 +237,7 @@ public class Bomberman extends Mob {
 			canPassWalls = true;
 			break;
 		case 6:
-			invincible = 300;
+			invincible = 600;
 			break;
 		case 7:
 			lives += 1;

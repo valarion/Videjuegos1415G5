@@ -97,7 +97,8 @@ public class Enemy extends Mob {
 
 	public void touchedBy(Entity entity) {
 		if (health > 0 && entity instanceof Bomberman) {
-			entity.hurt(this, 10); // BIEN
+			if(!entity.isInvincible())
+				entity.hurt(this, 10); // BIEN
 		}
 	}
 
