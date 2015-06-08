@@ -118,7 +118,10 @@ public class Enemy extends Mob {
 	public boolean findStartPos(Map map) {
 		located: for (int y = 0; y < map.getmapHeight() - obs.getOffsetY() * 2; y++) {
 			for (int x = 0; x < map.getmapWidth() - obs.getOffsetX() * 2; x++) {
-				if (x != 0 && y != 0 || x != 1 && y != 0 || x != 0 && y != 1) {
+				if (x == 0 && y == 0 || x == 1 && y == 0 || x == 0 && y == 1) {
+					break;
+				}
+				else {
 					if (!obs.obstacleAt(x, y, scale)
 							&& random.nextDouble() >= 0.99) {
 						this.position.x = x * obs.tileSize() + obs.getOffsetX()
