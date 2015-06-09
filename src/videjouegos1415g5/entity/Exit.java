@@ -34,7 +34,11 @@ public class Exit extends Entity {
 		BufferedImage[] exit = new BufferedImage[]{ss.obtenerSprite(0, 0, w*scale, h*scale),
 					ss.obtenerSprite(w*scale, 0, w*scale, h*scale)};
 		
-		while (!located) findStartPos(obs);
+		if (obs != null) while (!located) findStartPos(obs);
+		else {
+			this.position.x = 40*scale;
+			this.position.y = 72*scale;
+		}
 		this.animation = new Animation(exit, 10, Direction.DOWN);
 		
 	}

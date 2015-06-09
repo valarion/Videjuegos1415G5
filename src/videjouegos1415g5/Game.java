@@ -143,7 +143,7 @@ public class Game extends Canvas implements Runnable {
 			do {
 				exit = new Exit(obstacles.getList(), enemies);
 			} while(exit.intersects(powerup));
-		}
+		} else exit = new Exit(null, enemies);
 		
 		in.close();
 	}
@@ -236,6 +236,7 @@ public class Game extends Canvas implements Runnable {
 				music.get(keymusic).stop();
 				//MP3Player.stage.stop();
 				playing = false;
+				pause = false;
 				initLevel();
 				level = 1;
 				levelmap = 1;
