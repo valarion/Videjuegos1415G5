@@ -96,13 +96,15 @@ public class Game extends Canvas implements Runnable {
 		int powerupssize = powerups.size();
 		clear();
 		
-		int enemiesCount = 5;
-		int powerUpCount = 10;
 		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/"+level+"/"+level+"_"+levelmap+".txt"));
 		map = new Map(in.nextLine(), Map.TILESIZE);
 		obstacles = new GenerateObstacles(map);
 		
-		int poweruptype = in.nextInt();
+		PowerUps powerup;
+		if(levelmap != 8)
+			powerup = new PowerUps(in.nextInt(), obstacles.getList());
+		else 
+			powerup = new PowerUps(0, obstacles.getList());
 		
 		while(in.hasNext()) {
 			int type = in.nextInt();
@@ -111,7 +113,7 @@ public class Game extends Canvas implements Runnable {
 				enemies.add(Enemy.createEnemy(type, obstacles, map, player));
 		}
 		//in.close();
-		PowerUps powerup = new PowerUps(poweruptype, obstacles.getList());
+		
 		if(levelmap != 8 && !dead ){
 			powerups.add(powerup);
 		} 
@@ -124,6 +126,7 @@ public class Game extends Canvas implements Runnable {
 			exit = new Exit(obstacles.getList(), enemies);
 		} while(exit.intersects(powerup));
 		
+		in.close();
 	}
  	
 	private void clear() {
