@@ -6,6 +6,9 @@ import java.applet.AudioClip;
 public class Sound {
 
 	public static final Sound boom = new Sound("/music/boom.wav");
+	public static final Sound bomb = new Sound("/music/bomb.wav");
+	public static final Sound powerup = new Sound("/music/bonus.wav");
+	public static final Sound death = new Sound("/music/dying.wav");
 
 	private AudioClip clip;
 
@@ -27,9 +30,8 @@ public class Sound {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-
 	}
-
+	
 	public void stop() {
 		clip.stop();
 	}

@@ -327,14 +327,13 @@ public class Game extends Canvas implements Runnable {
 			// Pintar mapa
 			map.renderMap(g);
 			
+			// Pintar salida
+			exit.render(g);
 			
 			// Pintar bombas
 			for (Entity e : bombs) {
 				e.render(g);
 			}
-
-			// Pintar salida
-			exit.render(g);
 			
 			// Pintar PowerUps
 			for (Entity e : powerups) {

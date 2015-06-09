@@ -66,7 +66,7 @@ public class Bomb extends Entity {
 		super.tick();
 		
 		if(explode && animation.finalFrame()) removed = true;
-		if (removed) Sound.boom.play();
+		if (removed) Sound.bomb.play();
 
 		//else if (!removed) animation.tick();
 	}
