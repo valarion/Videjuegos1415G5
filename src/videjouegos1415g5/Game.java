@@ -84,10 +84,19 @@ public class Game extends Canvas implements Runnable {
 		setFocusable(true);
 
 		imagen = new BufferedImage(Main.ANCHURA, Main.ALTURA,BufferedImage.TYPE_INT_RGB);
-		music.put("bgm_01", new MP3Player("/music/bgm_01.mp3"));
-		music.put("bgm_02", new MP3Player("/music/bgm_02.mp3"));
-		music.put("bgm_03", new MP3Player("/music/bgm_03.mp3"));
-		music.put("bgm_boss", new MP3Player("/music/bgm_boss.mp3"));
+
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					music.put("bgm_01", new MP3Player("/music/bgm_01.mp3"));
+					music.put("bgm_02", new MP3Player("/music/bgm_02.mp3"));
+					music.put("bgm_03", new MP3Player("/music/bgm_03.mp3"));
+					music.put("bgm_boss", new MP3Player("/music/bgm_boss.mp3"));
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
 
 
 		setMenu(new TitleMenu());
