@@ -2,6 +2,7 @@ package videjouegos1415g5.menu;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Scanner;
 
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
@@ -9,6 +10,7 @@ import videjouegos1415g5.gfx.Font;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.MP3Player;
 
 public class PasswordMenu extends Menu {
 	
@@ -28,6 +30,8 @@ public class PasswordMenu extends Menu {
 	private SpriteSheet ss;
 	
 	private Menu menu;
+	
+	private String[][] passwords;
 
 	public PasswordMenu(TitleMenu titleMenu) {
 		this.menu = titleMenu;
@@ -42,6 +46,19 @@ public class PasswordMenu extends Menu {
 				ss.obtenerSprite(20*scale, 0, 20*scale, 23*scale), 
 				ss.obtenerSprite(40*scale, 0, 22*scale, 23*scale)};
 		this.bomb = new Animation(bomb, 10);
+		
+		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/passwords.txt"));
+		
+		passwords = new String[8][8];
+		
+		for(int i=0; i<8;i++) {
+			for(int j=0; j<8; j++) {
+				in.next();
+				in.next();
+				passwords[i][j] = in.next();
+			}
+		}
+		
 		this.bomb.start();
 	}
 	
@@ -61,9 +78,27 @@ public class PasswordMenu extends Menu {
 			else if (chars[selected].equals(chars[chars.length - 2])) index++; // Caracter >
 			else if (chars[selected].equals(chars[chars.length - 1])) { // Caracter END
 				// Comprobar password
+				//String pass = String.join("", password);
+				String pass = "";
 				for (int i = 0; i<password.length; i++) {
-					System.out.print(password[i]);
+					pass += password[i];
 				}
+				int i = 0, j = 0;
+				found: for(i=0; i<8;i++) {
+					for(j=0; j<8; j++) {
+						if(passwords[i][j].equals(pass)) {
+							i++;
+							j++;
+							MP3Player.title.stop();
+							game.startLevel(i, j);
+							break found;
+						}
+					}
+				}
+				// TODO crear nivel i j
+				/*for (int i = 0; i<password.length; i++) {
+					System.out.print(password[i]);
+				}*/
 				password = new String[password.length];
 				index = 0;
 			}

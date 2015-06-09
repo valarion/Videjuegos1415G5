@@ -1,6 +1,9 @@
 package videjouegos1415g5.entity;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import videjouegos1415g5.Main;
@@ -12,11 +15,11 @@ public class Enemy extends Mob {
 
 	int xdir, ydir, speed;
 
-	private GenerateObstacles obs;
-	private Bomberman player;
+	protected GenerateObstacles obs;
+	protected Bomberman player;
 	protected int score;
 
-	private static Random r = new Random();
+	protected static Random r = new Random();
 
 	protected Rectangle lastpos;
 
@@ -95,6 +98,15 @@ public class Enemy extends Mob {
 		 * { this.position.y--; } }
 		 */
 	}
+	
+	public void render(Graphics2D g) {
+		g.setColor(Color.CYAN);
+		g.fillRect(position.x, position.y, 12*scale, 14*scale);
+		BufferedImage f = animation.getSprite();
+		g.drawImage(animation.getSprite(), 
+				position.x+position.width/2 - (f.getWidth())/2, 
+				position.y+position.height/2 - (f.getHeight()+3*scale)/2, null);
+	}
 
 	public void touchedBy(Entity entity) {
 		if (health > 0 && entity instanceof Bomberman) {
@@ -106,7 +118,10 @@ public class Enemy extends Mob {
 	public boolean findStartPos(Map map) {
 		located: for (int y = 0; y < map.getmapHeight() - obs.getOffsetY() * 2; y++) {
 			for (int x = 0; x < map.getmapWidth() - obs.getOffsetX() * 2; x++) {
-				if (x != 0 && y != 0 || x != 1 && y != 0 || x != 0 && y != 1) {
+				if (x == 0 && y == 0 || x == 1 && y == 0 || x == 0 && y == 1) {
+					break;
+				}
+				else {
 					if (!obs.obstacleAt(x, y, scale)
 							&& random.nextDouble() >= 0.99) {
 						this.position.x = x * obs.tileSize() + obs.getOffsetX()

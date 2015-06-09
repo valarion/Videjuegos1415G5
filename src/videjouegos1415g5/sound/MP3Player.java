@@ -13,6 +13,7 @@ public class MP3Player {
 
 	
 	private Clip clip;
+	private int frameposition;
 	
 	public MP3Player(String s) {
 		
@@ -42,13 +43,26 @@ public class MP3Player {
 	
 	public void play() {
 		if (clip == null) return;
-		stop();
-		clip.setFramePosition(0);
-		clip.start();
+		if (!clip.isRunning()) {
+			stop();
+			if (frameposition > 0) clip.setFramePosition(frameposition);
+			else clip.setFramePosition(0);
+			clip.start();
+		}
 	}
 	
 	public void stop() {
-		if (clip != null && clip.isRunning()) clip.stop();
+		if (clip != null && clip.isRunning()) {
+			clip.stop();
+			frameposition = 0;
+		}
+	}
+	
+	public void pause() {
+		if (clip != null && clip.isRunning()) {
+			frameposition = clip.getFramePosition();
+			clip.stop();
+		}
 	}
 	
 	public void close() {

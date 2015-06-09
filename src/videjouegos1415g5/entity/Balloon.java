@@ -31,18 +31,14 @@ public class Balloon extends Enemy {
 		// Escalamos la secuencia de sprites
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(ANIMATION), scale));
 		
-		BufferedImage[] mov = {ss.obtenerSprite(7*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(8*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(9*w*scale, 0, w*scale, h*scale)};
-		BufferedImage[] die = {ss.obtenerSprite(10*w*scale, 0, w*scale, h*scale),
-				ss.obtenerSprite(11*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(0*w*scale, 0, w*scale, h*scale),
+		BufferedImage[] mov = {ss.obtenerSprite(0*w*scale, 0, w*scale, h*scale), 
 				ss.obtenerSprite(1*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(2*w*scale, 0, w*scale, h*scale),
-				ss.obtenerSprite(3*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(4*w*scale, 0, w*scale, h*scale),
-				ss.obtenerSprite(5*w*scale, 0, w*scale, h*scale), 
-				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale),
+				ss.obtenerSprite(2*w*scale, 0, w*scale, h*scale)};
+		BufferedImage[] die = {ss.obtenerSprite(3*w*scale, 0, w*scale, h*scale),
+				ss.obtenerSprite(4*w*scale, 0, w*scale, h*scale), 
+				ss.obtenerSprite(5*w*scale, 0, w*scale, h*scale),
+				ss.obtenerSprite(6*w*scale, 0, w*scale, h*scale), 
+				ss.obtenerSprite(7*w*scale, 0, w*scale, h*scale),
 				new Score(score, w, h).getImage()};
 		
 		this.down = new Animation(mov, 10, Direction.DOWN);
@@ -59,12 +55,7 @@ public class Balloon extends Enemy {
 	}
 
 	public void render(Graphics2D g) {
-		BufferedImage f = animation.getSprite();
-		g.drawImage(animation.getSprite(), 
-				position.x+position.width/2 - (f.getWidth()-2*scale)/2, 
-				position.y+position.height/2 - (f.getHeight()-2*scale)/2, null);
-		//g.setColor(Color.CYAN);
-		//g.fillRect(position.x, position.y, 12*scale, 14*scale);
+		super.render(g);
 	}
 	
 	public Rectangle getBounds() {

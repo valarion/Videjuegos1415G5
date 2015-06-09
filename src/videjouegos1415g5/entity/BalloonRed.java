@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -26,6 +27,8 @@ public class BalloonRed extends Enemy {
 		this.position.height = 14*scale;
 		this.health = 10;
 		this.score = 4000;
+		
+		this.speed = 2*Main.ESCALA/2;
 		
 		this.sl = new SpriteLoader();	    
 		// Escalamos la secuencia de sprites
@@ -58,12 +61,7 @@ public class BalloonRed extends Enemy {
 	}
 
 	public void render(Graphics2D g) {
-		BufferedImage f = animation.getSprite();
-		g.drawImage(animation.getSprite(), 
-				position.x+position.width/2 - (f.getWidth()-2*scale)/2, 
-				position.y+position.height/2 - (f.getHeight()-2*scale)/2, null);
-		//g.setColor(Color.CYAN);
-		//g.fillRect(position.x, position.y, 12*scale, 14*scale);
+		super.render(g);
 	}
 	
 	public Rectangle getBounds() {

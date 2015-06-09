@@ -57,24 +57,24 @@ public class Entity extends GameObject {
 		switch(animation.getAnimationDirection()) {
 		case UP:
 		case DOWN:
-			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= colisionlimit)
+			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= colisionlimit*scale/2)
 				this.position.x = (obs.position.x+obs.position.width) ;
-			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= colisionlimit)
+			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= colisionlimit*scale/2)
 				this.position.x = (obs.position.x-this.position.width) ;
-			else if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= colisionlimit)
+			else if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= colisionlimit*scale/2)
 				this.position.y = (obs.position.y+obs.position.height) ;
-			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= colisionlimit)
+			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= colisionlimit*scale/2)
 				this.position.y = (obs.position.y-this.position.height) ;
 			break;
 		case LEFT:
 		case RIGHT:
-			if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= colisionlimit)
+			if(Math.abs(this.position.y-(obs.position.y+obs.position.height)) <= colisionlimit*scale/2)
 				this.position.y = (obs.position.y+obs.position.height) ;
-			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= colisionlimit)
+			else if(Math.abs((this.position.y+this.position.height)-obs.position.y) <= colisionlimit*scale/2)
 				this.position.y = (obs.position.y-this.position.height) ;
-			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= colisionlimit)
+			if(Math.abs(this.position.x-(obs.position.x+obs.position.width)) <= colisionlimit*scale/2)
 				this.position.x = (obs.position.x+obs.position.width) ;
-			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= colisionlimit)
+			else if(Math.abs((this.position.x+this.position.width)-obs.position.x) <= colisionlimit*scale/2)
 				this.position.x = (obs.position.x-this.position.width) ;
 			break;
 			

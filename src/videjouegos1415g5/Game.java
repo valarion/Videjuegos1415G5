@@ -14,6 +14,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 import videjouegos1415g5.cutscenes.FinalScene;
+import videjouegos1415g5.cutscenes.InitScene;
 import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.BalloonBlue;
 import videjouegos1415g5.entity.BalloonPurple;
@@ -44,9 +45,9 @@ public class Game extends Canvas implements Runnable {
 
 	private BufferedImage imagen;
 	private int tickCount;
-	int offsetX = 0;
-	int offsetY = 0;
-	int time; // 4 minutos
+	private int offsetX = 0;
+	private int offsetY = 0;
+	private int time; // 4 minutos
 	
 	private int level = 1;
 	private int levelmap = 1;
@@ -57,13 +58,13 @@ public class Game extends Canvas implements Runnable {
 	private boolean pause = false;
 	// private KeyInput input = new KeyInput(this);
 	private InputHandler input = new InputHandler(this);
-	public Font font;
-	public BufferedImage gui = null;
+	private Font font;
+	private BufferedImage gui = null;
 
 	private Map map;
 	private GenerateObstacles obstacles;
 	private Menu menu;
-	public Bomberman player;
+	private Bomberman player;
 	private Entity exit;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Flare> flares = new ArrayList<Flare>();
@@ -91,6 +92,8 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void initLevel() {
+		boolean dead = player.removed;
+		int powerupssize = powerups.size();
 		clear();
 		
 		int enemiesCount = 5;
@@ -108,13 +111,19 @@ public class Game extends Canvas implements Runnable {
 				enemies.add(Enemy.createEnemy(type, obstacles, map, player));
 		}
 		//in.close();
-		
 		PowerUps powerup = new PowerUps(poweruptype, obstacles.getList());
-		powerups.add(powerup);
+		if(levelmap != 8 && !dead ){
+			powerups.add(powerup);
+		} 
+		else if(levelmap != 8 && dead && powerupssize > 0) {
+			powerups.add(powerup);
+		}
+		
 		
 		do {
 			exit = new Exit(obstacles.getList(), enemies);
 		} while(exit.intersects(powerup));
+		
 	}
  	
 	private void clear() {
@@ -202,14 +211,19 @@ public class Game extends Canvas implements Runnable {
 				}
 			}
 			if (input.exit.clicked) {
+				MP3Player.stage.stop();
 				playing = false;
 				initLevel();
+				level = 1;
+				levelmap = 1;
 				setMenu(new TitleMenu());
 			}
 			if (input.pause.clicked) {
+				MP3Player.stage.pause();
 				pause = !pause;
 			}
 			if (!pause) {
+				if (playing) MP3Player.stage.play();
 				playing = true;
 				player.tick();
 				if (player.endLvl()) {
@@ -232,11 +246,21 @@ public class Game extends Canvas implements Runnable {
 					bombs.get(0).removed = true;
 				}
 				if(input.fire.clicked && bombs.size() < player.getBombs()) {
-					bombs.add(new Bomb(player));
+					Bomb bomb = new Bomb(player);
+					boolean found = false;
+					for(Bomb b : bombs) {
+						if(bomb.intersects(b)){
+							found = true;
+							break;
+						}
+					}
+					if(!found)
+						bombs.add(bomb);
 				}
 				exit.tick();
 				// Comprobar si el jugador ha muerto
 				if (player.removed) {
+					MP3Player.stage.stop();
 					player.setLives(player.getLives() - 1);
 					if (player.getLives() < 0) {
 						initLevel();
@@ -308,23 +332,13 @@ public class Game extends Canvas implements Runnable {
 			// Pintar mapa
 			map.renderMap(g);
 			
-			
-			
-			
-			// Pintar enemigos
-			for (Entity e : enemies) {
-				e.render(g);
-			}
-			
-			
+			// Pintar salida
+			exit.render(g);
 			
 			// Pintar bombas
 			for (Entity e : bombs) {
 				e.render(g);
 			}
-
-			// Pintar salida
-			exit.render(g);
 			
 			// Pintar PowerUps
 			for (Entity e : powerups) {
@@ -333,6 +347,11 @@ public class Game extends Canvas implements Runnable {
 			
 			// Pintar obstaculos
 			obstacles.draw(g);
+			
+			// Pintar enemigos
+			for (Entity e : enemies) {
+				e.render(g);
+			}
 
 			// Pintar llamas finales
 			for (Flare e : flares) {
@@ -459,7 +478,6 @@ public class Game extends Canvas implements Runnable {
 				player.addPowerUp(powerup);
 				if (powerup.removed)
 					it.remove();
-				//break;
 			}
 		}
 		
@@ -467,6 +485,8 @@ public class Game extends Canvas implements Runnable {
 		if (player.intersects(exit) && ((Exit) exit).isActive() /*&& exit.getBounds().contains(player.getBounds())*/) {
 			bombs.clear();
 			player.touchedBy(exit);
+			playing = false;
+			MP3Player.stage.stop();
 			//System.out.println("Level Complete");
 		}
 	}
@@ -665,5 +685,21 @@ public class Game extends Canvas implements Runnable {
 			if(flare.isFinal())
 				break;
 		}
+	}
+	
+	public void startLevel(int level, int map) {
+		this.level = level;
+		this.levelmap = map;
+		player = new Bomberman(input);
+		initLevel();
+		font = new Font(Color.WHITE, false);
+		try {
+			gui = ScaleImg.scale(ImageIO.read(this.getClass().getResource("/hud.png")),Main.ESCALA);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (level == 1 && map == 1) setMenu(new InitScene());
+		else if (level > 1 && map == 1) setMenu(new LevelMenu(level));
+		else setMenu(new MapMenu(level, map));
 	}
 }

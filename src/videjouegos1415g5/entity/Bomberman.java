@@ -10,6 +10,7 @@ import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.Sound;
 
 public class Bomberman extends Mob {
 
@@ -125,6 +126,7 @@ public class Bomberman extends Mob {
 			invincible--;
 		if(animation != teleport) {
 			if (health <= 0) {
+				if (health == 0) Sound.death.play(); // Para que solo se reproduzca una vez
 				die();
 			} else {
 	
@@ -214,6 +216,7 @@ public class Bomberman extends Mob {
 
 	public void addPowerUp(Entity powerup) {
 		// Añadir mejoras del power up
+		Sound.powerup.play();
 		switch (powerup.getType()) {
 		case 0:
 			if(potency < max_potency)
@@ -281,11 +284,17 @@ public class Bomberman extends Mob {
 	}
 	
 	public void reset() {
+		if(removed) {
+	   		this.canPassBombs = false;
+	   		this.canPassWalls = false;
+	   		this.remoteDetonator = false;
+   		}
 		this.position.x = 25 * scale;
 		this.position.y = 45 * scale;
 		this.removed = false;
 		this.health = 10;
    		this.animation = down;
+   		this.invincible = 0;
 	}
 	
 	public void resetAnim() {
@@ -307,4 +316,6 @@ public class Bomberman extends Mob {
 	public boolean isInvincible() {
 		return invincible > 0;
 	}
+
+	
 }
