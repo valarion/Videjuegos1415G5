@@ -36,7 +36,7 @@ public class Boss extends Enemy {
 			int ysign = sign(player.position.y - position.y);
 
 			if (isinsquare) {
-				switch (r.nextInt(2)) {
+				switch (r.nextInt(15)) {
 				case 0:
 					xdir = xsign*speed;
 					ydir = 0;
