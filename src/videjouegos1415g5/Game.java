@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -70,6 +71,8 @@ public class Game extends Canvas implements Runnable {
 	private ArrayList<Flare> flares = new ArrayList<Flare>();
 	private ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 	private ArrayList<PowerUps> powerups = new ArrayList<PowerUps>();
+	private HashMap<String, MP3Player> music = new HashMap<String, MP3Player>();
+	private String keymusic = "";
 
 
 	public void start() {
@@ -87,6 +90,11 @@ public class Game extends Canvas implements Runnable {
 		setFocusable(true);
 
 		imagen = new BufferedImage(Main.ANCHURA, Main.ALTURA,BufferedImage.TYPE_INT_RGB);
+		music.put("bgm_01", new MP3Player("/music/bgm_01.mp3"));
+		music.put("bgm_02", new MP3Player("/music/bgm_02.mp3"));
+		music.put("bgm_03", new MP3Player("/music/bgm_03.mp3"));
+		music.put("bgm_boss", new MP3Player("/music/bgm_boss.mp3"));
+
 
 		setMenu(new TitleMenu());
 	}
@@ -98,13 +106,19 @@ public class Game extends Canvas implements Runnable {
 		
 		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/"+level+"/"+level+"_"+levelmap+".txt"));
 		map = new Map(in.nextLine(), Map.TILESIZE);
-		obstacles = new GenerateObstacles(map);
+		//obstacles = new GenerateObstacles(map, true);
 		
 		PowerUps powerup;
-		if(levelmap != 8)
+		if(levelmap != 8) {
+			obstacles = new GenerateObstacles(map, true);
 			powerup = new PowerUps(in.nextInt(), obstacles.getList());
-		else 
+			keymusic = "bgm_01";
+		}
+		else {
+			obstacles = new GenerateObstacles(map, false);
 			powerup = new PowerUps(0, obstacles.getList());
+			keymusic = "bgm_boss";
+		}
 		
 		while(in.hasNext()) {
 			int type = in.nextInt();
@@ -114,17 +128,18 @@ public class Game extends Canvas implements Runnable {
 		}
 		//in.close();
 		
-		if(levelmap != 8 && !dead ){
+		if(levelmap != 8 && !dead){
 			powerups.add(powerup);
 		} 
 		else if(levelmap != 8 && dead && powerupssize > 0) {
 			powerups.add(powerup);
 		}
 		
-		
-		do {
-			exit = new Exit(obstacles.getList(), enemies);
-		} while(exit.intersects(powerup));
+		if (levelmap != 8) {
+			do {
+				exit = new Exit(obstacles.getList(), enemies);
+			} while(exit.intersects(powerup));
+		}
 		
 		in.close();
 	}
@@ -214,7 +229,8 @@ public class Game extends Canvas implements Runnable {
 				}
 			}
 			if (input.exit.clicked) {
-				MP3Player.stage.stop();
+				music.get(keymusic).stop();
+				//MP3Player.stage.stop();
 				playing = false;
 				initLevel();
 				level = 1;
@@ -222,11 +238,12 @@ public class Game extends Canvas implements Runnable {
 				setMenu(new TitleMenu());
 			}
 			if (input.pause.clicked) {
-				MP3Player.stage.pause();
+				//MP3Player.stage.pause();
+				music.get(keymusic).pause();
 				pause = !pause;
 			}
 			if (!pause) {
-				if (playing) MP3Player.stage.play();
+				if (playing) music.get(keymusic).play();
 				playing = true;
 				player.tick();
 				if (player.endLvl()) {
@@ -263,7 +280,7 @@ public class Game extends Canvas implements Runnable {
 				exit.tick();
 				// Comprobar si el jugador ha muerto
 				if (player.removed) {
-					MP3Player.stage.stop();
+					music.get(keymusic).stop();
 					player.setLives(player.getLives() - 1);
 					if (player.getLives() < 0) {
 						initLevel();
@@ -489,7 +506,7 @@ public class Game extends Canvas implements Runnable {
 			bombs.clear();
 			player.touchedBy(exit);
 			playing = false;
-			MP3Player.stage.stop();
+			music.get(keymusic).stop();
 			//System.out.println("Level Complete");
 		}
 	}

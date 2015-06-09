@@ -22,7 +22,7 @@ public class GenerateObstacles {
 	private int tileSize = 16;
 	private boolean canPlace = false;
 
-	public GenerateObstacles(Map map) {
+	public GenerateObstacles(Map map, boolean solidObstacles) {
 		int finX = map.getmapWidth();
 		int finY = map.getmapHeight();
 		this.tileSize *= map.getScale();
@@ -42,7 +42,7 @@ public class GenerateObstacles {
 			if (currentY >= (finY - offsetY * 2))
 				break;
 
-			if (rn.nextDouble() >= LIMIT) {
+			if (solidObstacles && rn.nextDouble() >= LIMIT) {
 
 				// Posiciones protegidas
 				if (currentX == 0 && currentY == 0 || 
