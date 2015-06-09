@@ -15,11 +15,11 @@ public class Enemy extends Mob {
 
 	int xdir, ydir, speed;
 
-	private GenerateObstacles obs;
-	private Bomberman player;
+	protected GenerateObstacles obs;
+	protected Bomberman player;
 	protected int score;
 
-	private static Random r = new Random();
+	protected static Random r = new Random();
 
 	protected Rectangle lastpos;
 
