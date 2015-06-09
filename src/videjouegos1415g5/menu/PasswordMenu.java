@@ -30,13 +30,11 @@ public class PasswordMenu extends Menu {
 	private SpriteSheet ss;
 	
 	private Menu menu;
-	private Game game;
 	
 	private String[][] passwords;
 
-	public PasswordMenu(TitleMenu titleMenu, Game game) {
+	public PasswordMenu(TitleMenu titleMenu) {
 		this.menu = titleMenu;
-		this.game = game;
 		this.scale = Main.ESCALA;
 		this.font1 = new Font(null, false);
 		this.password = new String[8];
