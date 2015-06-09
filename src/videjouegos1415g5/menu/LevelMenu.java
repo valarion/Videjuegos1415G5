@@ -37,43 +37,43 @@ public class LevelMenu extends Menu {
 		BufferedImage[] head = {ss.obtenerSprite(1, 160*scale, 23*scale, 23*scale), 
 				ss.obtenerSprite(23*scale, 160*scale, 24*scale, 23*scale), 
 				ss.obtenerSprite(48*scale, 160*scale, 24*scale, 23*scale)};
-		this.head = new Animation(head, 5);
+		this.head = new Animation(head, 12);
 		this.roundFlicker = new Animation(roundFlicker, 5);
 		this.levelFlicker = new Animation(levelFlicker, 5);
 		
 		// FALTA DE CALCULAR 
 		switch (level) {
 		case 1:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 18*scale;
+			this.y = 134*scale;
 			break;
 		case 2:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 48*scale;
+			this.y = 112*scale;
 			break;
 		case 3:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 66*scale;
+			this.y = 168*scale;
 			break;
 		case 4:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 104*scale;
+			this.y = 128*scale;
 			break;
 		case 5:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 154*scale;
+			this.y = 120*scale;
 			break;
 		case 6:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 210*scale;
+			this.y = 138*scale;
 			break;
 		case 7:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 210*scale;
+			this.y = 104*scale;
 			break;
 		case 8:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 210*scale;
+			this.y = 62*scale;
 			break;
 		}
 		this.head.start();
@@ -90,7 +90,6 @@ public class LevelMenu extends Menu {
 			levelFlicker.stop();
 			MP3Player.level_start.stop();
 			game.setMenu(new MapMenu(1, 1));
-			//game.setMenu(null);
 		}
 		head.tick();
 		roundFlicker.tick();
