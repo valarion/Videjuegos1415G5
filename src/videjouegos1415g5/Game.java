@@ -112,13 +112,17 @@ public class Game extends Canvas implements Runnable {
 		if(levelmap != 8) {
 			obstacles = new GenerateObstacles(map, true);
 			powerup = new PowerUps(in.nextInt(), obstacles.getList());
-			keymusic = "bgm_01";
 		}
 		else {
 			obstacles = new GenerateObstacles(map, false);
 			powerup = new PowerUps(0, obstacles.getList());
-			keymusic = "bgm_boss";
 		}
+		
+		if (levelmap != 8) { 
+			if (level == 4 || level == 7) keymusic = "bgm_03";
+			else if (level == 6 || level == 8) keymusic = "bgm_02";
+			else keymusic = "bgm_01";	
+		} else keymusic = "bgm_boss";
 		
 		while(in.hasNext()) {
 			int type = in.nextInt();
