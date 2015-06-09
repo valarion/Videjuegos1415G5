@@ -93,6 +93,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public void initLevel() {
 		boolean dead = player.removed;
+		int powerupssize = powerups.size();
 		clear();
 		
 		int enemiesCount = 5;
@@ -111,9 +112,13 @@ public class Game extends Canvas implements Runnable {
 		}
 		//in.close();
 		PowerUps powerup = new PowerUps(poweruptype, obstacles.getList());
-		if(levelmap != 8 && !dead){
+		if(levelmap != 8 && !dead ){
+			powerups.add(powerup);
+		} 
+		else if(levelmap != 8 && dead && powerupssize > 0) {
 			powerups.add(powerup);
 		}
+		
 		
 		do {
 			exit = new Exit(obstacles.getList(), enemies);
@@ -124,11 +129,10 @@ public class Game extends Canvas implements Runnable {
 	private void clear() {
 		if (obstacles != null) obstacles.getList().clear();
 		if (enemies != null) enemies.clear();
-		//if (powerups != null) powerups.clear();
+		if (powerups != null) powerups.clear();
 		if (bombs != null) bombs.clear();
 		if (flares != null) flares.clear();
 		if (player != null) player.reset();
-		if (powerups != null) powerups.clear();
 		time = 240;
 		offsetX = 0;
 		offsetY = 0;
