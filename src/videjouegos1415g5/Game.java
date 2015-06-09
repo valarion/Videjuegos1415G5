@@ -108,14 +108,13 @@ public class Game extends Canvas implements Runnable {
 		map = new Map(in.nextLine(), Map.TILESIZE);
 		//obstacles = new GenerateObstacles(map, true);
 		
-		PowerUps powerup;
+		PowerUps powerup = null;
 		if(levelmap != 8) {
 			obstacles = new GenerateObstacles(map, true);
 			powerup = new PowerUps(in.nextInt(), obstacles.getList());
 		}
 		else {
 			obstacles = new GenerateObstacles(map, false);
-			powerup = new PowerUps(0, obstacles.getList());
 		}
 		
 		if (levelmap != 8) { 
@@ -132,10 +131,10 @@ public class Game extends Canvas implements Runnable {
 		}
 		//in.close();
 		
-		if(levelmap != 8 && !dead){
+		if(powerup != null && levelmap != 8 && !dead){
 			powerups.add(powerup);
 		} 
-		else if(levelmap != 8 && dead && powerupssize > 0) {
+		else if(powerup != null && levelmap != 8 && dead && powerupssize > 0) {
 			powerups.add(powerup);
 		}
 		
