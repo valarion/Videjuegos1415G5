@@ -30,8 +30,7 @@ public class PowerUps extends Entity {
 		
 		BufferedImage[] powerup = new BufferedImage[]{ss.obtenerSprite(type*w*scale, 0, w*scale, h*scale),
 					ss.obtenerSprite(type*w*scale, h*scale, w*scale, h*scale)};
-		
-		while (!located) findStartPos(obs);
+		if (type != 0) while (!located) findStartPos(obs);
 		this.animation = new Animation(powerup, 10, Direction.DOWN);
 		this.animation.start();
 		
