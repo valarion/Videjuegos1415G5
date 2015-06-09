@@ -14,6 +14,7 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 import videjouegos1415g5.cutscenes.FinalScene;
+import videjouegos1415g5.cutscenes.InitScene;
 import videjouegos1415g5.entity.Balloon;
 import videjouegos1415g5.entity.BalloonBlue;
 import videjouegos1415g5.entity.BalloonPurple;
@@ -44,9 +45,9 @@ public class Game extends Canvas implements Runnable {
 
 	private BufferedImage imagen;
 	private int tickCount;
-	int offsetX = 0;
-	int offsetY = 0;
-	int time; // 4 minutos
+	private int offsetX = 0;
+	private int offsetY = 0;
+	private int time; // 4 minutos
 	
 	private int level = 1;
 	private int levelmap = 1;
@@ -57,13 +58,13 @@ public class Game extends Canvas implements Runnable {
 	private boolean pause = false;
 	// private KeyInput input = new KeyInput(this);
 	private InputHandler input = new InputHandler(this);
-	public Font font;
-	public BufferedImage gui = null;
+	private Font font;
+	private BufferedImage gui = null;
 
 	private Map map;
 	private GenerateObstacles obstacles;
 	private Menu menu;
-	public Bomberman player;
+	private Bomberman player;
 	private Entity exit;
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	private ArrayList<Flare> flares = new ArrayList<Flare>();
@@ -684,5 +685,21 @@ public class Game extends Canvas implements Runnable {
 			if(flare.isFinal())
 				break;
 		}
+	}
+	
+	public void startLevel(int level, int map) {
+		this.level = level;
+		this.levelmap = map;
+		player = new Bomberman(input);
+		initLevel();
+		font = new Font(Color.WHITE, false);
+		try {
+			gui = ScaleImg.scale(ImageIO.read(this.getClass().getResource("/hud.png")),Main.ESCALA);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (level == 1 && map == 1) setMenu(new InitScene());
+		else if (level > 1 && map == 1) setMenu(new LevelMenu(level));
+		else setMenu(new MapMenu(level, map));
 	}
 }

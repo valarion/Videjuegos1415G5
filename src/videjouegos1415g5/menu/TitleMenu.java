@@ -74,18 +74,8 @@ public class TitleMenu extends Menu {
 
 			if (input.fire.clicked) {
 				if (selected == 0) {
-					// game.resetGame();
-					// game.setMenu(new TransitionMenu(null));
 					MP3Player.title.stop();
-					game.player = new Bomberman(input);
-					game.initLevel();
-					game.font = new Font(Color.WHITE, false);
-					try {
-						game.gui = ScaleImg.scale(ImageIO.read(this.getClass().getResource("/hud.png")),Main.ESCALA);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					game.setMenu(new InitScene());
+					game.startLevel(1, 1);
 				}
 				if (selected == 1)
 					game.setMenu(new BattleMenu(this));
