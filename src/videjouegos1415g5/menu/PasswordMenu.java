@@ -4,13 +4,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
 
-import videjouegos1415g5.Game;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.gfx.Font;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.MP3Player;
 
 public class PasswordMenu extends Menu {
 	
@@ -78,22 +78,29 @@ public class PasswordMenu extends Menu {
 			else if (chars[selected].equals(chars[chars.length - 2])) index++; // Caracter >
 			else if (chars[selected].equals(chars[chars.length - 1])) { // Caracter END
 				// Comprobar password
-				String pass = String.join("", password);
+				//String pass = String.join("", password);
+				String pass = "";
+				for (int i = 0; i<password.length; i++) {
+					pass += password[i];
+				}
 				int i = 0, j = 0;
-				for(i=0; i<8;i++) {
+				found: for(i=0; i<8;i++) {
 					for(j=0; j<8; j++) {
-						if(passwords[i][j].equals(pass))
-							System.out.println("Found!");
+						if(passwords[i][j].equals(pass)) {
+							i++;
+							j++;
+							MP3Player.title.stop();
+							game.startLevel(i, j);
+							break found;
+						}
 					}
 				}
-				i++;
-				j++;
 				// TODO crear nivel i j
 				/*for (int i = 0; i<password.length; i++) {
 					System.out.print(password[i]);
-				}
+				}*/
 				password = new String[password.length];
-				index = 0;*/
+				index = 0;
 			}
 			else password[index++] = chars[selected]; // Cualquiera de los otros caracteres
 			
