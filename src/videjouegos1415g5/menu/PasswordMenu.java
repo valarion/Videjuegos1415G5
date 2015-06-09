@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
 
+import videjouegos1415g5.Game;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.gfx.Font;
@@ -29,11 +30,13 @@ public class PasswordMenu extends Menu {
 	private SpriteSheet ss;
 	
 	private Menu menu;
+	private Game game;
 	
 	private String[][] passwords;
 
-	public PasswordMenu(TitleMenu titleMenu) {
+	public PasswordMenu(TitleMenu titleMenu, Game game) {
 		this.menu = titleMenu;
+		this.game = game;
 		this.scale = Main.ESCALA;
 		this.font1 = new Font(null, false);
 		this.password = new String[8];
@@ -46,7 +49,7 @@ public class PasswordMenu extends Menu {
 				ss.obtenerSprite(40*scale, 0, 22*scale, 23*scale)};
 		this.bomb = new Animation(bomb, 10);
 		
-		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitionspasswords.txt"));
+		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/passwords.txt"));
 		
 		passwords = new String[8][8];
 		
@@ -77,11 +80,22 @@ public class PasswordMenu extends Menu {
 			else if (chars[selected].equals(chars[chars.length - 2])) index++; // Caracter >
 			else if (chars[selected].equals(chars[chars.length - 1])) { // Caracter END
 				// Comprobar password
-				for (int i = 0; i<password.length; i++) {
+				String pass = String.join("", password);
+				int i = 0, j = 0;
+				for(i=0; i<8;i++) {
+					for(j=0; j<8; j++) {
+						if(passwords[i][j].equals(pass))
+							System.out.println("Found!");
+					}
+				}
+				i++;
+				j++;
+				// TODO crear nivel i j
+				/*for (int i = 0; i<password.length; i++) {
 					System.out.print(password[i]);
 				}
 				password = new String[password.length];
-				index = 0;
+				index = 0;*/
 			}
 			else password[index++] = chars[selected]; // Cualquiera de los otros caracteres
 			
