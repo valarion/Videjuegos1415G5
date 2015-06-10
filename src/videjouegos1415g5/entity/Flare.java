@@ -6,6 +6,10 @@ import java.awt.image.BufferedImage;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
+
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -163,5 +167,33 @@ public class Flare extends Entity {
 	
 	public boolean isMid() {
 		return ANIMATION == midflare;
+	}
+	
+	public void render3d(GL2 gl, GLU glu){
+gl.glPushMatrix();
+		
+		gl.glTranslated(position.x-5, -position.y+5, 0);
+		
+		  GLUquadric earth = glu.gluNewQuadric();
+	        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+	        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+	        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+	        
+	        final int slices = 16;
+	        final int stacks = 16;
+	        gl.glColor3d(1, 0.2, 0.2);
+	       // glu.gluSphere(earth, radius, slices, stacks);
+	        gl.glColor3d(0.1,0.0,1);
+	        glu.gluDisk(earth, 3, 4, slices, 5);
+	        glu.gluDisk(earth, 7, 8, slices, 5);
+	        gl.glColor3d(0.1,1,0.0);
+	        glu.gluDisk(earth, 5, 6, slices, 5);
+	        glu.gluDisk(earth, 9, 10, slices, 5);
+		gl.glTranslated(0.0,-0.5,8);
+		gl.glColor3d(1, 0.2, 0.2);
+	       // glu.gluSphere(earth, radius, slices, stacks);
+		//glu.gluSphere(earth,1, slices, stacks);
+		glu.gluDeleteQuadric(earth);
+		gl.glPopMatrix();
 	}
 }

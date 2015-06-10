@@ -9,6 +9,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+
 import videjouegos1415g5.Main;
 import videjouegos1415g5.gfx.Font;
 
@@ -129,4 +132,42 @@ public class SetupMenu extends Menu {
 		font1 = new Font(null, true);
 		font2 = new Font(new Color(255, 255, 0), true);
 	}
+public void render3D(GL2 gl, GLU glu) {	
+		
+		gl.glPushMatrix();
+		gl.glTranslated(-250, 150, 0);
+		gl.glColor3f(1.0f, 1.0f, 0.1f);
+		this.pintarfrase(gl, glu, 18f, "DYNA");
+		gl.glTranslated(170, -100, 0);
+		this.pintarfrase(gl, glu, 15f, "BLASTER");
+		float tamaño=8f;
+		gl.glTranslated(0, -90, 0);
+		
+		
+				
+				for (int i = 0; i < options.length; i++) {
+					System.out.println("hola");
+					String msg = options[i]; 
+					if (i == selected) {
+						gl.glPushMatrix();
+						gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
+						this.cursor(gl, glu, tamaño);
+						gl.glTranslatef(tamaño*2, 0.0f, 0.0f);
+						gl.glColor3f(0.0f, 1.0f, 0.1f);
+						
+						this.pintarfrase(gl, glu, tamaño, msg);
+						
+						gl.glPopMatrix();
+						} else {
+							gl.glPushMatrix();
+							gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
+							gl.glColor3f(0.0f, 0.0f, 1f);
+							this.pintarfrase(gl, glu, tamaño, msg);
+							gl.glPopMatrix();
+						}
+				}
+				
+							
+gl.glPopMatrix();	
+}
 }

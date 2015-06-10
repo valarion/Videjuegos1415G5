@@ -2,6 +2,9 @@ package videjouegos1415g5.entity;
 
 import java.awt.Graphics2D;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+
 import videjouegos1415g5.GameObject;
 import videjouegos1415g5.Main;
 import videjouegos1415g5.gfx.SpriteLoader;
@@ -99,5 +102,10 @@ public class Entity extends GameObject {
 	
 	public boolean isInvincible() {
 		return false;
+	}
+	
+	public void render3d(GL2 g, GLU glu) {
+		// TODO Auto-generated method stub
+		
 	}
 }

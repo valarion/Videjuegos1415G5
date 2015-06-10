@@ -57,7 +57,7 @@ public class InputHandler implements KeyListener {
 		}
 	}
 
-	public InputHandler(Game game) {
+	public InputHandler(Game3D game) {
 		game.addKeyListener(this);
 	}
 	

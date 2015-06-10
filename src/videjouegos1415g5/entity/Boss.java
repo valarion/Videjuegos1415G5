@@ -19,34 +19,32 @@ public class Boss extends Enemy {
 		if (health <= 0)
 			die();
 		else {
-			if (move) {
-				this.position.x += xdir;
-				this.position.y += ydir;
+			this.position.x += xdir;
+			this.position.y += ydir;
 
-				boolean isinsquare = position.equals(lastpos);
-				lastpos = new Rectangle(position);
-				if (!isinsquare)
-					for (Obstacle rect : obs.getPath()) {
-						if (rect.getBounds().contains(position)) {
-							isinsquare = true;
-							break;
-						}
-					}
-
-				int xsign = sign(player.position.x - position.x);
-				int ysign = sign(player.position.y - position.y);
-
-				if (isinsquare) {
-					switch (r.nextInt(15)) {
-					case 0:
-						xdir = xsign * speed;
-						ydir = 0;
-						break;
-					case 1:
-						xdir = 0;
-						ydir = ysign * speed;
+			boolean isinsquare = position.equals(lastpos);
+			lastpos = new Rectangle(position);
+			if (!isinsquare)
+				for (Obstacle rect : obs.getPath()) {
+					if (rect.getBounds().contains(position)) {
+						isinsquare = true;
 						break;
 					}
+				}
+			
+			int xsign = sign(player.position.x - position.x);
+			int ysign = sign(player.position.y - position.y);
+
+			if (isinsquare) {
+				switch (r.nextInt(15)) {
+				case 0:
+					xdir = xsign*speed;
+					ydir = 0;
+					break;
+				case 1:
+					xdir = 0;
+					ydir = ysign*speed;
+					break;
 				}
 			}
 		}

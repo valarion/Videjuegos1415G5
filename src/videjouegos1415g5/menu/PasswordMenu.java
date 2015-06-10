@@ -4,6 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Scanner;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+
 import videjouegos1415g5.Main;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.gfx.Font;
@@ -16,11 +19,11 @@ public class PasswordMenu extends Menu {
 	
 	private static final String cursor = "/menu/bomb_cursor.png";
 	private int selected = 0;
-	private String title = "Enter password ......";
+	private String title = "ENTER PASSWORD ......";
 	private String[] chars = 
 		{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 			"K", "L", "M", "N", "O", "P", "Q", "R", "S" , "T",
-			"U", "V", "W", "X", "Y", "Z", "<", ">", "#/" };
+			"U", "V", "W", "X", "Y", "Z", "<", ">", "#" };
 	private String[] password;
 	private int index = 0;;
 	private Font font1;
@@ -154,4 +157,77 @@ public class PasswordMenu extends Menu {
 			
 		}
 	}
+	
+		
+public void render3D(GL2 gl, GLU glu) {
+	float size=8;
+	
+	    gl.glPushMatrix();
+	    gl.glTranslated(-250, 150, 0);
+	    // Titulo del menu
+	   /* font1.render(g, title, 
+	    		game.getWidth() / 2 - (title.length() / 2)*font1.getTilesize()*scale,
+	    		game.getHeight() / 2 - font1.getTilesize()*8*scale);*/
+	    
+		this.x = game.getWidth() / 2 - ((19/2)*font1.getTilesize())*scale;
+		this.y = game.getHeight() / 2 - font1.getTilesize()*3*scale;
+		gl.glColor3d(1,0.0,0.0);
+		this.pintarfrase(gl, glu, 10f, title);
+	    gl.glTranslated(0, -50, 0);
+	    // Cursor de todas los caracteres
+	 
+		
+		// Caracteres
+		
+		
+	    for (int i = 0; i < chars.length; i++) {
+	    	/*font1.render(g, chars[i],
+	    			x + i%10 * font1.getTilesize()*2*scale, 
+	    			y + i/10 * font1.getTilesize()*2*scale);*/
+	    	gl.glPushMatrix();
+	    	gl.glColor3d(0.9, 0.9, 0.9);
+	    	if(i==selected){gl.glColor3d(0.1, 1, 0.1);}
+	    	gl.glTranslated(x+(i%10)*(size*3+size/2), -(y+(i/10)*(4*size+size/2)),0.0);
+	    	this.pintarfrase(gl, glu, size, chars[i]);
+	    	gl.glPopMatrix();
+	    }
+	    
+	    
+	    this.x = game.getWidth() / 2 - password.length/2*font1.getTilesize()*scale;
+	    this.y = game.getHeight() - font1.getTilesize()*5*scale;
+	    String pass;
+	    gl.glTranslated(0.0,-20,0.0);
+	    gl.glPushMatrix();
+		for (int i = 0; i < password.length; i++) {
+			
+			gl.glTranslated(size*3+size/2, 0.0, 0.0);
+			if (password[i] != null)
+				//font1.render(g, password[i],  x + i*font1.getTilesize()*scale, y);
+				
+	
+			this.pintarfrase(gl, glu, size, password[i]);
+		}
+		gl.glPopMatrix();
+			// Guiones
+			/*font1.render(g, "-", 
+					x + i*font1.getTilesize()*scale, y + font1.getTilesize() * scale);*/
+			gl.glTranslated(0, -size*4, 0.0);
+		gl.glPushMatrix();
+			for (int i = 0; i < password.length; i++) {
+				gl.glTranslated(size*3+size/2, 0.0, 0.0);
+			this.pintarfrase(gl, glu, size, "#");
+		
+			// Cursor de la letra seleccionada
+			//font1.render(g, "=", x+ index*font1.getTilesize()*scale, y + font1.getTilesize() * scale);
+		
+		}
+			gl.glPopMatrix();
+		gl.glPushMatrix();
+		gl.glTranslated((double)((size*3+size/2)*(index+1)),0.0,0.0);
+		this.pintarfrase(gl, glu, size, "-");
+		gl.glPopMatrix();
+gl.glPopMatrix();
+}
+
+	
 }

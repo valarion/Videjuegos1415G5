@@ -1,18 +1,19 @@
 package videjouegos1415g5.entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
+
 import videjouegos1415g5.InputHandler;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
-import videjouegos1415g5.gfx.Colors;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
-import videjouegos1415g5.sound.MP3Player;
 import videjouegos1415g5.sound.Sound;
 
 public class Bomberman extends Mob {
@@ -182,13 +183,6 @@ public class Bomberman extends Mob {
 								/ 2, position.y + position.height / 2
 								- (f.getHeight() + 11 * scale) / 2, null);
 			}
-			else {
-				BufferedImage f = animation.getSprite();
-				g.drawImage(Colors.convertColor(f, Color.WHITE),
-						position.x + position.width / 2 - (f.getWidth() - 1 * scale)
-								/ 2, position.y + position.height / 2
-								- (f.getHeight() + 11 * scale) / 2, null);
-			}
 		}
 		else {
 			BufferedImage f = teleport.getSprite();
@@ -327,9 +321,64 @@ public class Bomberman extends Mob {
 		return invincible > 0;
 	}
 
-	public boolean isDying() {
-		return animation == death;
+public void render3d( GL2 gl, GLU glu ) {
+		float r=8.5f;
+		setCamera(gl, glu, 0, 0,500);
+gl.glPushMatrix();
+		
+		gl.glTranslated(position.x-3, -position.y+5, 0);
+		gl.glScaled(1.4,1,1);
+		gl.glPushMatrix();
+		  GLUquadric earth = glu.gluNewQuadric();
+	        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+	        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+	        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+	        
+	        final int slices = 16;
+	        final int stacks = 16;
+	        gl.glColor3d(1, 1, 1);
+	       
+	     
+		glu.gluSphere(earth,r, slices, stacks);
+		 gl.glPushMatrix();
+	        gl.glTranslated(0,0,r);
+	        gl.glColor3d(1, 0.8, 0.7);
+	        glu.gluSphere(earth,r/1.5, slices, stacks);
+	        gl.glPopMatrix();
+		
+		gl.glPushMatrix();
+		gl.glTranslated(0,r-r/10.0, 0);
+		gl.glRotated(-90, 1, 0, 0);
+		glu.gluCylinder(earth, r/5, r/5, r/1.8, slices, stacks);
+		gl.glPopMatrix();
+		gl.glTranslated(0, 2*r-r/4.0, 0);
+		
+		gl.glColor3d(1, 0.2, 0.2);
+		glu.gluSphere(earth,r/2.5, slices, stacks);
+	 gl.glPopMatrix();
+	 gl.glColor3d(0.2, 0.2, 0.2);
+	 gl.glTranslated(-r/3.2,0, 1.5*r);
+	 glu.gluSphere(earth,r/6.0, slices, stacks);
+	 gl.glTranslated(r*2/3.2,0, 0);
+	 glu.gluSphere(earth,r/6.0, slices, stacks);
+	 glu.gluDeleteQuadric(earth);
+		gl.glPopMatrix();
 	}
+	private void setCamera(GL2 gl, GLU glu, float x, float y, float z) {
+        
+		// Change to projection matrix.
+        gl.glMatrixMode(GL2.GL_PROJECTION);
+        gl.glLoadIdentity();
 
-	
+        // Perspective.
+        float widthHeightRatio = 640 / (float) 480;
+        glu.gluPerspective(45, widthHeightRatio, 1, 1000);
+       
+        glu.gluLookAt(position.x, -position.y, z, position.x, -position.y, 0, 0, 1, 0);
+
+        // Change back to model view matrix.
+        gl.glMatrixMode(GL2.GL_MODELVIEW);
+        gl.glLoadIdentity();
+    }
 }
+

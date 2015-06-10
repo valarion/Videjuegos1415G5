@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
 	
-	public KeyInput(Game game) {
+	public KeyInput(Game3D game) {
 		game.addKeyListener(this);
 	}
 

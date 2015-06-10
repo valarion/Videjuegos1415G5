@@ -6,6 +6,9 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+
 
 public class GenerateObstacles {
 
@@ -61,7 +64,7 @@ public class GenerateObstacles {
 					obstacles.add(new Obstacle(
 							currentX*tileSize + offsetX*tileSize, 
 							currentY*tileSize + offsetY*tileSize, 
-							tileSize, null, map.getSpriteSheet(), map.getScale(), true));
+							tileSize, null, map.getSpriteSheet(), map.getScale(), true,1));
 
 					canPlace = false;
 				}
@@ -71,14 +74,14 @@ public class GenerateObstacles {
 				path.add(new Obstacle(
 							currentX*tileSize + offsetX*tileSize, 
 							currentY*tileSize + offsetY*tileSize, 
-							tileSize, null, map.getSpriteSheet(), map.getScale(), true));
+							tileSize, null, map.getSpriteSheet(), map.getScale(), true,4));
 			}
 			// Obstaculos fijos
 			if (currentY%2 != 0 && currentX%2 != 0)
 				obstacles.add(new Obstacle(
 						currentX*tileSize + offsetX*tileSize, 
 						currentY*tileSize + offsetY*tileSize, 
-						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false,2));
 			
 			// Paredes laterales
 			// Pared izquierda
@@ -86,28 +89,28 @@ public class GenerateObstacles {
 				obstacles.add(new Obstacle(
 						currentX*tileSize, 
 						currentY*tileSize + offsetY*tileSize, 
-						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false,3));
 			
 			// Pared Derecha
 			if (currentX == ((finX - offsetX*2) - 1)) 
 				obstacles.add(new Obstacle(
 						currentX*tileSize + (offsetX+1)*tileSize, 
 						currentY*tileSize + offsetY*tileSize, 
-						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false,3));
 			
 			// Pared superior
 			if (currentY == 0) 
 				obstacles.add(new Obstacle(
 						currentX*tileSize + offsetX*tileSize, 
 						currentY*tileSize, 
-						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false,3));
 			
 			// Pared inferior
 			if (currentY == (finY - offsetY*2) - 1) 
 				obstacles.add(new Obstacle(
 						currentX*tileSize + offsetX*tileSize, 
 						currentY*tileSize + (offsetY+1)*tileSize, 
-						tileSize, null, map.getSpriteSheet(), map.getScale(), false));
+						tileSize, null, map.getSpriteSheet(), map.getScale(), false,3));
 			
 
 			currentX++;
@@ -148,5 +151,10 @@ public class GenerateObstacles {
 	
 	public int tileSize() {
 		return tileSize;
+	}
+	public void draw3d(GL2 gl, GLU glu) {
+		for (int i = 0; i < obstacles.size(); i++) {
+			obstacles.get(i).draw3d(gl,glu);
+		}
 	}
 }

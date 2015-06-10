@@ -4,6 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
+
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -63,5 +67,51 @@ public class GhostYellow extends Enemy {
 	
 	public Rectangle getBounds() {
 		return new Rectangle(position.x, position.y, w, h);
+	}
+	
+	public void render3d(GL2 gl, GLU glu){
+
+		float r=8.5f;
+		gl.glPushMatrix();
+		 gl.glColor3d(1, 1, 0);
+		gl.glTranslated(position.x-3, -position.y+5, 0);
+		gl.glScaled(1.4,1,1);
+		gl.glPushMatrix();
+		gl.glScaled(1,1,0.2);
+		  GLUquadric earth = glu.gluNewQuadric();
+	        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+	        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+	        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+	        
+	        final int slices = 16;
+	        final int stacks = 16;
+	        gl.glColor3d(1, 1, 0);
+	       
+	     
+		glu.gluSphere(earth,r, slices, stacks);
+		gl.glPopMatrix();
+		gl.glPushMatrix();
+		gl.glRotated(90,1,0,0);
+		gl.glScaled(1,0.2,1);
+		 glu.gluCylinder(earth, r, r, 2*r, slices, stacks);
+		 gl.glPopMatrix();
+		
+		 gl.glColor3d(0,0,0);
+		 gl.glTranslated(-r/2, 0, r/5);
+		 glu.gluDisk(earth, 0, r/8, slices, stacks);
+		 gl.glTranslated(r,0,0);
+		 glu.gluDisk(earth, 0, r/8, slices, stacks);
+		 gl.glColor3d(1,1,1);
+		 glu.gluDisk(earth, r/8.2, r/3.8, slices, stacks);
+		 gl.glTranslated(-r,0,0);
+		 glu.gluDisk(earth, r/8.2, r/3.8, slices, stacks);
+		 
+		 gl.glTranslated(r/2,-r/2,0);
+		 gl.glScaled(3.5,0.5,0);
+		 gl.glColor3d(1,0.6,0);
+		 glu.gluDisk(earth, r/8.2, r/4, slices, stacks);
+		 gl.glColor3d(1,0.4,0.1);
+		 glu.gluDisk(earth, 0, r/8, slices, stacks);
+		gl.glPopMatrix();
 	}
 }

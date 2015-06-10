@@ -8,6 +8,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
+
 import videjouegos1415g5.Main;
 import videjouegos1415g5.cutscenes.InitScene;
 import videjouegos1415g5.entity.Bomberman;
@@ -26,7 +30,7 @@ public class TitleMenu extends Menu {
 	private static final String background = "/menu/bg1.png";
 	private static final String dyna = "/menu/dyna.png";
 	private static final String blaster = "/menu/blaster.png";
-	private static final String[] options = { "Game start", "Battle", "Setup", "Password" };
+	private static final String[] options = { "GAME START", "BATTLE", "SETUP", "PASSWORD" };
 	private static final String push = "Push fire button !";
 	private static final String copyright = "COPYRIGHT 2015.2015";
 	private static final String company = "VidejuegosG5 SA";
@@ -138,5 +142,135 @@ public class TitleMenu extends Menu {
 		bl = bi4.getScaledInstance(bi4.getWidth() * scale, bi4.getHeight() * scale, Image.SCALE_SMOOTH);
 		font1 = new Font(null, true);
 		font2 = new Font(new Color(255, 255, 0), true);
+	}
+	
+	public void render3D(GL2 gl, GLU glu) {	
+	
+		gl.glPushMatrix();
+		gl.glTranslated(-250, 150, 0);
+		gl.glColor3f(1.0f, 1.0f, 0.1f);
+		this.pintarfrase(gl, glu, 18f, "DYNA");
+		gl.glTranslated(170, -100, 0);
+		this.pintarfrase(gl, glu, 15f, "BLASTER");
+		float tamaño=8f;
+		gl.glTranslated(0, -90, 0);
+		
+		
+				
+				for (int i = 0; i < options.length; i++) {
+					
+					String msg = options[i]; 
+					if (i == selected) {
+						gl.glPushMatrix();
+						gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
+						this.cursor(gl, glu, tamaño);
+						gl.glTranslatef(tamaño*2, 0.0f, 0.0f);
+						gl.glColor3f(0.0f, 1.0f, 0.1f);
+						
+						this.pintarfrase(gl, glu, tamaño, msg);
+						
+						gl.glPopMatrix();
+						} else {
+							gl.glPushMatrix();
+							gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
+							gl.glColor3f(0.0f, 0.0f, 1f);
+							this.pintarfrase(gl, glu, tamaño, msg);
+							gl.glPopMatrix();
+						}
+				}
+				gl.glPushMatrix();
+				gl.glTranslated(-100, -50, 0.0);
+				gl.glScaled(7,7,7);
+	//this.prueba(gl, glu);
+	gl.glPopMatrix();
+gl.glPopMatrix();
+gl.glPushMatrix();
+//gl.glTranslated(-100, -50, 0.0);
+gl.glScaled(7,7,7);
+//this.prueba(gl, glu);
+gl.glPopMatrix();
+}
+	
+	
+	
+	
+	public void prueba(GL2 gl, GLU glu){
+
+		float r=8.5f;
+		gl.glPushMatrix();
+		 gl.glColor3d(1, 0, 1);
+		//gl.glTranslated(position.x-3, -position.y+5, 0);
+		gl.glScaled(1.4,1,1);
+		gl.glPushMatrix();
+		gl.glScaled(1,1,0.2);
+		  GLUquadric earth = glu.gluNewQuadric();
+	        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+	        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+	        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+	        
+	        final int slices = 16;
+	        final int stacks = 16;
+	        gl.glColor3d(1, 0, 1);
+	       
+	     
+		glu.gluSphere(earth,r, slices, stacks);
+		gl.glPopMatrix();
+		
+		
+		//alas
+		gl.glPushMatrix();
+		gl.glTranslated(r*0.85,r,r/20);
+		float tamaño=r/3f;
+	
+		 gl.glBegin(GL2.GL_TRIANGLE_FAN);
+	       gl.glNormal3f(0, 0, 1);
+	       gl.glVertex3f(-tamaño*1.5f, -tamaño*1.5f, 0);
+	       gl.glVertex3f(+tamaño*1.8f, tamaño*1.5f, 0);
+	       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
+	       gl.glEnd();
+	      gl.glTranslated(-r*1.8,0,0);
+	      gl.glRotated(180,0,1,0);
+	       gl.glBegin(GL2.GL_TRIANGLE_FAN);
+	   
+	       gl.glNormal3f(0, 0, -1);
+	       gl.glVertex3f(-tamaño*1.5f, -tamaño*1.5f, 0);
+	       gl.glVertex3f(+tamaño*1.8f, tamaño*1.5f, 0);
+	       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
+	       gl.glEnd();
+		
+		
+		gl.glPopMatrix();
+		
+		
+	
+	//ojos	
+		 gl.glColor3d(0,0,0);
+		 gl.glTranslated(-r/2, 0, r/5);
+		 glu.gluDisk(earth, 0, r/8, slices, stacks);
+		 gl.glTranslated(r,0,0);
+		 glu.gluDisk(earth, 0, r/8, slices, stacks);
+		 gl.glColor3d(1,1,1);
+		 glu.gluDisk(earth, r/8.2, r/3.8, slices, stacks);
+		 gl.glTranslated(-r,0,0);
+		 glu.gluDisk(earth, r/8.2, r/3.8, slices, stacks);
+		 //boca
+		 gl.glTranslated(r/2,-r/2,0);
+		 tamaño=r/10;
+		 gl.glTranslated(-r/4,0,0);
+		 gl.glBegin(GL2.GL_TRIANGLE_FAN);
+	       gl.glNormal3f(0, 0, 1);
+	       gl.glVertex3f(0, -tamaño*1.5f, 0);
+	       gl.glVertex3f(+tamaño*1.5f, tamaño*1.5f, 0);
+	       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
+	       gl.glEnd();
+	       gl.glTranslated(r/2,0,0);
+			 gl.glBegin(GL2.GL_TRIANGLE_FAN);
+		       gl.glNormal3f(0, 0, 1);
+		       gl.glVertex3f(0, -tamaño*1.5f, 0);
+		       gl.glVertex3f(+tamaño*1.5f, tamaño*1.5f, 0);
+		       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
+		       gl.glEnd();
+		gl.glPopMatrix();
+		System.out.println();
 	}
 }

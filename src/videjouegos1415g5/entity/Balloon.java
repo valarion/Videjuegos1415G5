@@ -4,6 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
+
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -61,4 +65,34 @@ public class Balloon extends Enemy {
 	public Rectangle getBounds() {
 		return new Rectangle(position.x, position.y, w, h);
 	}
+	
+	public void render3d( GL2 gl, GLU glu ) {
+		
+		float r=8;
+gl.glPushMatrix();
+
+gl.glTranslated(position.x-5, -position.y+5, 0);
+		gl.glScaled(1.5,1,1);
+		
+		
+		  GLUquadric earth = glu.gluNewQuadric();
+	        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+	        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+	        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+	        
+	        final int slices = 16;
+	        final int stacks = 16;
+	        gl.glColor3d(1, 0.25, 0.0);
+	       // glu.gluSphere(earth, radius, slices, stacks);
+		glu.gluSphere(earth,r, slices, stacks);
+		
+	
+		gl.glTranslated(0.0, -2*r*3/4, 0.0);
+		gl.glRotated(-90, 1, 0, 0);
+		
+		glu.gluCylinder(earth, r/10, r/1.2, r, slices, stacks);
+	 glu.gluDeleteQuadric(earth);
+		gl.glPopMatrix();
+	}
+	
 }

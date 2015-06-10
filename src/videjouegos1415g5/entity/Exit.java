@@ -4,6 +4,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
+
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
@@ -70,5 +74,61 @@ public class Exit extends Entity {
 	
 	public boolean isActive() {
 		return activated;
+	}
+	
+		public void render3d(GL2 gl, GLU glu){
+
+		gl.glPushMatrix();
+		gl.glTranslated(position.x, -position.y, 0);
+		gl.glScaled(20,20,1);
+		gl.glColor3d(1, 1, 0.2);
+		if (activated){
+			gl.glColor3d(0,0.3,1);
+			gl.glScaled(1.55,1.55,1);}
+	    gl.glTranslated(-0.5,-0.5,-0.5);
+	      /* draws the sides of a unit cube (0,0,0)-(1,1,1) */
+	      gl.glBegin(GL2.GL_POLYGON);/* f1: front */
+	        gl.glNormal3f(-1.0f,0.0f,0.0f);
+	        gl.glVertex3f(0.0f,0.0f,0.0f);
+	        gl.glVertex3f(0.0f,0.0f,1.0f);
+	        gl.glVertex3f(1.0f,0.0f,1.0f);
+	        gl.glVertex3f(1.0f,0.0f,0.0f);
+	      gl.glEnd();
+	      gl.glBegin(GL2.GL_POLYGON);/* f2: bottom */
+	        gl.glNormal3f(0.0f,0.0f,-1.0f);
+	        gl.glVertex3f(0.0f,0.0f,0.0f);
+	        gl.glVertex3f(1.0f,0.0f,0.0f);
+	        gl.glVertex3f(1.0f,1.0f,0.0f);
+	        gl.glVertex3f(0.0f,1.0f,0.0f);
+	      gl.glEnd();
+	      gl.glBegin(GL2.GL_POLYGON);/* f3:back */
+	        gl.glNormal3f(1.0f,0.0f,0.0f);
+	        gl.glVertex3f(1.0f,1.0f,0.0f);
+	        gl.glVertex3f(1.0f,1.0f,1.0f);
+	        gl.glVertex3f(0.0f,1.0f,1.0f);
+	        gl.glVertex3f(0.0f,1.0f,0.0f);
+	      gl.glEnd();
+	      gl.glBegin(GL2.GL_POLYGON);/* f4: top */
+	        gl.glNormal3f(0.0f,0.0f,1.0f);
+	        gl.glVertex3f(1.0f,1.0f,1.0f);
+	        gl.glVertex3f(1.0f,0.0f,1.0f);
+	        gl.glVertex3f(0.0f,0.0f,1.0f);
+	        gl.glVertex3f(0.0f,1.0f,1.0f);
+	      gl.glEnd();
+	      gl.glBegin(GL2.GL_POLYGON);/* f5: left */
+	        gl.glNormal3f(0.0f,1.0f,0.0f);
+	        gl.glVertex3f(0.0f,0.0f,0.0f);
+	        gl.glVertex3f(0.0f,1.0f,0.0f);
+	        gl.glVertex3f(0.0f,1.0f,1.0f);
+	        gl.glVertex3f(0.0f,0.0f,1.0f);
+	      gl.glEnd();
+	      gl.glBegin(GL2.GL_POLYGON);/* f6: right */
+	        gl.glNormal3f(0.0f,-1.0f,0.0f);
+	        gl.glVertex3f(1.0f,0.0f,0.0f);
+	        gl.glVertex3f(1.0f,0.0f,1.0f);
+	        gl.glVertex3f(1.0f,1.0f,1.0f);
+	        gl.glVertex3f(1.0f,1.0f,0.0f);
+	      gl.glEnd();
+	      gl.glPopMatrix();
 	}
 }
