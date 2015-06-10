@@ -33,6 +33,7 @@ import videjouegos1415g5.menu.MapMenu;
 import videjouegos1415g5.menu.Menu;
 import videjouegos1415g5.menu.TitleMenu;
 import videjouegos1415g5.sound.MP3Player;
+import videjouegos1415g5.sound.Sound;
 
 public class Game extends Canvas implements Runnable {
 
@@ -271,6 +272,7 @@ public class Game extends Canvas implements Runnable {
 				}
 				if(player.hasRemoteDetonator() && input.remote.clicked && bombs.size() > 0) {
 					bombs.get(0).removed = true;
+					Sound.bomb.play();
 				}
 				if(input.fire.clicked && bombs.size() < player.getBombs()) {
 					Bomb bomb = new Bomb(player);
@@ -282,6 +284,13 @@ public class Game extends Canvas implements Runnable {
 						}
 					}
 					if(!found)
+						for (Obstacle obs : obstacles.getList()) {
+							if (obs != null && obs.intersects(bomb)) {
+								found = true;
+								break;
+							}
+						}
+					if(!found && !player.isTeleporting() && !player.isDying())
 						bombs.add(bomb);
 				}
 				exit.tick();
@@ -314,12 +323,11 @@ public class Game extends Canvas implements Runnable {
 				}
 				for(Iterator<Bomb> it = bombs.iterator(); it.hasNext();) {
 					Bomb bomb = it.next();
+					bomb.tick();
 					if(bomb.removed) {
 						it.remove();
 						addFlares(bomb);
 					}
-					else
-						bomb.tick();
 				}
 				for(Iterator<Flare> it = flares.iterator(); it.hasNext();) {
 					Flare flare = it.next();
@@ -360,7 +368,8 @@ public class Game extends Canvas implements Runnable {
 			map.renderMap(g);
 			
 			// Pintar salida
-			exit.render(g);
+			//if (levelmap != 8 || ((Exit) exit).isActive())
+				exit.render(g);
 			
 			// Pintar bombas
 			for (Entity e : bombs) {
