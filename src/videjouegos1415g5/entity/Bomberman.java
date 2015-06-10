@@ -304,7 +304,7 @@ public class Bomberman extends Mob {
 		this.removed = false;
 		this.health = 10;
    		this.animation = down;
-   		this.invincible = 999999990;
+   		this.invincible = 0;
 	}
 	
 	public void resetAnim() {
