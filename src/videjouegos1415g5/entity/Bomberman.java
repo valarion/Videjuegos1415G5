@@ -1,5 +1,6 @@
 package videjouegos1415g5.entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -7,9 +8,11 @@ import java.awt.image.BufferedImage;
 import videjouegos1415g5.InputHandler;
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
+import videjouegos1415g5.gfx.Colors;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.MP3Player;
 import videjouegos1415g5.sound.Sound;
 
 public class Bomberman extends Mob {
@@ -179,6 +182,13 @@ public class Bomberman extends Mob {
 								/ 2, position.y + position.height / 2
 								- (f.getHeight() + 11 * scale) / 2, null);
 			}
+			else {
+				BufferedImage f = animation.getSprite();
+				g.drawImage(Colors.convertColor(f, Color.WHITE),
+						position.x + position.width / 2 - (f.getWidth() - 1 * scale)
+								/ 2, position.y + position.height / 2
+								- (f.getHeight() + 11 * scale) / 2, null);
+			}
 		}
 		else {
 			BufferedImage f = teleport.getSprite();
@@ -315,6 +325,10 @@ public class Bomberman extends Mob {
 	
 	public boolean isInvincible() {
 		return invincible > 0;
+	}
+
+	public boolean isDying() {
+		return animation == death;
 	}
 
 	
