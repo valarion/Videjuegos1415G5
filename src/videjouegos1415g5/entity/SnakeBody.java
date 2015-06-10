@@ -43,25 +43,25 @@ public class SnakeBody extends SnakeHead {
 		left = new Animation[4];
 		right = new Animation[4];
 		for(int i=0; i < 4; i++) {
-			BufferedImage[] u = {ss.obtenerSprite(12*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale), 
-					ss.obtenerSprite(13*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale),
-					ss.obtenerSprite(14*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale),
-					ss.obtenerSprite(13*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale)};
+			BufferedImage[] u = {ss.obtenerSprite(12*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale), 
+					ss.obtenerSprite(13*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale),
+					ss.obtenerSprite(14*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale),
+					ss.obtenerSprite(13*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale)};
 			
-			BufferedImage[] d = {ss.obtenerSprite(0*w*scale, (2*i+2)*h*scale+i+2, w*scale, h*scale), 
-					ss.obtenerSprite(19*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale),
-					ss.obtenerSprite(18*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale),
-					ss.obtenerSprite(19*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale)};
+			BufferedImage[] d = {ss.obtenerSprite(0*w*scale, (2*i+2)*h*scale+(i+1)*scale, w*scale, h*scale), 
+					ss.obtenerSprite(19*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale),
+					ss.obtenerSprite(18*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale),
+					ss.obtenerSprite(19*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale)};
 			
-			BufferedImage[] l = {ss.obtenerSprite(3*w*scale, (2*i+2)*h*scale+2*i+2, w*scale, h*scale), 
-					ss.obtenerSprite(2*w*scale, (2*i+2)*h*scale+i+2, w*scale, h*scale),
-					ss.obtenerSprite(1*w*scale, (2*i+2)*h*scale+i+2, w*scale, h*scale),
-					ss.obtenerSprite(2*w*scale, (2*i+2)*h*scale+i+2, w*scale, h*scale)};
+			BufferedImage[] l = {ss.obtenerSprite(3*w*scale, (2*i+2)*h*scale+(i+1)*scale, w*scale, h*scale), 
+					ss.obtenerSprite(2*w*scale, (2*i+2)*h*scale+(i+1)*scale, w*scale, h*scale),
+					ss.obtenerSprite(1*w*scale, (2*i+2)*h*scale+(i+1)*scale, w*scale, h*scale),
+					ss.obtenerSprite(2*w*scale, (2*i+2)*h*scale+(i+1)*scale, w*scale, h*scale)};
 			
-			BufferedImage[] r = {ss.obtenerSprite(15*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale), 
-					ss.obtenerSprite(16*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale),
-					ss.obtenerSprite(17*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale),
-					ss.obtenerSprite(16*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale)};
+			BufferedImage[] r = {ss.obtenerSprite(15*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale), 
+					ss.obtenerSprite(16*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale),
+					ss.obtenerSprite(17*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale),
+					ss.obtenerSprite(16*w*scale, (2*i+1)*h*scale+(i+1)*scale, w*scale, h*scale)};
 			
 			up[i] = new Animation(u, 20, Direction.UP);
 			down[i] = new Animation(d, 20, Direction.DOWN);
