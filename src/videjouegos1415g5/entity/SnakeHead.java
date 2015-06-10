@@ -59,17 +59,17 @@ public class SnakeHead extends Boss {
 		left = new Animation[4];
 		right = new Animation[4];
 		for(int i=0; i < 4; i++) {
-			BufferedImage[] u = {ss.obtenerSprite(0*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(1*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] u = {ss.obtenerSprite(0*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale), 
+					ss.obtenerSprite(1*w*scale, (2*i+1)*h*scale+i+1, w*scale, h*scale)};
 			
-			BufferedImage[] d = {ss.obtenerSprite(6*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(7*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] d = {ss.obtenerSprite(6*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale), 
+					ss.obtenerSprite(7*w*scale, (2*i+1)*h*scale+i+1, w*scale, h*scale)};
 			
-			BufferedImage[] l = {ss.obtenerSprite(8*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(9*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] l = {ss.obtenerSprite(8*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale), 
+					ss.obtenerSprite(9*w*scale, (2*i+1)*h*scale+i+1, w*scale, h*scale)};
 			
-			BufferedImage[] r = {ss.obtenerSprite(2*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(3*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] r = {ss.obtenerSprite(2*w*scale, (2*i+1)*h*scale+2*i+1, w*scale, h*scale), 
+					ss.obtenerSprite(3*w*scale, (2*i+1)*h*scale+i+1, w*scale, h*scale)};
 			
 			up[i] = new Animation(u, 20, Direction.UP);
 			down[i] = new Animation(d, 20, Direction.DOWN);
