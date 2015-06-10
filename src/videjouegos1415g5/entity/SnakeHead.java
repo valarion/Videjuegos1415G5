@@ -3,6 +3,7 @@ package videjouegos1415g5.entity;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
 
 import videjouegos1415g5.InputHandler;
 import videjouegos1415g5.animation.Animation;
@@ -21,9 +22,23 @@ public class SnakeHead extends Boss {
 	private final static int w = 16;
 	private final static int h = 18;
 	
-	private int state = 0;
+	protected int state = 0;
 	
-	Animation[] up, down, left, right;
+	protected Animation[] up, down, left, right;
+	
+	protected LinkedList<PosDir> positions = new LinkedList<PosDir>();
+	protected SnakeBody child;
+	
+	protected class PosDir {
+		public PosDir(Rectangle position, int dirx, int diry) {
+			this.position = new Rectangle(position);
+			this.dirx = dirx;
+			this.diry = diry;
+		}
+		public Rectangle position;
+		public int dirx;
+		public int diry;
+	}
 
 	public SnakeHead(GenerateObstacles obs, Map map, Bomberman player) {
 		super(obs, map, player);
@@ -87,6 +102,8 @@ public class SnakeHead extends Boss {
 		else
 			animation = down[state];
 		
+		positions.addLast(new PosDir(position,xdir,ydir));
+		
 		animation.start();
 	}
 
@@ -104,5 +121,9 @@ public class SnakeHead extends Boss {
 	
 	public boolean canPassBombs() {
 		return true;
+	}
+
+	public void setChild(SnakeBody child) {
+		this.child = child;
 	}
 }
