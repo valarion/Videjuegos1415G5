@@ -219,7 +219,7 @@ public class Game extends Canvas implements Runnable {
 		if (time <= 0 && playing) {
 			// Tiempo acabado, Game Over
 			player.setLives(player.getLives() - 1);
-			setMenu(new GameOverMenu(player.getLives()));
+			setMenu(new GameOverMenu(player.getLives(), level, levelmap));
 			time = 240;
 		}
 
@@ -309,7 +309,7 @@ public class Game extends Canvas implements Runnable {
 					if (player.getLives() < 0) {
 						initLevel();
 						player.setLives(2);
-						setMenu(new GameOverMenu(continues));
+						setMenu(new GameOverMenu(continues, level, levelmap));
 						continues--;
 					}
 					else {

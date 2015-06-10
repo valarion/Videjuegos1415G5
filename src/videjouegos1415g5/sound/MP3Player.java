@@ -9,6 +9,8 @@ public class MP3Player {
 	public static final MP3Player level_start = new MP3Player("/music/level_start.mp3");
 	public static final MP3Player map_start = new MP3Player("/music/map_start.mp3");
 	public static final MP3Player invincible = new MP3Player("/music/invincible.mp3");
+	public static final MP3Player no_continue = new MP3Player("/music/no_continue.mp3");
+
 
 
 	
