@@ -60,8 +60,6 @@ public class InputHandler implements KeyListener {
 	public InputHandler(Game game) {
 		game.addKeyListener(this);
 	}
-	
-	
 
 	public void keyPressed(KeyEvent ke) {
 		toggle(ke, true);
