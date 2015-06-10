@@ -317,5 +317,9 @@ public class Bomberman extends Mob {
 		return invincible > 0;
 	}
 
+	public boolean isDying() {
+		return animation == death;
+	}
+
 	
 }
