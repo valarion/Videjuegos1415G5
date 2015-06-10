@@ -237,7 +237,7 @@ public class Game extends Canvas implements Runnable {
 			}
 			if (input.exit.clicked) {
 				music.get(keymusic).stop();
-				//MP3Player.stage.stop();
+				if (player.isInvincible()) MP3Player.invincible.stop();
 				playing = false;
 				pause = false;
 				initLevel();
@@ -248,10 +248,18 @@ public class Game extends Canvas implements Runnable {
 			if (input.pause.clicked) {
 				//MP3Player.stage.pause();
 				music.get(keymusic).pause();
+				if (player.isInvincible()) MP3Player.invincible.pause();
 				pause = !pause;
 			}
 			if (!pause) {
-				if (playing) music.get(keymusic).play();
+				if (!player.isInvincible()) {
+					if (playing) music.get(keymusic).play();
+					MP3Player.invincible.stop();
+				}
+				else  {
+					MP3Player.invincible.play();
+					music.get(keymusic).pause();
+				}
 				playing = true;
 				player.tick();
 				if (player.endLvl()) {
