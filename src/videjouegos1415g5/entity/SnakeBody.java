@@ -28,10 +28,8 @@ public class SnakeBody extends SnakeHead {
 	public SnakeBody(GenerateObstacles obs, Map map, Bomberman player, SnakeHead parent) {
 		super(obs, map, player);
 		this.parent = parent;
-
-		this.position.width = 12*scale;
-		this.position.height = 14*scale;
-		this.health = 10;
+		this.move = false;
+		this.health = 80;
 		this.score = 100;
 		
 		this.position = new Rectangle(parent.position);
@@ -45,25 +43,25 @@ public class SnakeBody extends SnakeHead {
 		left = new Animation[4];
 		right = new Animation[4];
 		for(int i=0; i < 4; i++) {
-			BufferedImage[] u = {ss.obtenerSprite(12*w*scale, (i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(13*w*scale, (i+1)*h*scale, w*scale, h*scale),
-					ss.obtenerSprite(14*w*scale, (i+1)*h*scale, w*scale, h*scale),
-					ss.obtenerSprite(13*w*scale, (i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] u = {ss.obtenerSprite(12*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
+					ss.obtenerSprite(13*w*scale, (2*i+1)*h*scale, w*scale, h*scale),
+					ss.obtenerSprite(14*w*scale, (2*i+1)*h*scale, w*scale, h*scale),
+					ss.obtenerSprite(13*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
 			
-			BufferedImage[] d = {ss.obtenerSprite(0*w*scale, (i+2)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(19*w*scale, (i+1)*h*scale, w*scale, h*scale),
-					ss.obtenerSprite(18*w*scale, (i+1)*h*scale, w*scale, h*scale),
-					ss.obtenerSprite(19*w*scale, (i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] d = {ss.obtenerSprite(0*w*scale, (2*i+2)*h*scale, w*scale, h*scale), 
+					ss.obtenerSprite(19*w*scale, (2*i+1)*h*scale, w*scale, h*scale),
+					ss.obtenerSprite(18*w*scale, (2*i+1)*h*scale, w*scale, h*scale),
+					ss.obtenerSprite(19*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
 			
-			BufferedImage[] l = {ss.obtenerSprite(3*w*scale, (i+2)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(2*w*scale, (i+2)*h*scale, w*scale, h*scale),
-					ss.obtenerSprite(1*w*scale, (i+2)*h*scale, w*scale, h*scale),
-					ss.obtenerSprite(2*w*scale, (i+2)*h*scale, w*scale, h*scale)};
+			BufferedImage[] l = {ss.obtenerSprite(3*w*scale, (2*i+2)*h*scale, w*scale, h*scale), 
+					ss.obtenerSprite(2*w*scale, (2*i+2)*h*scale, w*scale, h*scale),
+					ss.obtenerSprite(1*w*scale, (2*i+2)*h*scale, w*scale, h*scale),
+					ss.obtenerSprite(2*w*scale, (2*i+2)*h*scale, w*scale, h*scale)};
 			
-			BufferedImage[] r = {ss.obtenerSprite(15*w*scale, (i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(16*w*scale, (i+1)*h*scale, w*scale, h*scale),
-					ss.obtenerSprite(17*w*scale, (i+1)*h*scale, w*scale, h*scale),
-					ss.obtenerSprite(16*w*scale, (i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] r = {ss.obtenerSprite(15*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
+					ss.obtenerSprite(16*w*scale, (2*i+1)*h*scale, w*scale, h*scale),
+					ss.obtenerSprite(17*w*scale, (2*i+1)*h*scale, w*scale, h*scale),
+					ss.obtenerSprite(16*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
 			
 			up[i] = new Animation(u, 20, Direction.UP);
 			down[i] = new Animation(d, 20, Direction.DOWN);
@@ -88,26 +86,55 @@ public class SnakeBody extends SnakeHead {
 	}
 
 	public void tick() {
-		if(parent.positions.size() > Map.TILESIZE*Main.ESCALA) {
-			PosDir pd = parent.positions.getFirst();
-			parent.positions.removeFirst();
-			position = pd.position;
-			xdir = pd.dirx;
-			ydir = pd.diry;
-			positions.addLast(pd);
-		}
-		//super.tick();
-		animation.tick();
-		if(xdir < 0)
-			animation = left[state];
-		else if(xdir > 0)
-			animation = right[state];
-		else if (ydir < 0)
-			animation = up[state];
+		if(child == null || child.removed)
+			animation.start();
 		else
-			animation = down[state];
-		
-		animation.start();
+			animation.stop();
+		if(animation == death && animation.finalFrame())
+			remove();
+		if (!removed)
+			animation.tick();
+		if (health <= 0)
+			die();
+		else {
+			if (invincible > 0)
+				invincible--;
+			if (health <= 20)
+				state = 3;
+			else if (health <= 40)
+				state = 2;
+			else if (health <= 60)
+				state = 1;
+			else
+				state = 0;
+			if (animation != death) {
+				if (parent.positions.size() > Map.TILESIZE * Main.ESCALA) {
+					PosDir pd = parent.positions.getFirst();
+					parent.positions.removeFirst();
+					position = pd.position;
+					xdir = pd.dirx;
+					ydir = pd.diry;
+					positions.addLast(pd);
+					if (positions.size() > Map.TILESIZE * Main.ESCALA * 2) {
+						positions.clear();
+					}
+				}
+			}
+			// super.tick();
+			animation.tick();
+			if (animation != death) {
+				if (xdir < 0)
+					animation = left[state];
+				else if (xdir > 0)
+					animation = right[state];
+				else if (ydir < 0)
+					animation = up[state];
+				else
+					animation = down[state];
+			}
+
+			animation.start();
+		}
 	}
 
 	public void render(Graphics2D g) {
@@ -124,5 +151,27 @@ public class SnakeBody extends SnakeHead {
 	
 	public boolean canPassBombs() {
 		return true;
+	}
+	
+	public void die() {
+		if(animation != death) {
+			animation = death;
+			parent.notifyChildDeath();
+			if(child != null)
+				child.notifyParentDeath();
+		}
+		if (animation.finalFrame())
+			remove();
+	}
+	
+	public void notifyChildDeath() {
+		die();
+		parent.notifyChildDeath();
+	}
+	
+	public void notifyParentDeath() {
+		die();
+		if(child != null)
+			child.notifyParentDeath();
 	}
 }

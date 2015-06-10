@@ -29,6 +29,8 @@ public class SnakeHead extends Boss {
 	protected LinkedList<PosDir> positions = new LinkedList<PosDir>();
 	protected SnakeBody child;
 	
+	protected int invincible = 0;
+	
 	protected class PosDir {
 		public PosDir(Rectangle position, int dirx, int diry) {
 			this.position = new Rectangle(position);
@@ -45,7 +47,7 @@ public class SnakeHead extends Boss {
 
 		this.position.width = 12*scale;
 		this.position.height = 14*scale;
-		this.health = 10;
+		this.health = 80;
 		this.score = 100;
 		
 		this.sl = new SpriteLoader();	    
@@ -57,17 +59,17 @@ public class SnakeHead extends Boss {
 		left = new Animation[4];
 		right = new Animation[4];
 		for(int i=0; i < 4; i++) {
-			BufferedImage[] u = {ss.obtenerSprite(0*w*scale, (i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(1*w*scale, (i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] u = {ss.obtenerSprite(0*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
+					ss.obtenerSprite(1*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
 			
-			BufferedImage[] d = {ss.obtenerSprite(6*w*scale, (i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(7*w*scale, (i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] d = {ss.obtenerSprite(6*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
+					ss.obtenerSprite(7*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
 			
-			BufferedImage[] l = {ss.obtenerSprite(8*w*scale, (i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(9*w*scale, (i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] l = {ss.obtenerSprite(8*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
+					ss.obtenerSprite(9*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
 			
-			BufferedImage[] r = {ss.obtenerSprite(2*w*scale, (i+1)*h*scale, w*scale, h*scale), 
-					ss.obtenerSprite(3*w*scale, (i+1)*h*scale, w*scale, h*scale)};
+			BufferedImage[] r = {ss.obtenerSprite(2*w*scale, (2*i+1)*h*scale, w*scale, h*scale), 
+					ss.obtenerSprite(3*w*scale, (2*i+1)*h*scale, w*scale, h*scale)};
 			
 			up[i] = new Animation(u, 20, Direction.UP);
 			down[i] = new Animation(d, 20, Direction.DOWN);
@@ -92,15 +94,33 @@ public class SnakeHead extends Boss {
 	}
 
 	public void tick() {
-		super.tick();
-		if(xdir < 0)
-			animation = left[state];
-		else if(xdir > 0)
-			animation = right[state];
-		else if (ydir < 0)
-			animation = up[state];
+		if(child == null || child.removed)
+			animation.start();
+		else if(animation == death)
+			animation.stop();
+		if(animation == death && animation.finalFrame())
+			remove();
+		if(invincible > 0) 
+			invincible--;
+		if(health <= 20) 
+			state = 3;
+		else if(health <= 40)
+			state = 2;
+		else if(health <= 60)
+			state = 1;
 		else
-			animation = down[state];
+			state = 0;
+		super.tick();
+		if(animation != death) {
+			if(xdir < 0)
+				animation = left[state];
+			else if(xdir > 0)
+				animation = right[state];
+			else if (ydir < 0)
+				animation = up[state];
+			else
+				animation = down[state];
+		}
 		
 		positions.addLast(new PosDir(position,xdir,ydir));
 		
@@ -122,8 +142,33 @@ public class SnakeHead extends Boss {
 	public boolean canPassBombs() {
 		return true;
 	}
+	
+	public boolean isInvincible() {
+		return invincible > 0;
+	}
 
 	public void setChild(SnakeBody child) {
 		this.child = child;
+	}
+	
+	public void doHurt(int damage) {
+		if(!isInvincible()) {
+			super.doHurt(damage);
+			invincible = 60;
+		}
+	}
+	
+	public void die() {
+		if(animation != death) {
+			move = false;
+			animation = death;
+			child.notifyParentDeath();
+		}
+		if (animation.finalFrame())
+			remove();
+	}
+	
+	public void notifyChildDeath() {
+		die();
 	}
 }
