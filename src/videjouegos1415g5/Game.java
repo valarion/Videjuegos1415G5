@@ -282,6 +282,13 @@ public class Game extends Canvas implements Runnable {
 						}
 					}
 					if(!found)
+						for (Obstacle obs : obstacles.getList()) {
+							if (obs != null && obs.intersects(bomb)) {
+								found = true;
+								break;
+							}
+						}
+					if(!found && !player.isTeleporting() && !player.isDying())
 						bombs.add(bomb);
 				}
 				exit.tick();
