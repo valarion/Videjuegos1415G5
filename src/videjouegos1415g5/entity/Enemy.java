@@ -170,6 +170,18 @@ public class Enemy extends Mob {
 			return new CoinYellow(obs, map, player);
 		case 12:
 			return new GhostPink(obs, map, player);
+		case 13:
+			return new Flame(obs, map, player);
+		case 14:
+			return new DuckPurple(obs, map, player);
+		case 15:
+			return new GhostWhite(obs, map, player);
+		case 16:
+			return new Spinning(obs, map, player);
+		case 17:
+			return new FrogYellow(obs, map, player);
+		case 18:
+			return new GhostGreen(obs, map, player);
 		}
 		return null;
 	}

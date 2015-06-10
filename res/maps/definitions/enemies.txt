@@ -12,3 +12,9 @@ Purely explanatory file about the enemy indexes
 10 blue ghost
 11 yellow coin
 12 pink ghost
+13 flame
+14 purple duck
+15 white ghost
+16 spinning
+17 yellow frog
+18 green ghost
