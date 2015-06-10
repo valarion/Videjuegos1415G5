@@ -284,7 +284,7 @@ public class Game extends Canvas implements Runnable {
 				if (player.endLvl()) {
 					levelmap++;
 					if (levelmap > 8) {
-						levelmap = 0;
+						levelmap = 1;
 						level++;
 						if (level > 8) {
 							setMenu(new FinalScene());

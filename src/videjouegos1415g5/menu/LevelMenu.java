@@ -21,10 +21,11 @@ public class LevelMenu extends Menu {
 	private BufferedImage bg, round, level;
 	private Animation head, roundFlicker, levelFlicker;
 	private int count = 0;
-	private int x, y;
+	private int x, y, lev;
 	
 	public LevelMenu (int level) {
 		this.scale = Main.ESCALA;
+		this.lev = level;
 		
 		this.sl = new SpriteLoader();
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(sprites), scale));
@@ -89,7 +90,7 @@ public class LevelMenu extends Menu {
 			roundFlicker.stop();
 			levelFlicker.stop();
 			MP3Player.level_start.stop();
-			game.setMenu(new MapMenu(1, 1));
+			game.setMenu(new MapMenu(lev, 1));
 		}
 		head.tick();
 		roundFlicker.tick();
