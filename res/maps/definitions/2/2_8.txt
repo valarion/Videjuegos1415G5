@@ -2,4 +2,4 @@ map2_width
 4 1
 5 1
 
-# Jefe y 8 bichos rosas
+# Falta jefe y 8 bichos rosas

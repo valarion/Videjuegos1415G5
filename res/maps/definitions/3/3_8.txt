@@ -1,3 +1,4 @@
-map1_2_square
-5 2
-6 1
+map3_width
+4 1
+5 1
+6 2

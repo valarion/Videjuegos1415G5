@@ -8,3 +8,7 @@ Purely explanatory file about the enemy indexes
 6 blue snake
 7 green crocodile
 8 blue garlic
+9 green fish
+10 blue ghost
+11 yellow coin
+12 pink ghost

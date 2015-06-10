@@ -1,0 +1,4 @@
+map4_width
+5 2
+
+# Falta 4 jefes rosa del ojo y 1 azul
