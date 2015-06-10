@@ -114,10 +114,8 @@ public class SnakeBody extends SnakeHead {
 					position = pd.position;
 					xdir = pd.dirx;
 					ydir = pd.diry;
-					positions.addLast(pd);
-					if (positions.size() > Map.TILESIZE * Main.ESCALA * 2) {
-						positions.clear();
-					}
+					if(child != null)
+						positions.addLast(pd);
 				}
 			}
 			// super.tick();
