@@ -10,6 +10,7 @@ import videjouegos1415g5.animation.Animation.Direction;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.MP3Player;
 import videjouegos1415g5.sound.Sound;
 
 public class Bomberman extends Mob {
@@ -122,8 +123,11 @@ public class Bomberman extends Mob {
 	}
 
 	public void tick() {
-		if(isInvincible())
+		if(isInvincible()) {
 			invincible--;
+			if (invincible <= 0)
+				MP3Player.invincible.stop();
+		}
 		if(animation != teleport) {
 			if (health <= 0) {
 				if (health == 0) Sound.death.play(); // Para que solo se reproduzca una vez
@@ -241,6 +245,7 @@ public class Bomberman extends Mob {
 			break;
 		case 6:
 			invincible = 600;
+			MP3Player.invincible.play();
 			break;
 		case 7:
 			lives += 1;
