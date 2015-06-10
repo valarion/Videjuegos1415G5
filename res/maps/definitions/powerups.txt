@@ -1,8 +1,8 @@
 0 - Fire         = it will make your explosion range longer
 1 - Bomb         = it will add your bomb by 1
-2 - Skate Board  = it will speed up your walking
-3 - Detonator    = it will make you can detonate the bomb
-4 - Wall-Through = it will make you can accross the wall
-5 - Bomb-Through = it will make you can accross the bomb
-6 - Dyna Blaster = it will add your life by 1
-7 - Invincible   = it will make you invincible temporarily
+2 - Detonator    = it will make you can detonate the bomb
+3 - Skate Board  = it will speed up your walking
+4 - Bomb-Through = it will make you can accross the bomb
+5 - Wall-Through = it will make you can accross the wall
+6 - Invincible   = it will make you invincible temporarily
+7 - Dyna Blaster = it will add your life by 1

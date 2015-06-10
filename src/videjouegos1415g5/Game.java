@@ -134,15 +134,18 @@ public class Game extends Canvas implements Runnable {
 			int count = in.nextInt();
 			switch(type) {
 			case 6: //blue snake
-				SnakeHead head = new SnakeHead(obstacles, map, player);
-				SnakeBody body = new SnakeBody(obstacles, map, player, head);
-				
-				for(int i=0; i < 4; i++) {
-					head.setChild(body);
-					enemies.add(head);
-					enemies.add(body);
-					head = body;
-					body = new SnakeBody(obstacles, map, player, head);
+				for (int x = 0; x < count; x++) {
+
+					SnakeHead head = new SnakeHead(obstacles, map, player);
+					SnakeBody body = new SnakeBody(obstacles, map, player, head);
+
+					for (int i = 0; i < 4; i++) {
+						head.setChild(body);
+						enemies.add(head);
+						enemies.add(body);
+						head = body;
+						body = new SnakeBody(obstacles, map, player, head);
+					}
 				}
 				
 				break;

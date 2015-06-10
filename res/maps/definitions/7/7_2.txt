@@ -1,4 +1,4 @@
-map4_width
+map7_height
 7
 2 2
 3 2
