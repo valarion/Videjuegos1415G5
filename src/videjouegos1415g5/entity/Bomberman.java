@@ -293,6 +293,10 @@ public class Bomberman extends Mob {
 		return animation == teleport && animation.finalFrame();
 	}
 	
+	public boolean endLvlFirst() {
+		return animation == teleport;
+	}
+	
 	public void reset() {
 		if(removed) {
 	   		this.canPassBombs = false;

@@ -249,6 +249,8 @@ public class Game extends Canvas implements Runnable {
 			menu.tick();
 			playing = false;
 		} else {
+			// Si se han matado a todos los enemigos y no se ha cogido el powerup
+			// el obstaculo sobre el que esta el powerup parpadea
 			if(((Exit) exit).isActive() && powerups.size() > 0) {
 				for(Obstacle obs : obstacles.getList()) {
 					if(obs.intersects(powerups.get(0))) {
@@ -257,73 +259,90 @@ public class Game extends Canvas implements Runnable {
 					}
 				}
 			}
+			
+			// Tecla ESC, salir al menu principal
 			if (input.exit.clicked) {
-				music.get(keymusic).stop();
 				if (player.isInvincible()) MP3Player.invincible.stop();
+				else music.get(keymusic).stop();
 				playing = false;
 				pause = false;
-				initLevel();
+				//initLevel();
 				level = 1;
 				levelmap = 1;
 				setMenu(new TitleMenu());
 			}
+			
+			// Tecla P, pausa
 			if (input.pause.clicked) {
-				//MP3Player.stage.pause();
-				music.get(keymusic).pause();
 				if (player.isInvincible()) MP3Player.invincible.pause();
+				else music.get(keymusic).pause();
 				pause = !pause;
 			}
+			
 			if (!pause) {
+				// Si bomberman no es invencible, musica normal
 				if (!player.isInvincible()) {
 					if (playing) music.get(keymusic).play();
 					MP3Player.invincible.stop();
 				}
-				else  {
+				// Si no, musica de invencibilidad
+				else {
 					MP3Player.invincible.play();
 					music.get(keymusic).pause();
 				}
 				playing = true;
 				player.tick();
+				
+				if (player.endLvlFirst()) {
+					music.get(keymusic).stop();
+					MP3Player.level_clear.play();
+				}
+				
+				// Si se ha acabado el nivel
 				if (player.endLvl()) {
 					levelmap++;
 					if (levelmap > 8) {
 						levelmap = 1;
 						level++;
-						if (level > 8) {
-							setMenu(new FinalScene());
-						}
-						else
-							setMenu(new LevelMenu(level));
+						if (level > 8) setMenu(new FinalScene());
+						else setMenu(new LevelMenu(level));
 					}
 					else
 						setMenu(new MapMenu(level,levelmap));
 					initLevel();
 					return;
 				}
-				if(player.hasRemoteDetonator() && input.remote.clicked && bombs.size() > 0) {
+				
+				// Detonacion remota de las bombas
+				if (player.hasRemoteDetonator() && input.remote.clicked && bombs.size() > 0) {
 					bombs.get(0).removed = true;
 					Sound.bomb.play();
 				}
-				if(input.fire.clicked && bombs.size() < player.getBombs()) {
+				
+				// Detonacion normal de las bombas
+				if (input.fire.clicked && bombs.size() < player.getBombs()) {
 					Bomb bomb = new Bomb(player);
 					boolean found = false;
-					for(Bomb b : bombs) {
-						if(bomb.intersects(b)){
+					for (Bomb b : bombs) {
+						if (bomb.intersects(b)){
 							found = true;
 							break;
 						}
 					}
-					if(!found)
+					if (!found)
 						for (Obstacle obs : obstacles.getList()) {
 							if (obs != null && obs.intersects(bomb)) {
 								found = true;
 								break;
 							}
 						}
-					if(!found && !player.isTeleporting() && !player.isDying())
+					if (!found && !player.isTeleporting() && !player.isDying())
 						bombs.add(bomb);
 				}
+				
+				// Tick de las salida
 				exit.tick();
+				
 				// Comprobar si el jugador ha muerto
 				if (player.removed) {
 					music.get(keymusic).stop();
@@ -339,7 +358,8 @@ public class Game extends Canvas implements Runnable {
 						setMenu(new MapMenu(level, levelmap));
 					}
 				}
-				// Comprobar si los enemigos han muerto
+				
+				// Comprobar si los enemigos han muerto y hacer tick
 				for (Entity enemy : enemies) {
 					if (enemy.removed) {
 						player.setScore(player.getScore() + enemy.getScore());
@@ -348,9 +368,13 @@ public class Game extends Canvas implements Runnable {
 					}
 					enemy.tick();
 				}
+				
+				// Tick de los powerups
 				for (Entity e : powerups) {
 					e.tick();
 				}
+				
+				// Tick de las bombas
 				for(Iterator<Bomb> it = bombs.iterator(); it.hasNext();) {
 					Bomb bomb = it.next();
 					bomb.tick();
@@ -359,18 +383,24 @@ public class Game extends Canvas implements Runnable {
 						addFlares(bomb);
 					}
 				}
-				for(Iterator<Flare> it = flares.iterator(); it.hasNext();) {
+				
+				// Tick de las llamas
+				for (Iterator<Flare> it = flares.iterator(); it.hasNext();) {
 					Flare flare = it.next();
-					if(flare.removed) 
+					if (flare.removed) 
 						it.remove();
 					else
 						flare.tick();
 				}
+				
+				// Tick de los obstaculos
 				for (int i = 0; i < obstacles.getList().size(); i++) {
 					obstacles.getList().get(i).tick();
 					if (obstacles.getList().get(i).removed)
 						obstacles.getList().remove(obstacles.getList().get(i));
 				}
+				
+				// Comprobar colisiones
 				checkCollisions();
 			}
 		}
@@ -552,7 +582,6 @@ public class Game extends Canvas implements Runnable {
 			bombs.clear();
 			player.touchedBy(exit);
 			playing = false;
-			music.get(keymusic).stop();
 			//System.out.println("Level Complete");
 		}
 	}
