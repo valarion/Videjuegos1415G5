@@ -59,6 +59,8 @@ public class GameOverMenu extends Menu {
 					this.password = in.next();
 					break found;
 				}
+				else 
+					in.next();
 			}
 		}
 		in.close();
