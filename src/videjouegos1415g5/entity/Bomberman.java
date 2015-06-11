@@ -94,13 +94,15 @@ public class Bomberman extends Mob {
 				ss.obtenerSprite(8 * w * scale, h * scale, w * scale, h * scale),
 				ss.obtenerSprite(9 * w * scale, h * scale, w * scale, h * scale) };
 		
-		BufferedImage[] tp = new BufferedImage[h*scale];
+		BufferedImage[] tp = new BufferedImage[h*scale + 1];
 		for(int i=0; i<h*scale/4; i++) {
 			tp[i*4] = ss.obtenerSprite(6 * w * scale, i*4, w * scale, h * scale-i*4);
 			tp[i*4+1] = ss.obtenerSprite(9 * w * scale, i*4, w * scale, h * scale-i*4);
 			tp[i*4+2] = ss.obtenerSprite(3 * w * scale, i*4, w * scale, h * scale-i*4);
 			tp[i*4+3] = ss.obtenerSprite(0 * w * scale, i*4, w * scale, h * scale-i*4);
 		}
+		tp[tp.length - 1] = new BufferedImage(tp[0].getWidth(), tp[0].getHeight(), BufferedImage.TYPE_INT_ARGB);
+
 
 		BufferedImage[] sp = new BufferedImage[h * scale];
 
@@ -117,8 +119,8 @@ public class Bomberman extends Mob {
 		this.down = new Animation(walkingDown, 10, Direction.DOWN);
 		this.death = new Animation(die, 10, Direction.DOWN);
 		
-		this.teleport = new Animation(tp,4,Direction.DOWN);
-		this.sparks = new Animation(sp,15,Direction.DOWN);
+		this.teleport = new Animation(tp,6,Direction.DOWN);
+		this.sparks = new Animation(sp,10,Direction.DOWN);
 
 		// Animacion inicial
 		this.animation = down;
@@ -211,8 +213,8 @@ public class Bomberman extends Mob {
 				this.hurt(go, 10);
 		}
 		if(go instanceof Exit) {
-			this.position.x = go.position.x;
-			this.position.y = go.position.y;
+			//this.position.x = go.position.x;
+			//this.position.y = go.position.y;
 			this.animation = teleport;
 			teleport.start();
 			sparks.start();

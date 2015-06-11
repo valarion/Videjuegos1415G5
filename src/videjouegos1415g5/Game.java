@@ -293,6 +293,7 @@ public class Game extends Canvas implements Runnable {
 				playing = true;
 				player.tick();
 				
+				// Primer frame en el que se ha acabado el nivel
 				if (player.endLvlFirst()) {
 					music.get(keymusic).stop();
 					MP3Player.level_clear.play();
@@ -300,6 +301,7 @@ public class Game extends Canvas implements Runnable {
 				
 				// Si se ha acabado el nivel
 				if (player.endLvl()) {
+					MP3Player.level_clear.stop();
 					levelmap++;
 					if (levelmap > 8) {
 						levelmap = 1;
