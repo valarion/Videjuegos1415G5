@@ -3,6 +3,7 @@ package videjouegos1415g5.menu;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.io.IOException;
@@ -66,6 +67,8 @@ public class SetupMenu extends Menu {
 			if (input.left.clicked) localScale--;
 			if (input.right.clicked) localScale++;
 			if (localScale < 1) localScale = 1;
+			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+			if (localScale > screenSize.height/232) localScale = screenSize.height/232;
 			//if (localScale > EscalaAbsurda) localScale = EscalaNOabsurda
 		}
 

@@ -119,7 +119,7 @@ public class Bomberman extends Mob {
 		this.down = new Animation(walkingDown, 10, Direction.DOWN);
 		this.death = new Animation(die, 10, Direction.DOWN);
 		
-		this.teleport = new Animation(tp,6,Direction.DOWN);
+		this.teleport = new Animation(tp,8-scale,Direction.DOWN);
 		this.sparks = new Animation(sp,10,Direction.DOWN);
 
 		// Animacion inicial
@@ -194,7 +194,8 @@ public class Bomberman extends Mob {
 		}
 		else {
 			BufferedImage f = teleport.getSprite();
-			g.drawImage(f,
+			if (f != null)
+				g.drawImage(f,
 					position.x + position.width / 2 - (f.getWidth() - 1 * scale)
 							/ 2, position.y + position.height / 2
 							- (f.getHeight() + 11 * scale) / 2 + teleport.getCurrentFrame()/scale, null);
