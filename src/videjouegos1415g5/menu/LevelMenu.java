@@ -122,7 +122,7 @@ public class LevelMenu extends Menu {
 		gl.glColor3f(1.0f, 1.0f, 0.1f);
 		this.pintarfrase(gl, glu, 18f, "LEVEL");
 		gl.glTranslated(170, -100, 0);
-		this.pintarfrase(gl, glu, 15f, "MENU");
+		this.pintarfrase(gl, glu, 15f, String.valueOf(lev));
 		float size=8f;
 		gl.glTranslated(0, -90, 0);
 		

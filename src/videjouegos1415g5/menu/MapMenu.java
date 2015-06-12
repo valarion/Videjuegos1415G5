@@ -69,7 +69,7 @@ public void render3D(GL2 gl, GLU glu) {
 		gl.glColor3f(1.0f, 1.0f, 0.1f);
 		this.pintarfrase(gl, glu, 18f, "MAP");
 		gl.glTranslated(170, -100, 0);
-		this.pintarfrase(gl, glu, 15f, "MENU");
+		this.pintarfrase(gl, glu, 15f, String.valueOf(level)+"-"+String.valueOf(map));
 		float size=8f;
 		gl.glTranslated(0, -90, 0);
 		
