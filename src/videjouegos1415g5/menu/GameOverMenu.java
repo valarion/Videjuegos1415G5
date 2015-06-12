@@ -170,6 +170,9 @@ public class GameOverMenu extends Menu {
 							gl.glPopMatrix();
 						}
 				}
+				gl.glColor3d(0.8,0.8,0.8);
+				gl.glTranslatef(-75f, -2*(size*5+size), 0.0f);
+				this.pintarfrase(gl, glu, size-2, "PASSWORD  " + password);
 				
 							
 gl.glPopMatrix();	
