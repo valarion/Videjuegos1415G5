@@ -20,8 +20,12 @@ public class MapMenu extends Menu {
 	private SpriteSheet ss;
 	private BufferedImage stage, game_start, level, map;
 	private int count = 0;
+	private int nivel;
+	private int mapa;
 	
 	public MapMenu (int level, int map) {
+		this.nivel=level;
+		this.mapa=map;
 		this.scale = Main.ESCALA;
 		
 		this.sl = new SpriteLoader();
@@ -69,7 +73,7 @@ public void render3D(GL2 gl, GLU glu) {
 		gl.glColor3f(1.0f, 1.0f, 0.1f);
 		this.pintarfrase(gl, glu, 18f, "MAP");
 		gl.glTranslated(170, -100, 0);
-		this.pintarfrase(gl, glu, 15f, String.valueOf(level)+"-"+String.valueOf(map));
+		this.pintarfrase(gl, glu, 15f, String.valueOf(nivel)+"-"+String.valueOf(mapa));
 		float size=8f;
 		gl.glTranslated(0, -90, 0);
 		
