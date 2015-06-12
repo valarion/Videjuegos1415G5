@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -16,13 +17,14 @@ import videjouegos1415g5.gfx.Font;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
+import videjouegos1415g5.sound.MP3Player;
 
 public class GameOverMenu extends Menu {
 	
 	private static final String sprites = "/menu/gameover_menu.png";
 	private static final String cursor = "/menu/flecharoja.png";
 	
-	private String[] options = { "Continue", "End"};
+	private String[] options = { "CONTINUE", "END"};
 	private int selected = 0;
 	private SpriteLoader sl;
 	private SpriteSheet ss;
@@ -30,25 +32,43 @@ public class GameOverMenu extends Menu {
 	private Image cu;
 	private Font font, passfont;
 	private String password;
-	private int lives;
+	private int lives, level, map;
 	
-	public GameOverMenu(int lives) {
+	public GameOverMenu(int lives, int level, int map) {
 		this.lives = lives;
+		this.level = level;
+		this.map = map;
 		this.options[0] += " " + lives;
 		this.font = new Font(null, true);
 
+		// Ultimo continue
 		if (lives == -1) {
 			options[0] = "Continue last";
 			this.font = new Font(Color.RED, true);
 		}
 		
+		// No hay mas continues
 		if (lives == -2) {
 			options = new String[]{"End"};
 		}
 		
+		// Buscar password
+		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/passwords.txt"));
+		found: for (int i=0; i<8;i++) {
+			for (int j=0; j<8; j++) {
+				in.next();
+				in.next();
+				if (level == i+1 && map == j+1)	{
+					this.password = in.next();
+					break found;
+				}
+			}
+		}
+		in.close();
+		
 		this.scale = Main.ESCALA;
 		this.bgColor = new Color(0, 97, 146);
-		this.password = "Password";
+		//this.password = "Password";
 		
 		this.sl = new SpriteLoader();
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(sprites), scale));
@@ -63,6 +83,7 @@ public class GameOverMenu extends Menu {
 		cu = bi.getScaledInstance(bi.getWidth() * scale, bi.getHeight() * scale, Image.SCALE_SMOOTH);
 		
 		this.passfont = new Font(null, false);
+		MP3Player.no_continue.play();
 	}
 	
 	public void tick() {
@@ -74,7 +95,8 @@ public class GameOverMenu extends Menu {
 		if (selected >= len) selected -= len;
 
 		if (input.fire.clicked) {
-			if (selected == 0  && lives > -2) game.setMenu(null);
+			MP3Player.no_continue.stop();
+			if (selected == 0  && lives > -2) game.setMenu(new MapMenu(level, map));
 			else game.setMenu(new TitleMenu());
 			if (selected == 1) game.setMenu(new TitleMenu());
 				
@@ -114,7 +136,6 @@ public class GameOverMenu extends Menu {
 	    		game.getHeight() / 2 + 39*scale);
 		
 	}
-
 	public void render3D(GL2 gl, GLU glu) {	
 		
 		gl.glPushMatrix();
@@ -123,7 +144,7 @@ public class GameOverMenu extends Menu {
 		this.pintarfrase(gl, glu, 18f, "GAME");
 		gl.glTranslated(170, -100, 0);
 		this.pintarfrase(gl, glu, 15f, "OVER");
-		float tamaño=8f;
+		float size=8f;
 		gl.glTranslated(0, -90, 0);
 		
 		
@@ -133,19 +154,19 @@ public class GameOverMenu extends Menu {
 					String msg = options[i]; 
 					if (i == selected) {
 						gl.glPushMatrix();
-						gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
-						this.cursor(gl, glu, tamaño);
-						gl.glTranslatef(tamaño*2, 0.0f, 0.0f);
+						gl.glTranslatef(0.0f, -i*size*5+size/2, 0.0f);
+						this.cursor(gl, glu, size);
+						gl.glTranslatef(size*2, 0.0f, 0.0f);
 						gl.glColor3f(0.0f, 1.0f, 0.1f);
 						
-						this.pintarfrase(gl, glu, tamaño, msg);
+						this.pintarfrase(gl, glu, size, msg);
 						
 						gl.glPopMatrix();
 						} else {
 							gl.glPushMatrix();
-							gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
+							gl.glTranslatef(0.0f, -i*size*5+size/2, 0.0f);
 							gl.glColor3f(0.0f, 0.0f, 1f);
-							this.pintarfrase(gl, glu, tamaño, msg);
+							this.pintarfrase(gl, glu, size, msg);
 							gl.glPopMatrix();
 						}
 				}
@@ -155,5 +176,5 @@ gl.glPopMatrix();
 }
 
 
-	
+
 }

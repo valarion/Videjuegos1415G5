@@ -103,7 +103,6 @@ public class Entity extends GameObject {
 	public boolean isInvincible() {
 		return false;
 	}
-	
 	public void render3d(GL2 g, GLU glu) {
 		// TODO Auto-generated method stub
 		

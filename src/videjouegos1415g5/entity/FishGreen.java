@@ -17,13 +17,13 @@ import videjouegos1415g5.gfx.SpriteSheet;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 
-public class BalloonBlue extends Enemy {
+public class FishGreen extends Enemy {
 	
-	private final String ANIMATION = "/enemies/balloon_blue.png"; 
+	private final String ANIMATION = "/enemies/fish_green.png"; 
 	private final static int w = 16;
 	private final static int h = 18;
 
-	public BalloonBlue(GenerateObstacles obs, Map map, Bomberman player) {
+	public FishGreen(GenerateObstacles obs, Map map, Bomberman player) {
 		super(obs, map, player);
 
 		this.position.width = 12*scale;
@@ -68,31 +68,73 @@ public class BalloonBlue extends Enemy {
 	public Rectangle getBounds() {
 		return new Rectangle(position.x, position.y, w, h);
 	}
+public void render3d( GL2 gl, GLU glu ) {
+
+	float r=8.5f;
+	gl.glPushMatrix();
 	
-	public void render3d( GL2 gl, GLU glu ) {
-		float r=8;
-gl.glPushMatrix();
-gl.glTranslated(position.x-5, -position.y+5, 0);
-gl.glScaled(1.5,1,1);
-		
-		  GLUquadric earth = glu.gluNewQuadric();
-	        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
-	        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
-	        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
-	        
-	        final int slices = 16;
-	        final int stacks = 16;
-	        gl.glColor3d(0.0, 0.25,1);
-	       // glu.gluSphere(earth, radius, slices, stacks);
-		glu.gluSphere(earth,r, slices, stacks);
-		
+	gl.glTranslated(position.x-3, -position.y+5, 0);
+	gl.glScaled(1.4,1,1);
+	gl.glPushMatrix();
+	gl.glScaled(1,1,0.2);
+	  GLUquadric earth = glu.gluNewQuadric();
+        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+        
+        final int slices = 16;
+        final int stacks = 16;
+        gl.glColor3d(0.1, 1, 0.1);
+       
+     
+	glu.gluSphere(earth,r, slices, stacks);
+	gl.glPopMatrix();
 	
-		gl.glTranslated(0.0, -2*r*3/4, 0.0);
-		gl.glRotated(-90, 1, 0, 0);
-		
-		glu.gluCylinder(earth, r/10, r/1.2, r, slices, stacks);
-	 glu.gluDeleteQuadric(earth);
-		gl.glPopMatrix();
+	
+	
+	
+	gl.glPushMatrix();
+	gl.glColor3d(1,0.7,0);
+	gl.glTranslated(-r*0.9,r/4,r/10);
+	float size=r/3f;
+
+	 gl.glBegin(GL2.GL_TRIANGLE_FAN);
+       gl.glNormal3f(0, 0, 1);
+       gl.glVertex3f(-size*1.5f, -size*1.5f, 0);
+       gl.glVertex3f(+size*1.8f, -size*1.5f, 0);
+       gl.glVertex3f(-size*1.5f, size*1.5f, 0);
+       gl.glEnd();
+      gl.glTranslated(r*1.8,0,0);
+      gl.glRotated(180,0,1,0);
+       gl.glBegin(GL2.GL_TRIANGLE_FAN);
+   
+       gl.glNormal3f(0, 0, -1);
+       gl.glVertex3f(-size*1.5f, -size*1.5f, 0);
+       gl.glVertex3f(+size*1.8f, -size*1.5f, 0);
+       gl.glVertex3f(-size*1.5f, size*1.5f, 0);
+       gl.glEnd();
+	
+	
+	gl.glPopMatrix();
+	
+	 gl.glColor3d(0,0,0);
+	 gl.glTranslated(-r/2, 0, r/5);
+	 glu.gluDisk(earth, 0, r/8, slices, stacks);
+	 gl.glTranslated(r,0,0);
+	 glu.gluDisk(earth, 0, r/8, slices, stacks);
+	 gl.glColor3d(1,1,1);
+	 glu.gluDisk(earth, r/8.2, r/3.8, slices, stacks);
+	 gl.glTranslated(-r,0,0);
+	 glu.gluDisk(earth, r/8.2, r/3.8, slices, stacks);
+	 
+	 gl.glTranslated(r/2,-r/2,0);
+	 gl.glScaled(3.5,0.5,0);
+	 gl.glColor3d(1,0.6,0);
+	 glu.gluDisk(earth, r/8.2, r/4, slices, stacks);
+	 gl.glColor3d(1,0.4,0.1);
+	 glu.gluDisk(earth, 0, r/8, slices, stacks);
+	gl.glPopMatrix();
 	}
+	
 	
 }

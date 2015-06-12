@@ -21,7 +21,7 @@ public class Obstacle extends GameObject {
 
 	public Obstacle(int x, int y, int size, Animation animation,
 			SpriteSheet ss, int scale, boolean solid, int type) {
-		super(x - 8*scale, y + 24*scale, size, size, animation);
+			super(x - 8*scale, y + 24*scale, size, size, animation);
 		//this.position.x = this.position.x - 8 * scale;
 		//this.position.y = this.position.y + 24 * scale;
 		this.solid = solid;
@@ -97,7 +97,8 @@ public class Obstacle extends GameObject {
 			a3.start();
 		}
 	}
-public void draw3d(GL2 gl, GLU glu){
+	
+	public void draw3d(GL2 gl, GLU glu){
 	if(animation!=a2){
 		  final int slices = 16;
 	        final int stacks = 16;
@@ -232,4 +233,3 @@ public void draw3d(GL2 gl, GLU glu){
       gl.glPopMatrix();
     }
 }
-

@@ -3,7 +3,6 @@ package videjouegos1415g5;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -25,18 +24,15 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 import videjouegos1415g5.cutscenes.FinalScene;
 import videjouegos1415g5.cutscenes.InitScene;
-import videjouegos1415g5.entity.Balloon;
-import videjouegos1415g5.entity.BalloonBlue;
-import videjouegos1415g5.entity.BalloonPurple;
-import videjouegos1415g5.entity.BalloonRed;
 import videjouegos1415g5.entity.Bomb;
 import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.entity.Enemy;
 import videjouegos1415g5.entity.Entity;
 import videjouegos1415g5.entity.Exit;
 import videjouegos1415g5.entity.Flare;
-import videjouegos1415g5.entity.GhostYellow;
 import videjouegos1415g5.entity.PowerUps;
+import videjouegos1415g5.entity.SnakeBody;
+import videjouegos1415g5.entity.SnakeHead;
 import videjouegos1415g5.gfx.Font;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.map.GenerateObstacles;
@@ -48,11 +44,13 @@ import videjouegos1415g5.menu.MapMenu;
 import videjouegos1415g5.menu.Menu;
 import videjouegos1415g5.menu.TitleMenu;
 import videjouegos1415g5.sound.MP3Player;
+import videjouegos1415g5.sound.Sound;
 
 public class Game3D extends GLCanvas implements GLEventListener, Runnable {
 
+
 	private static final long serialVersionUID = 1L;
-private GLU glu;
+
 	private BufferedImage imagen;
 	private int tickCount;
 	private int offsetX = 0;
@@ -70,7 +68,7 @@ private GLU glu;
 	private InputHandler input = new InputHandler(this);
 	private Font font;
 	private BufferedImage gui = null;
-private Menu GUI;
+
 	private Map map;
 	private GenerateObstacles obstacles;
 	private Menu menu;
@@ -83,6 +81,9 @@ private Menu GUI;
 	private HashMap<String, MP3Player> music = new HashMap<String, MP3Player>();
 	private String keymusic = "";
 	private FPSAnimator animator;
+	private GLU glu;
+	
+	private Menu GUI;
 
 public Game3D(int width, int height){
 		this.glu=new GLU();
@@ -91,7 +92,6 @@ public Game3D(int width, int height){
 		addGLEventListener(this);
 		setSize(width, height);
 	}
-	
 	public void start() {
 		running = true;
 		new Thread(this).start();
@@ -107,10 +107,19 @@ public Game3D(int width, int height){
 		setFocusable(true);
 
 		imagen = new BufferedImage(Main.ANCHURA, Main.ALTURA,BufferedImage.TYPE_INT_RGB);
-		music.put("bgm_01", new MP3Player("/music/bgm_01.mp3"));
-		music.put("bgm_02", new MP3Player("/music/bgm_02.mp3"));
-		music.put("bgm_03", new MP3Player("/music/bgm_03.mp3"));
-		music.put("bgm_boss", new MP3Player("/music/bgm_boss.mp3"));
+
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					music.put("bgm_01", new MP3Player("/music/bgm_01.mp3"));
+					music.put("bgm_02", new MP3Player("/music/bgm_02.mp3"));
+					music.put("bgm_03", new MP3Player("/music/bgm_03.mp3"));
+					music.put("bgm_boss", new MP3Player("/music/bgm_boss.mp3"));
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
 
 
 		setMenu(new TitleMenu());
@@ -122,18 +131,16 @@ public Game3D(int width, int height){
 		clear();
 		
 		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/"+level+"/"+level+"_"+levelmap+".txt"));
-
 		map = new Map(in.nextLine(), Map.TILESIZE);
 		//obstacles = new GenerateObstacles(map, true);
 		
-		PowerUps powerup=null;
+		PowerUps powerup = null;
 		if(levelmap != 8) {
 			obstacles = new GenerateObstacles(map, true);
 			powerup = new PowerUps(in.nextInt(), obstacles.getList());
 		}
 		else {
 			obstacles = new GenerateObstacles(map, false);
-			powerup = new PowerUps(0, obstacles.getList());
 		}
 		
 		if (levelmap != 8) { 
@@ -145,15 +152,35 @@ public Game3D(int width, int height){
 		while(in.hasNext()) {
 			int type = in.nextInt();
 			int count = in.nextInt();
-			for(int i = 0; i< count; i++)
-				enemies.add(Enemy.createEnemy(type, obstacles, map, player));
+			switch(type) {
+			case 6: //blue snake
+				for (int x = 0; x < count; x++) {
+
+					SnakeHead head = new SnakeHead(obstacles, map, player);
+					SnakeBody body = new SnakeBody(obstacles, map, player, head);
+
+					for (int i = 0; i < 4; i++) {
+						head.setChild(body);
+						enemies.add(head);
+						enemies.add(body);
+						head = body;
+						body = new SnakeBody(obstacles, map, player, head);
+					}
+				}
+				
+				break;
+			default:
+				for(int i = 0; i< count; i++)
+					enemies.add(Enemy.createEnemy(type, obstacles, map, player));
+			}
+			
 		}
 		//in.close();
 		
-		if(powerup!=null && levelmap != 8 && !dead){
+		if(powerup != null && levelmap != 8 && !dead){
 			powerups.add(powerup);
 		} 
-		else if(powerup!=null && levelmap != 8 && dead && powerupssize > 0) {
+		else if(powerup != null && levelmap != 8 && dead && powerupssize > 0) {
 			powerups.add(powerup);
 		}
 		
@@ -212,7 +239,7 @@ public Game3D(int width, int height){
 
 			if (System.currentTimeMillis() - lastLoopTime1 > 1000) {
 				lastLoopTime1 += 1000;
-				System.out.println("FPS: " + frames + " - Ticks: " + ticks);
+				//System.out.println("FPS: " + frames + " - Ticks: " + ticks);
 				frames = 0;
 				ticks = 0;
 				if (playing && !pause)
@@ -234,7 +261,7 @@ public Game3D(int width, int height){
 		if (time <= 0 && playing) {
 			// Tiempo acabado, Game Over
 			player.setLives(player.getLives() - 1);
-			setMenu(new GameOverMenu(player.getLives()));
+			setMenu(new GameOverMenu(player.getLives(), level, levelmap));
 			time = 240;
 		}
 
@@ -252,7 +279,7 @@ public Game3D(int width, int height){
 			}
 			if (input.exit.clicked) {
 				music.get(keymusic).stop();
-				//MP3Player.stage.stop();
+				if (player.isInvincible()) MP3Player.invincible.stop();
 				playing = false;
 				pause = false;
 				initLevel();
@@ -263,16 +290,24 @@ public Game3D(int width, int height){
 			if (input.pause.clicked) {
 				//MP3Player.stage.pause();
 				music.get(keymusic).pause();
+				if (player.isInvincible()) MP3Player.invincible.pause();
 				pause = !pause;
 			}
 			if (!pause) {
-				if (playing) music.get(keymusic).play();
+				if (!player.isInvincible()) {
+					if (playing) music.get(keymusic).play();
+					MP3Player.invincible.stop();
+				}
+				else  {
+					MP3Player.invincible.play();
+					music.get(keymusic).pause();
+				}
 				playing = true;
 				player.tick();
 				if (player.endLvl()) {
 					levelmap++;
 					if (levelmap > 8) {
-						levelmap = 0;
+						levelmap = 1;
 						level++;
 						if (level > 8) {
 							setMenu(new FinalScene());
@@ -287,6 +322,7 @@ public Game3D(int width, int height){
 				}
 				if(player.hasRemoteDetonator() && input.remote.clicked && bombs.size() > 0) {
 					bombs.get(0).removed = true;
+					Sound.bomb.play();
 				}
 				if(input.fire.clicked && bombs.size() < player.getBombs()) {
 					Bomb bomb = new Bomb(player);
@@ -298,6 +334,13 @@ public Game3D(int width, int height){
 						}
 					}
 					if(!found)
+						for (Obstacle obs : obstacles.getList()) {
+							if (obs != null && obs.intersects(bomb)) {
+								found = true;
+								break;
+							}
+						}
+					if(!found && !player.isTeleporting() && !player.isDying())
 						bombs.add(bomb);
 				}
 				exit.tick();
@@ -308,7 +351,7 @@ public Game3D(int width, int height){
 					if (player.getLives() < 0) {
 						initLevel();
 						player.setLives(2);
-						setMenu(new GameOverMenu(continues));
+						setMenu(new GameOverMenu(continues, level, levelmap));
 						continues--;
 					}
 					else {
@@ -330,12 +373,11 @@ public Game3D(int width, int height){
 				}
 				for(Iterator<Bomb> it = bombs.iterator(); it.hasNext();) {
 					Bomb bomb = it.next();
+					bomb.tick();
 					if(bomb.removed) {
 						it.remove();
 						addFlares(bomb);
 					}
-					else
-						bomb.tick();
 				}
 				for(Iterator<Flare> it = flares.iterator(); it.hasNext();) {
 					Flare flare = it.next();
@@ -376,7 +418,8 @@ public Game3D(int width, int height){
 			map.renderMap(g);
 			
 			// Pintar salida
-			exit.render(g);
+			//if (levelmap != 8 || ((Exit) exit).isActive())
+				exit.render(g);
 			
 			// Pintar bombas
 			for (Entity e : bombs) {
@@ -746,14 +789,7 @@ public Game3D(int width, int height){
 		else setMenu(new MapMenu(level, map));
 	}
 	
-	@Override
-		public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-			// TODO Auto-generated method stub
-			  GL2 gl = drawable.getGL().getGL2();
-		        gl.glViewport(0, 0, width, height);
-		}
-			
-		private void setCamera(GL2 gl, GLU glu, float x, float y, float z) {
+	private void setCamera(GL2 gl, GLU glu, float x, float y, float z) {
 	       
 			// Change to projection matrix.
 	        gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -1009,7 +1045,13 @@ gl.glColor3d(1,1,1);
 			
 		}catch(java.lang.NullPointerException e){}
 	}
+	@Override
+	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+		// TODO Auto-generated method stub
+		  GL2 gl = drawable.getGL().getGL2();
+	        gl.glViewport(0, 0, width, height);
+	}
 	
 
-	
+
 }

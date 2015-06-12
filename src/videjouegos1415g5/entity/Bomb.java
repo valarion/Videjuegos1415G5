@@ -109,6 +109,7 @@ public class Bomb extends Entity {
 			removed = true;
 		}
 	}
+	
 	public void render3d(GL2 gl, GLU glu) {
 gl.glPushMatrix();
 		
@@ -131,4 +132,5 @@ gl.glPushMatrix();
 		glu.gluDeleteQuadric(earth);
 		gl.glPopMatrix();
 	}
+	
 }

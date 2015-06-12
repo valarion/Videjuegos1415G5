@@ -29,11 +29,10 @@ public class Menu {
 	
 	public void render(Graphics2D g) {
 	}
-
 public void render3D(GL2 gl, GLU glu) {
 	}
 
-	private void pintarletra(GL2 gl, GLU glu,float tamaño, char letra){
+	private void pintarletra(GL2 gl, GLU glu,float size, char letra){
 		int[] vector;
 		
 		switch (letra){
@@ -90,7 +89,7 @@ public void render3D(GL2 gl, GLU glu) {
 					1,1,1,
 					1,0,1};
 					vector=H;
-					System.out.println("pintando h");
+					
 					break;
 					
 		case 'I': int[] I={	1,1,1,
@@ -314,7 +313,7 @@ public void render3D(GL2 gl, GLU glu) {
 		        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
 		        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
 		        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
-		        final float radius = tamaño/2;
+		        final float radius = size/2;
 		        final int slices = 16;
 		        final int stacks = 16;
 		       // glu.gluSphere(earth, radius, slices, stacks);
@@ -322,73 +321,73 @@ public void render3D(GL2 gl, GLU glu) {
 		
 		if (vector[0]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		if (vector[1]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		if (vector[2]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
-		gl.glTranslatef(-3*tamaño,-tamaño,0);
+		gl.glTranslatef(size,0,0);
+		gl.glTranslatef(-3*size,-size,0);
 
 		if (vector[3]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		if (vector[4]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		if (vector[5]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
-		gl.glTranslatef(-3*tamaño,-tamaño,0);
+		gl.glTranslatef(size,0,0);
+		gl.glTranslatef(-3*size,-size,0);
 
 		if (vector[6]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		if (vector[7]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		if (vector[8]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
-		gl.glTranslatef(-3*tamaño,-tamaño,0);
+		gl.glTranslatef(size,0,0);
+		gl.glTranslatef(-3*size,-size,0);
 
 		if (vector[9]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		if (vector[10]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		if (vector[11]==1)
 			glu.gluSphere(earth, radius, slices, stacks);
-		gl.glTranslatef(tamaño,0,0);
+		gl.glTranslatef(size,0,0);
 		  glu.gluDeleteQuadric(earth);
 		  gl.glPopMatrix();
 		
 	}
 
-public void pintarfrase(GL2 gl, GLU glu,float tamaño, String frase){
+public void pintarfrase(GL2 gl, GLU glu,float size, String frase){
 	gl.glPushMatrix();
 	
 	for (int i=0; i<frase.length();i++){
 	
-		pintarletra(gl,glu,tamaño,frase.charAt(i));
-		gl.glTranslated(tamaño*3+tamaño/2, 0, 0);
+		pintarletra(gl,glu,size,frase.charAt(i));
+		gl.glTranslated(size*3+size/2, 0, 0);
 	}
 	gl.glPopMatrix();
 }
-public void cursor(GL2 gl, GLU glu, float tamaño ){
+public void cursor(GL2 gl, GLU glu, float size ){
 	gl.glPushMatrix();
-	gl.glTranslated(0, -tamaño*1.7, 0);
+	gl.glTranslated(0, -size*1.7, 0);
 	 float[] ambiental= {0.99f, 0.2f, 0.2f};
 		gl.glColor3f(0.99f, 0.2f, 0.2f);
 		 
 	  
        gl.glBegin(GL2.GL_TRIANGLE_FAN);
        gl.glNormal3f(0, 0, 1);
-       gl.glVertex3f(-tamaño*1.5f, -tamaño*1.5f, 0);
-       gl.glVertex3f(+tamaño*1.5f, 0, 0);
-       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
+       gl.glVertex3f(-size*1.5f, -size*1.5f, 0);
+       gl.glVertex3f(+size*1.5f, 0, 0);
+       gl.glVertex3f(-size*1.5f, size*1.5f, 0);
        gl.glEnd();
        gl.glPopMatrix();
 	

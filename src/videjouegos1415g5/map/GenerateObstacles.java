@@ -152,6 +152,7 @@ public class GenerateObstacles {
 	public int tileSize() {
 		return tileSize;
 	}
+	
 	public void draw3d(GL2 gl, GLU glu) {
 		for (int i = 0; i < obstacles.size(); i++) {
 			obstacles.get(i).draw3d(gl,glu);

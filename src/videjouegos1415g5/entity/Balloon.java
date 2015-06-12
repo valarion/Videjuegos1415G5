@@ -95,4 +95,5 @@ gl.glTranslated(position.x-5, -position.y+5, 0);
 		gl.glPopMatrix();
 	}
 	
+	
 }

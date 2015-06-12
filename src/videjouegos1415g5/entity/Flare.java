@@ -168,7 +168,6 @@ public class Flare extends Entity {
 	public boolean isMid() {
 		return ANIMATION == midflare;
 	}
-	
 	public void render3d(GL2 gl, GLU glu){
 gl.glPushMatrix();
 		
@@ -196,4 +195,5 @@ gl.glPushMatrix();
 		glu.gluDeleteQuadric(earth);
 		gl.glPopMatrix();
 	}
+	
 }

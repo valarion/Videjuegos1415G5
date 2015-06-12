@@ -21,7 +21,7 @@ public class SetupMenu extends Menu {
 	private static final String background = "/menu/bg1.png";
 	private static final String dyna = "/menu/dyna.png";
 	private static final String blaster = "/menu/blaster.png";
-	private static final String[] options = { "Resolution", "Exit"};
+	private static final String[] options = { "RESOLUTION", "EXIT"};
 	private static final String copyright = "COPYRIGHT 2015.2015";
 	private static final String company = "VidejuegosG5 SA";
 	
@@ -132,7 +132,8 @@ public class SetupMenu extends Menu {
 		font1 = new Font(null, true);
 		font2 = new Font(new Color(255, 255, 0), true);
 	}
-public void render3D(GL2 gl, GLU glu) {	
+	
+	public void render3D(GL2 gl, GLU glu) {	
 		
 		gl.glPushMatrix();
 		gl.glTranslated(-250, 150, 0);
@@ -140,7 +141,7 @@ public void render3D(GL2 gl, GLU glu) {
 		this.pintarfrase(gl, glu, 18f, "DYNA");
 		gl.glTranslated(170, -100, 0);
 		this.pintarfrase(gl, glu, 15f, "BLASTER");
-		float tamaño=8f;
+		float size=8f;
 		gl.glTranslated(0, -90, 0);
 		
 		
@@ -150,19 +151,19 @@ public void render3D(GL2 gl, GLU glu) {
 					String msg = options[i]; 
 					if (i == selected) {
 						gl.glPushMatrix();
-						gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
-						this.cursor(gl, glu, tamaño);
-						gl.glTranslatef(tamaño*2, 0.0f, 0.0f);
+						gl.glTranslatef(0.0f, -i*size*5+size/2, 0.0f);
+						this.cursor(gl, glu, size);
+						gl.glTranslatef(size*2, 0.0f, 0.0f);
 						gl.glColor3f(0.0f, 1.0f, 0.1f);
 						
-						this.pintarfrase(gl, glu, tamaño, msg);
+						this.pintarfrase(gl, glu, size, msg);
 						
 						gl.glPopMatrix();
 						} else {
 							gl.glPushMatrix();
-							gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
+							gl.glTranslatef(0.0f, -i*size*5+size/2, 0.0f);
 							gl.glColor3f(0.0f, 0.0f, 1f);
-							this.pintarfrase(gl, glu, tamaño, msg);
+							this.pintarfrase(gl, glu, size, msg);
 							gl.glPopMatrix();
 						}
 				}

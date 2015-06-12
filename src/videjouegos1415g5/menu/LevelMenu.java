@@ -24,10 +24,11 @@ public class LevelMenu extends Menu {
 	private BufferedImage bg, round, level;
 	private Animation head, roundFlicker, levelFlicker;
 	private int count = 0;
-	private int x, y;
+	private int x, y, lev;
 	
 	public LevelMenu (int level) {
 		this.scale = Main.ESCALA;
+		this.lev = level;
 		
 		this.sl = new SpriteLoader();
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(sprites), scale));
@@ -40,43 +41,43 @@ public class LevelMenu extends Menu {
 		BufferedImage[] head = {ss.obtenerSprite(1, 160*scale, 23*scale, 23*scale), 
 				ss.obtenerSprite(23*scale, 160*scale, 24*scale, 23*scale), 
 				ss.obtenerSprite(48*scale, 160*scale, 24*scale, 23*scale)};
-		this.head = new Animation(head, 5);
+		this.head = new Animation(head, 12);
 		this.roundFlicker = new Animation(roundFlicker, 5);
 		this.levelFlicker = new Animation(levelFlicker, 5);
 		
 		// FALTA DE CALCULAR 
 		switch (level) {
 		case 1:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 18*scale;
+			this.y = 134*scale;
 			break;
 		case 2:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 48*scale;
+			this.y = 112*scale;
 			break;
 		case 3:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 66*scale;
+			this.y = 168*scale;
 			break;
 		case 4:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 104*scale;
+			this.y = 128*scale;
 			break;
 		case 5:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 154*scale;
+			this.y = 120*scale;
 			break;
 		case 6:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 210*scale;
+			this.y = 138*scale;
 			break;
 		case 7:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 210*scale;
+			this.y = 104*scale;
 			break;
 		case 8:
-			this.x = 10*scale;
-			this.y = 150*scale;
+			this.x = 210*scale;
+			this.y = 62*scale;
 			break;
 		}
 		this.head.start();
@@ -92,8 +93,7 @@ public class LevelMenu extends Menu {
 			roundFlicker.stop();
 			levelFlicker.stop();
 			MP3Player.level_start.stop();
-			game.setMenu(new MapMenu(1, 1));
-			//game.setMenu(null);
+			game.setMenu(new MapMenu(lev, 1));
 		}
 		head.tick();
 		roundFlicker.tick();
@@ -115,7 +115,7 @@ public class LevelMenu extends Menu {
 	    g.drawImage(head.getSprite(), x, y, null);
 
 	}
-		public void render3D(GL2 gl, GLU glu) {	
+	public void render3D(GL2 gl, GLU glu) {	
 		
 		gl.glPushMatrix();
 		gl.glTranslated(-250, 150, 0);
@@ -123,7 +123,7 @@ public class LevelMenu extends Menu {
 		this.pintarfrase(gl, glu, 18f, "LEVEL");
 		gl.glTranslated(170, -100, 0);
 		this.pintarfrase(gl, glu, 15f, "MENU");
-		float tamaño=8f;
+		float size=8f;
 		gl.glTranslated(0, -90, 0);
 		
 		
@@ -132,5 +132,6 @@ public class LevelMenu extends Menu {
 							
 gl.glPopMatrix();	
 }
+
 
 }

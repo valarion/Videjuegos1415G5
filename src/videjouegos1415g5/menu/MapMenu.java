@@ -70,7 +70,7 @@ public void render3D(GL2 gl, GLU glu) {
 		this.pintarfrase(gl, glu, 18f, "MAP");
 		gl.glTranslated(170, -100, 0);
 		this.pintarfrase(gl, glu, 15f, "MENU");
-		float tamaño=8f;
+		float size=8f;
 		gl.glTranslated(0, -90, 0);
 		
 		

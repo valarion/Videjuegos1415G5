@@ -97,4 +97,5 @@ gl.glScaled(1.5,1,1);
 	 glu.gluDeleteQuadric(earth);
 		gl.glPopMatrix();
 	}
+	
 }

@@ -143,7 +143,6 @@ public class TitleMenu extends Menu {
 		font1 = new Font(null, true);
 		font2 = new Font(new Color(255, 255, 0), true);
 	}
-	
 	public void render3D(GL2 gl, GLU glu) {	
 	
 		gl.glPushMatrix();
@@ -152,7 +151,7 @@ public class TitleMenu extends Menu {
 		this.pintarfrase(gl, glu, 18f, "DYNA");
 		gl.glTranslated(170, -100, 0);
 		this.pintarfrase(gl, glu, 15f, "BLASTER");
-		float tamaño=8f;
+		float size=8f;
 		gl.glTranslated(0, -90, 0);
 		
 		
@@ -162,19 +161,19 @@ public class TitleMenu extends Menu {
 					String msg = options[i]; 
 					if (i == selected) {
 						gl.glPushMatrix();
-						gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
-						this.cursor(gl, glu, tamaño);
-						gl.glTranslatef(tamaño*2, 0.0f, 0.0f);
+						gl.glTranslatef(0.0f, -i*size*5+size/2, 0.0f);
+						this.cursor(gl, glu, size);
+						gl.glTranslatef(size*2, 0.0f, 0.0f);
 						gl.glColor3f(0.0f, 1.0f, 0.1f);
 						
-						this.pintarfrase(gl, glu, tamaño, msg);
+						this.pintarfrase(gl, glu, size, msg);
 						
 						gl.glPopMatrix();
 						} else {
 							gl.glPushMatrix();
-							gl.glTranslatef(0.0f, -i*tamaño*5+tamaño/2, 0.0f);
+							gl.glTranslatef(0.0f, -i*size*5+size/2, 0.0f);
 							gl.glColor3f(0.0f, 0.0f, 1f);
-							this.pintarfrase(gl, glu, tamaño, msg);
+							this.pintarfrase(gl, glu, size, msg);
 							gl.glPopMatrix();
 						}
 				}
@@ -195,10 +194,9 @@ gl.glPopMatrix();
 	
 	
 	public void prueba(GL2 gl, GLU glu){
-
 		float r=8.5f;
 		gl.glPushMatrix();
-		 gl.glColor3d(1, 0, 1);
+		 
 		//gl.glTranslated(position.x-3, -position.y+5, 0);
 		gl.glScaled(1.4,1,1);
 		gl.glPushMatrix();
@@ -210,67 +208,40 @@ gl.glPopMatrix();
 	        
 	        final int slices = 16;
 	        final int stacks = 16;
-	        gl.glColor3d(1, 0, 1);
+	        gl.glColor3d(1, 1, 1);
 	       
 	     
 		glu.gluSphere(earth,r, slices, stacks);
 		gl.glPopMatrix();
-		
-		
-		//alas
 		gl.glPushMatrix();
-		gl.glTranslated(r*0.85,r,r/20);
-		float tamaño=r/3f;
-	
-		 gl.glBegin(GL2.GL_TRIANGLE_FAN);
-	       gl.glNormal3f(0, 0, 1);
-	       gl.glVertex3f(-tamaño*1.5f, -tamaño*1.5f, 0);
-	       gl.glVertex3f(+tamaño*1.8f, tamaño*1.5f, 0);
-	       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
-	       gl.glEnd();
-	      gl.glTranslated(-r*1.8,0,0);
-	      gl.glRotated(180,0,1,0);
-	       gl.glBegin(GL2.GL_TRIANGLE_FAN);
-	   
-	       gl.glNormal3f(0, 0, -1);
-	       gl.glVertex3f(-tamaño*1.5f, -tamaño*1.5f, 0);
-	       gl.glVertex3f(+tamaño*1.8f, tamaño*1.5f, 0);
-	       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
-	       gl.glEnd();
-		
-		
+		gl.glRotated(90,1,0,0);
+		gl.glScaled(1,0.2,1);
+		 glu.gluCylinder(earth, r, r, 2*r, slices, stacks);
+		 gl.glPopMatrix();
+		gl.glPushMatrix();
+		gl.glColor3d(0,0,1);
+		gl.glTranslated(r/10,r/1.4,0);
+		gl.glRotated(-90,1,0,0);
+		gl.glRotated(10,0,1,0);
+		glu.gluCylinder(earth, r/2, 0, r, slices, stacks);
 		gl.glPopMatrix();
-		
-		
-	
-	//ojos	
 		 gl.glColor3d(0,0,0);
 		 gl.glTranslated(-r/2, 0, r/5);
 		 glu.gluDisk(earth, 0, r/8, slices, stacks);
 		 gl.glTranslated(r,0,0);
 		 glu.gluDisk(earth, 0, r/8, slices, stacks);
-		 gl.glColor3d(1,1,1);
+		 gl.glColor3d(1,1,0.4);
 		 glu.gluDisk(earth, r/8.2, r/3.8, slices, stacks);
 		 gl.glTranslated(-r,0,0);
 		 glu.gluDisk(earth, r/8.2, r/3.8, slices, stacks);
-		 //boca
+		 
 		 gl.glTranslated(r/2,-r/2,0);
-		 tamaño=r/10;
-		 gl.glTranslated(-r/4,0,0);
-		 gl.glBegin(GL2.GL_TRIANGLE_FAN);
-	       gl.glNormal3f(0, 0, 1);
-	       gl.glVertex3f(0, -tamaño*1.5f, 0);
-	       gl.glVertex3f(+tamaño*1.5f, tamaño*1.5f, 0);
-	       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
-	       gl.glEnd();
-	       gl.glTranslated(r/2,0,0);
-			 gl.glBegin(GL2.GL_TRIANGLE_FAN);
-		       gl.glNormal3f(0, 0, 1);
-		       gl.glVertex3f(0, -tamaño*1.5f, 0);
-		       gl.glVertex3f(+tamaño*1.5f, tamaño*1.5f, 0);
-		       gl.glVertex3f(-tamaño*1.5f, tamaño*1.5f, 0);
-		       gl.glEnd();
+		 gl.glScaled(3.5,0.5,0);
+		 gl.glColor3d(1,0.6,0);
+		 glu.gluDisk(earth, r/8.2, r/4, slices, stacks);
+		 gl.glColor3d(1,0.4,0.1);
+		 glu.gluDisk(earth, 0, r/8, slices, stacks);
 		gl.glPopMatrix();
-		System.out.println();
 	}
+	
 }

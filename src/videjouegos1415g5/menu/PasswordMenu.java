@@ -23,7 +23,7 @@ public class PasswordMenu extends Menu {
 	private String[] chars = 
 		{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
 			"K", "L", "M", "N", "O", "P", "Q", "R", "S" , "T",
-			"U", "V", "W", "X", "Y", "Z", "<", ">", "#" };
+			"U", "V", "W", "X", "Y", "Z", "<", ">", "#/" };
 	private String[] password;
 	private int index = 0;;
 	private Font font1;
@@ -85,11 +85,13 @@ public class PasswordMenu extends Menu {
 				String pass = "";
 				for (int i = 0; i<password.length; i++) {
 					pass += password[i];
+					System.out.println(pass);
 				}
 				int i = 0, j = 0;
 				found: for(i=0; i<8;i++) {
 					for(j=0; j<8; j++) {
 						if(passwords[i][j].equals(pass)) {
+							
 							i++;
 							j++;
 							MP3Player.title.stop();
@@ -158,6 +160,7 @@ public class PasswordMenu extends Menu {
 		}
 	}
 	
+		
 		
 public void render3D(GL2 gl, GLU glu) {
 	float size=8;
@@ -229,5 +232,5 @@ public void render3D(GL2 gl, GLU glu) {
 gl.glPopMatrix();
 }
 
-	
+
 }

@@ -22,6 +22,8 @@ public class Enemy extends Mob {
 	protected static Random r = new Random();
 
 	protected Rectangle lastpos;
+	
+	protected boolean move = true;
 
 	public Enemy(GenerateObstacles obs, Map map, Bomberman player) {
 		this.obs = obs;
@@ -56,37 +58,39 @@ public class Enemy extends Mob {
 		if (health <= 0)
 			die();
 		else {
-			this.position.x += xdir;
-			this.position.y += ydir;
+			if (move) {
+				this.position.x += xdir;
+				this.position.y += ydir;
 
-			boolean isinsquare = position.equals(lastpos);
-			lastpos = new Rectangle(position);
-			if (!isinsquare)
-				for (Obstacle rect : obs.getPath()) {
-					if (rect.getBounds().contains(position)) {
-						isinsquare = true;
+				boolean isinsquare = position.equals(lastpos);
+				lastpos = new Rectangle(position);
+				if (!isinsquare)
+					for (Obstacle rect : obs.getPath()) {
+						if (rect.getBounds().contains(position)) {
+							isinsquare = true;
+							break;
+						}
+					}
+
+				if (isinsquare) {
+					switch (r.nextInt(30)) {
+					case 0:
+						xdir = speed;
+						ydir = 0;
+						break;
+					case 1:
+						xdir = -speed;
+						ydir = 0;
+						break;
+					case 2:
+						xdir = 0;
+						ydir = speed;
+						break;
+					case 3:
+						xdir = 0;
+						ydir = -speed;
 						break;
 					}
-				}
-
-			if (isinsquare) {
-				switch (r.nextInt(30)) {
-				case 0:
-					xdir = speed;
-					ydir = 0;
-					break;
-				case 1:
-					xdir = -speed;
-					ydir = 0;
-					break;
-				case 2:
-					xdir = 0;
-					ydir = speed;
-					break;
-				case 3:
-					xdir = 0;
-					ydir = -speed;
-					break;
 				}
 			}
 		}
@@ -101,7 +105,7 @@ public class Enemy extends Mob {
 	
 	public void render(Graphics2D g) {
 		g.setColor(Color.CYAN);
-		g.fillRect(position.x, position.y, 12*scale, 14*scale);
+		//g.fillRect(position.x, position.y, 12*scale, 14*scale);
 		BufferedImage f = animation.getSprite();
 		g.drawImage(animation.getSprite(), 
 				position.x+position.width/2 - (f.getWidth())/2, 
@@ -158,6 +162,30 @@ public class Enemy extends Mob {
 			return new GhostYellow(obs, map, player);
 		case 6:
 			return new SnakeHead(obs, map, player);
+		case 7:
+			return new CrocodileGreen(obs, map, player);
+		case 8:
+			return new GarlicBlue(obs, map, player);
+		case 9:
+			return new FishGreen(obs, map, player);
+		case 10:
+			return new GhostBlue(obs, map, player);
+		case 11:
+			return new CoinYellow(obs, map, player);
+		case 12:
+			return new GhostPink(obs, map, player);
+		case 13:
+			return new Flame(obs, map, player);
+		case 14:
+			return new DuckPurple(obs, map, player);
+		case 15:
+			return new GhostWhite(obs, map, player);
+		case 16:
+			return new Spinning(obs, map, player);
+		case 17:
+			return new FrogYellow(obs, map, player);
+		case 18:
+			return new GhostGreen(obs, map, player);
 		}
 		return null;
 	}

@@ -67,7 +67,7 @@ public class PowerUps extends Entity {
 		return true;
 		
 	}
-	
+
 	public void render3d( GL2 gl, GLU glu ) {
 		float r=8;
 		int slices = 16;
@@ -237,4 +237,5 @@ public class PowerUps extends Entity {
 	}
 
 
+	
 }

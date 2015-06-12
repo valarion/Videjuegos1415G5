@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.glu.GLUquadric;
 
 import videjouegos1415g5.animation.Animation;
 import videjouegos1415g5.animation.Animation.Direction;
@@ -76,7 +75,7 @@ public class Exit extends Entity {
 		return activated;
 	}
 	
-		public void render3d(GL2 gl, GLU glu){
+	public void render3d(GL2 gl, GLU glu){
 
 		gl.glPushMatrix();
 		gl.glTranslated(position.x, -position.y, 0);
@@ -131,4 +130,5 @@ public class Exit extends Entity {
 	      gl.glEnd();
 	      gl.glPopMatrix();
 	}
+	
 }
