@@ -100,12 +100,4 @@ public class GhostGreen extends Enemy {
 	public Rectangle getBounds() {
 		return new Rectangle(position.x, position.y, w, h);
 	}
-	
-	public boolean canPassWalls() {
-		return true;
-	}
-	
-	public boolean canPassBombs() {
-		return true;
-	}
 }

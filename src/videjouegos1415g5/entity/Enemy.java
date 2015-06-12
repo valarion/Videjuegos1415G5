@@ -104,7 +104,7 @@ public class Enemy extends Mob {
 	}
 	
 	public void render(Graphics2D g) {
-		g.setColor(Color.CYAN);
+		//g.setColor(Color.CYAN);
 		//g.fillRect(position.x, position.y, 12*scale, 14*scale);
 		BufferedImage f = animation.getSprite();
 		g.drawImage(animation.getSprite(), 
