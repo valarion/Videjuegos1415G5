@@ -787,6 +787,7 @@ public class Game extends Canvas implements Runnable {
 	public void startLevel(int level, int map) {
 		this.level = level;
 		this.levelmap = map;
+		this.continues = 2;
 		player = new Bomberman(input);
 		initLevel();
 		font = new Font(Color.WHITE, false);
