@@ -32,7 +32,7 @@ public class Bomberman extends Mob {
 	private int potency;
 	private int max_potency;
 	
-	private boolean canPassWalls, canPassBombs, remoteDetonator;
+	private boolean canPassWalls, canPassBombs, remoteDetonator, deathPlayed;
 	
 	private int invincible;
 	
@@ -57,6 +57,7 @@ public class Bomberman extends Mob {
 		this.canPassWalls = false;
 		this.canPassBombs = false;
 		this.remoteDetonator = false;
+		this.deathPlayed = false;
 		this.invincible = 0;
 
 		this.sl = new SpriteLoader();
@@ -131,7 +132,10 @@ public class Bomberman extends Mob {
 			invincible--;
 		if(animation != teleport) {
 			if (health <= 0) {
-				if (health == 0) Sound.death.play(); // Para que solo se reproduzca una vez
+				if (!deathPlayed) {
+					Sound.death.play(); // Para que solo se reproduzca una vez
+					deathPlayed = true;
+				}
 				die();
 			} else {
 	
@@ -305,6 +309,7 @@ public class Bomberman extends Mob {
 	   		this.canPassBombs = false;
 	   		this.canPassWalls = false;
 	   		this.remoteDetonator = false;
+	   		this.deathPlayed = false;
    		}
 		this.position.x = 25 * scale;
 		this.position.y = 45 * scale;
@@ -336,6 +341,10 @@ public class Bomberman extends Mob {
 
 	public boolean isDying() {
 		return animation == death;
+	}
+	
+	public boolean isDyingFirst() {
+		return deathPlayed;
 	}
 
 	

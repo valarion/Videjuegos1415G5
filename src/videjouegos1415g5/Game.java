@@ -299,6 +299,11 @@ public class Game extends Canvas implements Runnable {
 					MP3Player.level_clear.play();
 				}
 				
+				// Si el jugador se ha muerto parar la musica de fondo
+				if (player.isDyingFirst()) {
+					music.get(keymusic).stop();
+				}
+				
 				// Si se ha acabado el nivel
 				if (player.endLvl()) {
 					MP3Player.level_clear.stop();
