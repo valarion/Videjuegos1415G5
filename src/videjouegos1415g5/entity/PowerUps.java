@@ -121,7 +121,24 @@ public class PowerUps extends Entity {
 			glu.gluDeleteQuadric(earth);
 			gl.glPopMatrix();
 			break;
-		case	2:// - Skate Board  = it will speed up your walking
+		case	2:// detonator-	gl.glPushMatrix();
+			
+			gl.glTranslated(position.x-5, -position.y+5, 0);
+			
+			  
+		        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+		        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+		        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+		        
+		    
+		        gl.glColor3d(0.2, 0.2,0.2);
+		       // glu.gluSphere(earth, radius, slices, stacks);
+			glu.gluSphere(earth,8, slices, stacks);
+		
+			gl.glPopMatrix();
+		
+			break;
+		case	3: //skateboard- Detonator   
 			gl.glPushMatrix();
 			
 			gl.glTranslated(position.x-5, -position.y+5, 0);
@@ -132,14 +149,30 @@ public class PowerUps extends Entity {
 		        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
 		        
 		    
-		        gl.glColor3d(1, 1,1);
+		        gl.glColor3d(0.0, 0.0,1);
 		       // glu.gluSphere(earth, radius, slices, stacks);
 			glu.gluSphere(earth,8, slices, stacks);
 		
 			gl.glPopMatrix();
-		
 			break;
-		case	3: //- Detonator    = it will make you can detonate the bomb
+		case	5: //- Wall-Through = it will make you can accross the wall
+	gl.glPushMatrix();
+			
+			gl.glTranslated(position.x-5, -position.y+5, 0);
+			
+			  
+		        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+		        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+		        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+		        
+		    
+		        gl.glColor3d(0.8,0.6,0.3);
+		       // glu.gluSphere(earth, radius, slices, stacks);
+			glu.gluSphere(earth,8, slices, stacks);
+		
+			gl.glPopMatrix();
+			break;
+		case	4: //- Bomb-Through = it will make you can accross the bomb
 	gl.glPushMatrix();
 			
 			gl.glTranslated(position.x-5, -position.y+5, 0);
@@ -156,41 +189,7 @@ public class PowerUps extends Entity {
 		
 			gl.glPopMatrix();
 			break;
-		case	4: //- Wall-Through = it will make you can accross the wall
-	gl.glPushMatrix();
-			
-			gl.glTranslated(position.x-5, -position.y+5, 0);
-			
-			  
-		        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
-		        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
-		        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
-		        
-		    
-		        gl.glColor3d(1,0.7,0.3);
-		       // glu.gluSphere(earth, radius, slices, stacks);
-			glu.gluSphere(earth,8, slices, stacks);
-		
-			gl.glPopMatrix();
-			break;
-		case	5: //- Bomb-Through = it will make you can accross the bomb
-	gl.glPushMatrix();
-			
-			gl.glTranslated(position.x-5, -position.y+5, 0);
-			
-			  
-		        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
-		        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
-		        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
-		        
-		    
-		        gl.glColor3d(0.0, 0.0,1);
-		       // glu.gluSphere(earth, radius, slices, stacks);
-			glu.gluSphere(earth,8, slices, stacks);
-		
-			gl.glPopMatrix();
-			break;
-		case	6: //- Dyna Blaster = it will add your life by 1
+		case	7: //- Dyna Blaster = it will add your life by 1
 			gl.glPushMatrix();
 			
 			gl.glTranslated(position.x-3, -position.y+5, 0);
@@ -230,7 +229,22 @@ public class PowerUps extends Entity {
 		 glu.gluDeleteQuadric(earth);
 			gl.glPopMatrix();
 			break;
-		case	7: //- Invincible   = it will make you invincible temporarily
+		case	6: //- Invincible   = it will make you invincible temporarily
+	gl.glPushMatrix();
+			
+			gl.glTranslated(position.x-5, -position.y+5, 0);
+			
+			  
+		        glu.gluQuadricDrawStyle(earth, GLU.GLU_FILL);
+		        glu.gluQuadricNormals(earth, GLU.GLU_FLAT);
+		        glu.gluQuadricOrientation(earth, GLU.GLU_OUTSIDE);
+		        
+		    
+		        gl.glColor3d(1,1,0.0);
+		       // glu.gluSphere(earth, radius, slices, stacks);
+			glu.gluSphere(earth,8, slices, stacks);
+		
+			gl.glPopMatrix();
 			break;
 		}
 		gl.glPopMatrix();
