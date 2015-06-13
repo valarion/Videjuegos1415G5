@@ -29,6 +29,7 @@ import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.map.GenerateObstacles;
 import videjouegos1415g5.map.Map;
 import videjouegos1415g5.map.Obstacle;
+import videjouegos1415g5.menu.CreditsMenu;
 import videjouegos1415g5.menu.GameOverMenu;
 import videjouegos1415g5.menu.LevelMenu;
 import videjouegos1415g5.menu.MapMenu;
@@ -287,17 +288,19 @@ public class Game extends Canvas implements Runnable {
 				}
 				// Si no, musica de invencibilidad
 				else {
-					MP3Player.invincible.play();
+					if (playing) MP3Player.invincible.play();
 					music.get(keymusic).pause();
 				}
-				playing = true;
-				player.tick();
 				
 				// Primer frame en el que se ha acabado el nivel
 				if (player.endLvlFirst()) {
 					music.get(keymusic).stop();
+					if (!playing) MP3Player.invincible.stop();
 					MP3Player.level_clear.play();
 				}
+				
+				playing = true;
+				player.tick();
 				
 				// Si el jugador se ha muerto parar la musica de fondo
 				if (player.isDyingFirst()) {
@@ -311,7 +314,10 @@ public class Game extends Canvas implements Runnable {
 					if (levelmap > 8) {
 						levelmap = 1;
 						level++;
-						if (level > 8) setMenu(new FinalScene());
+						if (level > 8) {
+							setMenu(new CreditsMenu());
+							return;
+						}
 						else setMenu(new LevelMenu(level));
 					}
 					else

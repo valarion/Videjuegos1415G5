@@ -72,6 +72,10 @@ public class MP3Player {
 		stop();
 		clip.close();
 	}
+
+	public boolean isPlaying() {
+		return clip.getFramePosition() != clip.getFrameLength();
+	}
 	
 }
 
