@@ -141,8 +141,8 @@ public class SetupMenu extends Menu {
 		this.pintarfrase(gl, glu, 18f, "DYNA");
 		gl.glTranslated(170, -100, 0);
 		this.pintarfrase(gl, glu, 15f, "BLASTER");
-		float size=8f;
-		gl.glTranslated(0, -90, 0);
+		float size=6f;
+		gl.glTranslated(-120, -90, 0);
 		
 		
 				
@@ -157,6 +157,10 @@ public class SetupMenu extends Menu {
 						gl.glColor3f(0.0f, 1.0f, 0.1f);
 						
 						this.pintarfrase(gl, glu, size, msg);
+						if(i==0){
+							gl.glTranslated(250,0,0);
+							this.pintarfrase(gl,glu,size/1.2f, "<" + width*localScale + "X" + height*localScale + ">");
+							}
 						
 						gl.glPopMatrix();
 						} else {
@@ -167,7 +171,6 @@ public class SetupMenu extends Menu {
 							gl.glPopMatrix();
 						}
 				}
-				
 							
 gl.glPopMatrix();	
 }

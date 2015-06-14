@@ -6,14 +6,14 @@ import javax.swing.JFrame;
 
 public class Main {
 	
-	public static final int ALTURA = 232;
-	public static final int ANCHURA = 256;
+	public static final int ALTURA = 480;
+	public static final int ANCHURA = 600;
 	public static int ESCALA = 2;
-	public static final String TITULO = "+";
+	public static final String TITULO = "Dyna Blaster";
 	private static JFrame frame;
 	
 	public static void main(String[] args) {
-		Game3D game = new Game3D(640,480);
+		Game3D game = new Game3D(600,480);
 	
 	
 	
@@ -23,7 +23,7 @@ public class Main {
 		frame.setLayout(new BorderLayout());
 		frame.add(game, BorderLayout.CENTER);
 		//frame.pack();
-		frame.setSize(640, 480);
+		frame.setSize(600, 480);
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		
