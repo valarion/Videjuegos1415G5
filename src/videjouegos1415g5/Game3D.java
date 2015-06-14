@@ -126,6 +126,8 @@ public Game3D(int width, int height){
 		setMenu(new TitleMenu());
 	}
 	
+	
+	
 	public void initLevel() {
 		boolean dead = player.removed;
 		int powerupssize = powerups.size();
@@ -837,6 +839,7 @@ public Game3D(int width, int height){
 		
 		private void renderGui3d(GL2 gl, GLU glu) {
 gl.glPushMatrix();
+//a la misma distancia del jugador siempre
 gl.glTranslated(player.position.x-200, -player.position.y+150, 0.0);
 gl.glTranslated(0.0, 0.0, 100);
 gl.glPushMatrix();
@@ -945,6 +948,10 @@ gl.glColor3d(1,1,1);
 			gl.glPopMatrix();
 		}
 	}
+		
+		
+		
+		
 	public void display(GLAutoDrawable drawable) {
 		if(shouldRender) {
 			try{
@@ -955,15 +962,27 @@ gl.glColor3d(1,1,1);
         float[] lightPos = {-20, 0, 50, SHINE_ALL_DIRECTIONS};
         float[] lightColorAmbient = {0.5f, 0.5f, 0.5f, 1f};
         float[] lightColorSpecular = {0.4f, 0.4f, 0.4f, 1f};
-   
-
+        float[] lightColorAmbient2 = {0.5f, 0.0f, 0.0f, 1f};
+        float[] lightColorSpecular2 = {0.1f, 0.0f, 0.0f, 1f};
+      
         // Set light parameters.
         g.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, lightPos, 0);
         g.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, lightColorAmbient, 0);
    
         g.glLightfv(GL2.GL_LIGHT1, GL2.GL_SPECULAR, lightColorSpecular, 0);
 
+        
+        g.glLightfv(GL2.GL_LIGHT2, GL2.GL_POSITION, lightPos, 0);
+        g.glLightfv(GL2.GL_LIGHT2, GL2.GL_AMBIENT, lightColorAmbient2, 0);
+   
+        g.glLightfv(GL2.GL_LIGHT2, GL2.GL_SPECULAR, lightColorSpecular2, 0);
+        
         // Enable lighting in GL.
+        if(!flares.isEmpty()){
+        	g.glEnable(GL2.GL_LIGHT2);
+        }else{
+        	g.glDisable(GL2.GL_LIGHT2);
+        }
         g.glEnable(GL2.GL_LIGHT1);
         g.glEnable(GL2.GL_LIGHTING);
         float[] spec={1.0f,1.0f,1.0f};
