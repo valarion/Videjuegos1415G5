@@ -44,6 +44,7 @@ public class InputHandler implements KeyListener {
 	public Key remote = new Key();
 	public Key pause = new Key();
 	public Key exit = new Key();
+	public Key camera=new Key();
 
 	public void releaseAll() {
 		for (int i = 0; i < keys.size(); i++) {
@@ -72,6 +73,7 @@ public class InputHandler implements KeyListener {
 	}
 
 	private void toggle(KeyEvent ke, boolean pressed) {
+		if(ke.getKeyCode()==KeyEvent.VK_C) camera.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD8) up.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD2) down.toggle(pressed);
 		if (ke.getKeyCode() == KeyEvent.VK_NUMPAD4) left.toggle(pressed);
