@@ -82,7 +82,7 @@ public class Game3D extends GLCanvas implements GLEventListener, Runnable {
 	private String keymusic = "";
 	private FPSAnimator animator;
 	private GLU glu;
-	
+	private boolean shouldRender;
 	private Menu GUI;
 
 public Game3D(int width, int height){
@@ -91,6 +91,7 @@ public Game3D(int width, int height){
 		this.GUI=new Menu();
 		addGLEventListener(this);
 		setSize(width, height);
+	
 	}
 	public void start() {
 		running = true;
@@ -214,7 +215,7 @@ public Game3D(int width, int height){
 		long lastLoopTime = System.nanoTime();
 		long lastLoopTime1 = System.currentTimeMillis();
 		long now = 0;
-		boolean shouldRender;
+	
 
 		iniciar();
 		//initLevel();
@@ -235,6 +236,7 @@ public Game3D(int width, int height){
 			if (shouldRender) {
 				frames++;
 				//render();
+				
 			}
 
 			if (System.currentTimeMillis() - lastLoopTime1 > 1000) {
@@ -823,7 +825,7 @@ public Game3D(int width, int height){
 
 		        
 		        // Start animator (which should be a field).
-		        animator = new FPSAnimator(this, 30);
+		        animator = new FPSAnimator(this, 60);
 		        animator.start();
 		}
 
@@ -944,7 +946,8 @@ gl.glColor3d(1,1,1);
 		}
 	}
 	public void display(GLAutoDrawable drawable) {
-		try{
+		if(shouldRender) {
+			try{
 	GL2 g=drawable.getGL().getGL2();
 		g.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		
@@ -1044,6 +1047,7 @@ gl.glColor3d(1,1,1);
 }catch( java.util.ConcurrentModificationException e){
 			
 		}catch(java.lang.NullPointerException e){}
+	}
 	}
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
