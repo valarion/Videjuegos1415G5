@@ -82,7 +82,7 @@ public class TitleMenu extends Menu {
 					game.startLevel(1, 1);
 				}
 				if (selected == 1)
-					game.setMenu(new CreditsMenu(this));
+					game.setMenu(new CreditsMenu());
 				if (selected == 2)
 					game.setMenu(new SetupMenu(this));
 				if (selected == 3)
@@ -144,7 +144,7 @@ public class TitleMenu extends Menu {
 		font2 = new Font(new Color(255, 255, 0), true);
 	}
 	public void render3D(GL2 gl, GLU glu) {	
-	
+	game.setCamera(gl, glu, 0, 0, 500, 0, 0, 0);
 		gl.glPushMatrix();
 		gl.glTranslated(-250, 150, 0);
 		gl.glColor3f(1.0f, 1.0f, 0.1f);

@@ -789,7 +789,7 @@ public Game3D(int width, int height){
 		else setMenu(new MapMenu(level, map));
 	}
 	
-	private void setCamera(GL2 gl, GLU glu, float x, float y, float z) {
+	public void setCamera(GL2 gl, GLU glu, float x, float y, float z, float xx, float yy, float zz) {
 	       
 			// Change to projection matrix.
 	        gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -798,7 +798,7 @@ public Game3D(int width, int height){
 	        // Perspective.
 	        float widthHeightRatio = (float) getWidth() / (float) getHeight();
 	        glu.gluPerspective(45, widthHeightRatio, 1, 1000);
-	        glu.gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
+	        glu.gluLookAt(x, y, z, xx, yy, zz, 0, 1, 0);
 
 	        // Change back to model view matrix.
 	        gl.glMatrixMode(GL2.GL_MODELVIEW);
@@ -970,7 +970,7 @@ gl.glColor3d(1,1,1);
 		
 		if (menu != null) {
 			g.glPushMatrix();
-		setCamera(g,glu,0,0,500);
+		setCamera(g,glu,0,0,500,0, 0,0);
 			menu.render3D(g,glu);
 			g.glPopMatrix();
 		} else {
