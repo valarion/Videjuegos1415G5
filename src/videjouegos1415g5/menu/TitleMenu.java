@@ -81,8 +81,10 @@ public class TitleMenu extends Menu {
 					MP3Player.title.stop();
 					game.startLevel(1, 1);
 				}
-				if (selected == 1)
+				if (selected == 1) {
+					MP3Player.title.stop();
 					game.setMenu(new CreditsMenu());
+				}
 				if (selected == 2)
 					game.setMenu(new SetupMenu(this));
 				if (selected == 3)
