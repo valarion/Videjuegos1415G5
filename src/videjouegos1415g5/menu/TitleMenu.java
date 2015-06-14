@@ -9,10 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import videjouegos1415g5.Main;
-import videjouegos1415g5.cutscenes.InitScene;
-import videjouegos1415g5.entity.Bomberman;
 import videjouegos1415g5.gfx.Font;
-import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.sound.MP3Player;
 
 public class TitleMenu extends Menu {
@@ -26,7 +23,7 @@ public class TitleMenu extends Menu {
 	private static final String background = "/menu/bg1.png";
 	private static final String dyna = "/menu/dyna.png";
 	private static final String blaster = "/menu/blaster.png";
-	private static final String[] options = { "Game start", "Battle", "Setup", "Password" };
+	private static final String[] options = { "Game start", "Credits", "Setup", "Password" };
 	private static final String push = "Push fire button !";
 	private static final String copyright = "COPYRIGHT 2015.2015";
 	private static final String company = "VidejuegosG5 SA";
@@ -77,8 +74,10 @@ public class TitleMenu extends Menu {
 					MP3Player.title.stop();
 					game.startLevel(1, 1);
 				}
-				if (selected == 1)
-					game.setMenu(new BattleMenu(this));
+				if (selected == 1) {
+					MP3Player.title.stop();
+					game.setMenu(new CreditsMenu());
+				}
 				if (selected == 2)
 					game.setMenu(new SetupMenu(this));
 				if (selected == 3)
