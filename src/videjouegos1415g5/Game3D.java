@@ -1007,10 +1007,10 @@ gl.glColor3d(1,1,1);
 		
 		float SHINE_ALL_DIRECTIONS = 1;
         float[] lightPos = {-20, 0, 50, SHINE_ALL_DIRECTIONS};
-        float[] lightColorAmbient = {0.5f, 0.5f, 0.5f, 1f};
-        float[] lightColorSpecular = {0.4f, 0.4f, 0.4f, 1f};
-        float[] lightColorAmbient2 = {0.3f, 0.0f, 0.0f, 1f};
-        float[] lightColorSpecular2 = {0.1f, 0.0f, 0.0f, 1f};
+        float[] lightColorAmbient = {0.7f, 0.7f, 0.7f, 1f};
+        float[] lightColorSpecular = {0.3f, 0.3f, 0.3f, 1f};
+        float[] lightColorAmbient2 = {0.0f, 0.8f, 0.0f, 1f};
+        float[] lightColorSpecular2 = {0.0f, 0.2f, 0.0f, 1f};
       
         // Set light parameters.
         g.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, lightPos, 0);
@@ -1032,7 +1032,7 @@ gl.glColor3d(1,1,1);
         }
         g.glEnable(GL2.GL_LIGHT1);
         g.glEnable(GL2.GL_LIGHTING);
-        float[] spec={1.0f,1.0f,1.0f};
+        float[] spec={0.7f,0.7f,0.7f,1.0f};
         g.glMaterialfv(GL2.GL_FRONT,GL2.GL_SPECULAR,spec,0);
 			
 	
