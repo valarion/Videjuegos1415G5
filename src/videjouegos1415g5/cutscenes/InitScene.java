@@ -130,7 +130,9 @@ public class InitScene extends Menu {
 	}
 	
 	public void tick() {
-		switch(state) {
+		MP3Player.intro.stop();
+		game.setMenu(new LevelMenu(1));
+		/*switch(state) {
 		// No pasa nada (4 segundos)
 		case 0:
 			if (count > 60*4) {
@@ -212,7 +214,7 @@ public class InitScene extends Menu {
 							bomberAn = bomberCalm;
 							oldAn = oldCalm;
 							if (count > 60*22) {
-								MP3Player.intro.stop();
+							
 								game.setMenu(new LevelMenu(1));
 							}
 						}
@@ -221,7 +223,7 @@ public class InitScene extends Menu {
 			}
 			break;
 			
-		}
+		}*/
 		if (input.fire.clicked) {
 			MP3Player.intro.stop();
 			game.setMenu(new LevelMenu(1));
