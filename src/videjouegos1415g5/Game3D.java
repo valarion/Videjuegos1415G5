@@ -1006,7 +1006,7 @@ gl.glColor3d(1,1,1);
 		g.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		
 		float SHINE_ALL_DIRECTIONS = 1;
-        float[] lightPos = {-20, 0, 50, SHINE_ALL_DIRECTIONS};
+        float[] lightPos = {-21, 0, 50, SHINE_ALL_DIRECTIONS};
         float[] lightColorAmbient = {0.7f, 0.7f, 0.7f, 1f};
         float[] lightColorSpecular = {0.3f, 0.3f, 0.3f, 1f};
         float[] lightColorAmbient2 = {0.0f, 0.8f, 0.0f, 1f};
