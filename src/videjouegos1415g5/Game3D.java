@@ -462,6 +462,7 @@ public Game3D(int width, int height){
 			player.render(g);
 			
 			// Pintar gui
+			
 			renderGui(g);
 		}
 
@@ -962,7 +963,7 @@ gl.glColor3d(1,1,1);
         float[] lightPos = {-20, 0, 50, SHINE_ALL_DIRECTIONS};
         float[] lightColorAmbient = {0.5f, 0.5f, 0.5f, 1f};
         float[] lightColorSpecular = {0.4f, 0.4f, 0.4f, 1f};
-        float[] lightColorAmbient2 = {0.5f, 0.0f, 0.0f, 1f};
+        float[] lightColorAmbient2 = {0.3f, 0.0f, 0.0f, 1f};
         float[] lightColorSpecular2 = {0.1f, 0.0f, 0.0f, 1f};
       
         // Set light parameters.
@@ -1033,25 +1034,32 @@ gl.glColor3d(1,1,1);
 			// Pintar llamas finales
 		
 			for (Flare e : flares) {
+				g.glDisable(GL2.GL_LIGHT2);
 				if(e.isFinal())
 					e.render3d(g,glu);
+				g.glEnable(GL2.GL_LIGHT2);
 			}
 			
 			// Pintar llamas intermedias
 			for (Flare e : flares) {
+				g.glDisable(GL2.GL_LIGHT2);
 				if(!e.isFinal() && !e.isMid())
 					e.render3d(g,glu);
+				g.glEnable(GL2.GL_LIGHT2);
 			}
 			// Pintar llamas iniciales
 			for (Flare e : flares) {
+				g.glDisable(GL2.GL_LIGHT2);
 				if(e.isMid())
 					e.render3d(g,glu);
+				g.glEnable(GL2.GL_LIGHT2);
 			}
 			// Pintar bomberman
 			player.render3d(g,glu);
 			
 			// Pintar gui
 			g.glPopMatrix();
+			g.glDisable(GL2.GL_LIGHT2);
 			renderGui3d(g,glu);
 		
 		
