@@ -36,7 +36,7 @@ public class Bomberman extends Mob {
 	private int potency;
 	private int max_potency;
 	
-	private boolean canPassWalls, canPassBombs, remoteDetonator;
+	private boolean canPassWalls, canPassBombs, remoteDetonator, deathPlayed;
 	
 	private int invincible;
 	
@@ -61,6 +61,7 @@ public class Bomberman extends Mob {
 		this.canPassWalls = false;
 		this.canPassBombs = false;
 		this.remoteDetonator = false;
+		this.deathPlayed = false;
 		this.invincible = 0;
 
 		this.sl = new SpriteLoader();
@@ -98,13 +99,15 @@ public class Bomberman extends Mob {
 				ss.obtenerSprite(8 * w * scale, h * scale, w * scale, h * scale),
 				ss.obtenerSprite(9 * w * scale, h * scale, w * scale, h * scale) };
 		
-		BufferedImage[] tp = new BufferedImage[h*scale];
+		BufferedImage[] tp = new BufferedImage[h*scale + 1];
 		for(int i=0; i<h*scale/4; i++) {
 			tp[i*4] = ss.obtenerSprite(6 * w * scale, i*4, w * scale, h * scale-i*4);
 			tp[i*4+1] = ss.obtenerSprite(9 * w * scale, i*4, w * scale, h * scale-i*4);
 			tp[i*4+2] = ss.obtenerSprite(3 * w * scale, i*4, w * scale, h * scale-i*4);
 			tp[i*4+3] = ss.obtenerSprite(0 * w * scale, i*4, w * scale, h * scale-i*4);
 		}
+		tp[tp.length - 1] = new BufferedImage(tp[0].getWidth(), tp[0].getHeight(), BufferedImage.TYPE_INT_ARGB);
+
 
 		BufferedImage[] sp = new BufferedImage[h * scale];
 
@@ -121,8 +124,8 @@ public class Bomberman extends Mob {
 		this.down = new Animation(walkingDown, 10, Direction.DOWN);
 		this.death = new Animation(die, 10, Direction.DOWN);
 		
-		this.teleport = new Animation(tp,4,Direction.DOWN);
-		this.sparks = new Animation(sp,15,Direction.DOWN);
+		this.teleport = new Animation(tp,8-scale,Direction.DOWN);
+		this.sparks = new Animation(sp,10,Direction.DOWN);
 
 		// Animacion inicial
 		this.animation = down;
@@ -133,7 +136,10 @@ public class Bomberman extends Mob {
 			invincible--;
 		if(animation != teleport) {
 			if (health <= 0) {
-				if (health == 0) Sound.death.play(); // Para que solo se reproduzca una vez
+				if (!deathPlayed) {
+					Sound.death.play(); // Para que solo se reproduzca una vez
+					deathPlayed = true;
+				}
 				die();
 			} else {
 	
@@ -196,7 +202,8 @@ public class Bomberman extends Mob {
 		}
 		else {
 			BufferedImage f = teleport.getSprite();
-			g.drawImage(f,
+			if (f != null)
+				g.drawImage(f,
 					position.x + position.width / 2 - (f.getWidth() - 1 * scale)
 							/ 2, position.y + position.height / 2
 							- (f.getHeight() + 11 * scale) / 2 + teleport.getCurrentFrame()/scale, null);
@@ -215,8 +222,8 @@ public class Bomberman extends Mob {
 				this.hurt(go, 10);
 		}
 		if(go instanceof Exit) {
-			this.position.x = go.position.x;
-			this.position.y = go.position.y;
+			//this.position.x = go.position.x;
+			//this.position.y = go.position.y;
 			this.animation = teleport;
 			teleport.start();
 			sparks.start();
@@ -297,11 +304,16 @@ public class Bomberman extends Mob {
 		return animation == teleport && animation.finalFrame();
 	}
 	
+	public boolean endLvlFirst() {
+		return animation == teleport;
+	}
+	
 	public void reset() {
 		if(removed) {
 	   		this.canPassBombs = false;
 	   		this.canPassWalls = false;
 	   		this.remoteDetonator = false;
+	   		this.deathPlayed = false;
    		}
 		this.position.x = 25 * scale;
 		this.position.y = 45 * scale;
@@ -334,6 +346,20 @@ public class Bomberman extends Mob {
 	public boolean isDying() {
 		return animation == death;
 	}
+	
+	public boolean isDyingFirst() {
+		return deathPlayed;
+	}
+
+	
+
+
+
+
+
+	
+	
+	
 
 	public void render3d( GL2 gl, GLU glu ) {
 		float r=8.5f;
