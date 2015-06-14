@@ -35,7 +35,8 @@ public class Bomberman extends Mob {
 	private int max_bombs;
 	private int potency;
 	private int max_potency;
-	
+	private boolean view;
+	private Rectangle positionc;
 	private boolean canPassWalls, canPassBombs, remoteDetonator, deathPlayed;
 	
 	private int invincible;
@@ -43,13 +44,13 @@ public class Bomberman extends Mob {
 	private Animation teleport, sparks;
 
 	public Bomberman(InputHandler input) {
-		
+		this.positionc=new Rectangle();
 		this.input = input;
 		this.position.x = 25 * scale;
 		this.position.y = 45 * scale;
 		this.position.width = 14 * scale;
 		this.position.height = 11 * scale;
-
+		this.view=false;
 		this.score = 0;
 		this.lives = 1;
 		this.velocity = 0;
@@ -63,7 +64,10 @@ public class Bomberman extends Mob {
 		this.remoteDetonator = false;
 		this.deathPlayed = false;
 		this.invincible = 0;
-
+		this.positionc.x = 25 * scale;
+		this.positionc.y = 45 * scale;
+		this.positionc.width = 14 * scale;
+		this.positionc.height = 11 * scale;
 		this.sl = new SpriteLoader();
 		// Escalamos la secuencia de sprites
 		this.ss = new SpriteSheet(ScaleImg.scale(sl.cargarImagen(ANIMATION),
@@ -171,6 +175,25 @@ public class Bomberman extends Mob {
 					animation.stop();
 					animation.reset();
 				}
+			}
+			if (input.leftc.down) {
+				positionc.x -= (scale + velocity);
+			
+			}
+
+			else if (input.rightc.down) {
+				positionc.x += (scale + velocity);
+			
+			}
+
+			else if (input.upc.down) {
+				positionc.y -= (scale + velocity);
+				
+			}
+
+			else if (input.downc.down) {
+				positionc.y += (scale + velocity);
+				
 			}
 			animation.tick();
 		}
@@ -405,7 +428,10 @@ gl.glPushMatrix();
 		gl.glPopMatrix();
 	}
 	private void setCamera(GL2 gl, GLU glu, float x, float y, float z) {
-        
+        if(input.camera.clicked){
+        view=!view;	
+        }
+        if(!view){
 		// Change to projection matrix.
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
@@ -420,4 +446,30 @@ gl.glPushMatrix();
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
+        else{
+        	
+        	// Change to projection matrix.
+            gl.glMatrixMode(GL2.GL_PROJECTION);
+            gl.glLoadIdentity();
+
+            // Perspective.
+            float widthHeightRatio = 640 / (float) 480;
+            glu.gluPerspective(45, widthHeightRatio, 1, 1000);
+           
+          
+        	
+        	
+        	
+        		  glu.gluLookAt(positionc.x, -positionc.y, z, position.x, -position.y, 0, 0, 1, 0);
+
+        		
+        	
+        	 // Change back to model view matrix.
+            gl.glMatrixMode(GL2.GL_MODELVIEW);
+            gl.glLoadIdentity();
+        	
+        	}
+        	
+        }    
+	
 }
