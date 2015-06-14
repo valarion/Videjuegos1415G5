@@ -147,7 +147,7 @@ public class SetupMenu extends Menu {
 		
 				
 				for (int i = 0; i < options.length; i++) {
-					System.out.println("hola");
+					
 					String msg = options[i]; 
 					if (i == selected) {
 						gl.glPushMatrix();

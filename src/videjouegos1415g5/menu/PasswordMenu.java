@@ -85,7 +85,7 @@ public class PasswordMenu extends Menu {
 				String pass = "";
 				for (int i = 0; i<password.length; i++) {
 					pass += password[i];
-					System.out.println(pass);
+					
 				}
 				int i = 0, j = 0;
 				found: for(i=0; i<8;i++) {
