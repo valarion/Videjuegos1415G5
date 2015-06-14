@@ -2,6 +2,8 @@ package videjouegos1415g5;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 
 public class Main {
@@ -26,6 +28,7 @@ public class Main {
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/dynablaster_icon.png")));
 		
 		game.start();
 		frame.pack();
