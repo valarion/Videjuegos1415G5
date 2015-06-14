@@ -30,7 +30,7 @@ public class TitleMenu extends Menu {
 	private static final String background = "/menu/bg1.png";
 	private static final String dyna = "/menu/dyna.png";
 	private static final String blaster = "/menu/blaster.png";
-	private static final String[] options = { "GAME START", "BATTLE", "SETUP", "PASSWORD" };
+	private static final String[] options = { "GAME START", "CREDITS", "SETUP", "PASSWORD" };
 	private static final String push = "Push fire button !";
 	private static final String copyright = "COPYRIGHT 2015.2015";
 	private static final String company = "VidejuegosG5 SA";
@@ -82,7 +82,7 @@ public class TitleMenu extends Menu {
 					game.startLevel(1, 1);
 				}
 				if (selected == 1)
-					game.setMenu(new BattleMenu(this));
+					game.setMenu(new CreditsMenu(this));
 				if (selected == 2)
 					game.setMenu(new SetupMenu(this));
 				if (selected == 3)
