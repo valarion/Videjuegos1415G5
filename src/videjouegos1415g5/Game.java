@@ -241,6 +241,8 @@ public class Game extends Canvas implements Runnable {
 
 		if (time <= 0 && playing) {
 			// Tiempo acabado, Game Over
+			if (player.isInvincible()) MP3Player.invincible.stop();
+			else music.get(keymusic).stop();
 			player.setLives(player.getLives() - 1);
 			setMenu(new GameOverMenu(player.getLives(), level, levelmap));
 			time = 240;
