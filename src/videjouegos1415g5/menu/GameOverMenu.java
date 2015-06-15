@@ -43,7 +43,7 @@ public class GameOverMenu extends Menu {
 
 		// Ultimo continue
 		if (lives == -1) {
-			options[0] = "Continue last";
+			options[0] = "CONTINUE LAST";
 			this.font = new Font(Color.RED, true);
 		}
 		
