@@ -117,7 +117,7 @@ public void render3d( GL2 gl, GLU glu ) {
 	float r=8.5f;
 	gl.glPushMatrix();
 	 
-	//gl.glTranslated(position.x-3, -position.y+5, 0);
+	gl.glTranslated(position.x-3, -position.y+5, 0);
 	gl.glScaled(1.4,1,1);
 	gl.glPushMatrix();
 	gl.glScaled(1,1,0.2);
