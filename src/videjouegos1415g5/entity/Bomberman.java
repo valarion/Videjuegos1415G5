@@ -12,7 +12,6 @@ import videjouegos1415g5.gfx.Colors;
 import videjouegos1415g5.gfx.ScaleImg;
 import videjouegos1415g5.gfx.SpriteLoader;
 import videjouegos1415g5.gfx.SpriteSheet;
-import videjouegos1415g5.sound.MP3Player;
 import videjouegos1415g5.sound.Sound;
 
 public class Bomberman extends Mob {
@@ -135,6 +134,7 @@ public class Bomberman extends Mob {
 				if (!deathPlayed) {
 					Sound.death.play(); // Para que solo se reproduzca una vez
 					deathPlayed = true;
+					System.out.println("1");
 				}
 				die();
 			} else {
