@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -252,7 +253,7 @@ public Game3D(int width, int height){
 			}
 
 			try {
-				Thread.sleep(2); // Como a Mena le gusta
+				Thread.sleep(10); // Como a Mena le gusta
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -329,9 +330,9 @@ public Game3D(int width, int height){
 				player.tick();
 				
 				// Si el jugador se ha muerto parar la musica de fondo
-				if (player.isDyingFirst()) {
-					music.get(keymusic).stop();
-				}
+				//if (player.isDyingFirst()) {
+					//music.get(keymusic).stop();
+				//}
 				
 				// Si se ha acabado el nivel
 				if (player.endLvl()) {
@@ -415,11 +416,16 @@ public Game3D(int width, int height){
 				
 				// Tick de las bombas
 				for(Iterator<Bomb> it = bombs.iterator(); it.hasNext();) {
-					Bomb bomb = it.next();
+					final Bomb bomb = it.next();
 					bomb.tick();
 					if(bomb.removed) {
 						it.remove();
-						addFlares(bomb);
+						Thread flares = new Thread() {
+							public void run() {
+								addFlares(bomb);
+							}
+						};
+						flares.start();
 					}
 				}
 				
@@ -489,21 +495,24 @@ public Game3D(int width, int height){
 				e.render(g);
 			}
 
-			// Pintar llamas finales
-			for (Flare e : flares) {
-				if(e.isFinal())
-					e.render(g);
-			}
-			// Pintar llamas intermedias
-			for (Flare e : flares) {
-				if(!e.isFinal() && !e.isMid())
-					e.render(g);
-			}
-			// Pintar llamas iniciales
-			for (Flare e : flares) {
-				if(e.isMid())
-					e.render(g);
-			}
+			try {
+				// Pintar llamas finales
+				for (Flare e : flares) {
+					if (e.isFinal())
+						e.render(g);
+				}
+				// Pintar llamas intermedias
+				for (Flare e : flares) {
+					if (!e.isFinal() && !e.isMid())
+						e.render(g);
+				}
+				// Pintar llamas iniciales
+				for (Flare e : flares) {
+					if (e.isMid())
+						e.render(g);
+				}
+			} catch (ConcurrentModificationException e1) {}
+			
 			// Pintar bomberman
 			player.render(g);
 			
@@ -539,35 +548,36 @@ public Game3D(int width, int height){
 				}
 			}
 		}
-		// los enemigos con las llamas
-		for (Enemy enemy : enemies) {
-			for (Entity flare : flares) {
-				if (flare.intersects(enemy)) {
-					enemy.hurt(flare, 10);
-				}
-			}
-		}
-
-		// el jugador con las llamas
-		for (Entity flare : flares) {
-			if (flare.intersects(player)) {
-				if(!player.isInvincible())
-					player.touchedBy(flare);
-				//break;
-			}
-		}
-
-		// las bombas con las llamas
-		for (Entity bomb : bombs) {
-			for (Entity flare : flares) {
-				if (flare.intersects(bomb)) {
-					bomb.touchedBy(flare);
-					//break;
-				}
-			}
-		}
-
 		
+		try {
+			// los enemigos con las llamas
+			for (Enemy enemy : enemies) {
+				for (Entity flare : flares) {
+					if (flare.intersects(enemy)) {
+						enemy.hurt(flare, 10);
+					}
+				}
+			}
+
+			// el jugador con las llamas
+			for (Entity flare : flares) {
+				if (flare.intersects(player)) {
+					if (!player.isInvincible())
+						player.touchedBy(flare);
+					// break;
+				}
+			}
+
+			// las bombas con las llamas
+			for (Entity bomb : bombs) {
+				for (Entity flare : flares) {
+					if (flare.intersects(bomb)) {
+						bomb.touchedBy(flare);
+						// break;
+					}
+				}
+			}
+		} catch (ConcurrentModificationException e) {}
 		
 		// los enemigos con las bombas
 		for (Enemy enemy : enemies) {
