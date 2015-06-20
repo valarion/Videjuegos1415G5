@@ -7,13 +7,13 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
-import videjouegos1415g5.cutscenes.FinalScene;
 import videjouegos1415g5.cutscenes.InitScene;
 import videjouegos1415g5.entity.Bomb;
 import videjouegos1415g5.entity.Bomberman;
@@ -107,34 +107,39 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void initLevel() {
-		boolean dead = player.removed;
-		int powerupssize = powerups.size();
+		final boolean dead = player.removed;
+		final int powerupssize = powerups.size();
 		clear();
-		
-		Scanner in = new Scanner(getClass().getResourceAsStream("/maps/definitions/"+level+"/"+level+"_"+levelmap+".txt"));
+
+		Scanner in = new Scanner(getClass().getResourceAsStream(
+				"/maps/definitions/" + level + "/" + level + "_" + levelmap
+						+ ".txt"));
 		map = new Map(in.nextLine(), Map.TILESIZE);
-		//obstacles = new GenerateObstacles(map, true);
-		
+		// obstacles = new GenerateObstacles(map, true);
+
 		PowerUps powerup = null;
-		if(levelmap != 8) {
+		if (levelmap != 8) {
 			obstacles = new GenerateObstacles(map, true);
 			powerup = new PowerUps(in.nextInt(), obstacles.getList());
-		}
-		else {
+		} else {
 			obstacles = new GenerateObstacles(map, false);
 		}
-		
-		if (levelmap != 8) { 
-			if (level == 4 || level == 7) keymusic = "bgm_03";
-			else if (level == 6 || level == 8) keymusic = "bgm_02";
-			else keymusic = "bgm_01";	
-		} else keymusic = "bgm_boss";
-		
-		while(in.hasNext()) {
+
+		if (levelmap != 8) {
+			if (level == 4 || level == 7)
+				keymusic = "bgm_03";
+			else if (level == 6 || level == 8)
+				keymusic = "bgm_02";
+			else
+				keymusic = "bgm_01";
+		} else
+			keymusic = "bgm_boss";
+
+		while (in.hasNext()) {
 			int type = in.nextInt();
 			int count = in.nextInt();
-			switch(type) {
-			case 6: //blue snake
+			switch (type) {
+			case 6: // blue snake
 				for (int x = 0; x < count; x++) {
 
 					SnakeHead head = new SnakeHead(obstacles, map, player);
@@ -148,29 +153,28 @@ public class Game extends Canvas implements Runnable {
 						body = new SnakeBody(obstacles, map, player, head);
 					}
 				}
-				
+
 				break;
 			default:
-				for(int i = 0; i< count; i++)
+				for (int i = 0; i < count; i++)
 					enemies.add(Enemy.createEnemy(type, obstacles, map, player));
 			}
-			
+
 		}
-		//in.close();
-		
-		if(powerup != null && levelmap != 8 && !dead){
+		// in.close();
+
+		if (powerup != null && levelmap != 8 && !dead) {
 			powerups.add(powerup);
-		} 
-		else if(powerup != null && levelmap != 8 && dead && powerupssize > 0) {
+		} else if (powerup != null && levelmap != 8 && dead && powerupssize > 0) {
 			powerups.add(powerup);
 		}
-		
+
 		if (levelmap != 8) {
 			do {
 				exit = new Exit(obstacles.getList(), enemies);
-			} while(exit.intersects(powerup));
-		} else exit = new Exit(null, enemies);
-		
+			} while (exit.intersects(powerup));
+		} else
+			exit = new Exit(null, enemies);
 		in.close();
 	}
  	
@@ -228,7 +232,7 @@ public class Game extends Canvas implements Runnable {
 			}
 
 			try {
-				Thread.sleep(2); // Como a Mena le gusta
+				Thread.sleep(10); // Como a Mena le gusta
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -305,9 +309,9 @@ public class Game extends Canvas implements Runnable {
 				player.tick();
 				
 				// Si el jugador se ha muerto parar la musica de fondo
-				if (player.isDyingFirst()) {
-					music.get(keymusic).stop();
-				}
+//				if (player.isDyingFirst()) {
+//					music.get(keymusic).stop();
+//				}
 				
 				// Si se ha acabado el nivel
 				if (player.endLvl()) {
@@ -391,11 +395,17 @@ public class Game extends Canvas implements Runnable {
 				
 				// Tick de las bombas
 				for(Iterator<Bomb> it = bombs.iterator(); it.hasNext();) {
-					Bomb bomb = it.next();
+					final Bomb bomb = it.next();
 					bomb.tick();
 					if(bomb.removed) {
 						it.remove();
-						addFlares(bomb);
+						Thread flares = new Thread() {
+							public void run(){
+								addFlares(bomb);
+							}
+						};
+						    flares.start();
+						    //t.join();
 					}
 				}
 				
@@ -464,21 +474,26 @@ public class Game extends Canvas implements Runnable {
 				e.render(g);
 			}
 
-			// Pintar llamas finales
-			for (Flare e : flares) {
-				if(e.isFinal())
-					e.render(g);
-			}
-			// Pintar llamas intermedias
-			for (Flare e : flares) {
-				if(!e.isFinal() && !e.isMid())
-					e.render(g);
-			}
-			// Pintar llamas iniciales
-			for (Flare e : flares) {
-				if(e.isMid())
-					e.render(g);
-			}
+			try {
+				// Pintar llamas finales
+				for (Flare e : flares) {
+					if (e.isFinal())
+						e.render(g);
+				}
+				
+				// Pintar llamas intermedias
+				for (Flare e : flares) {
+					if (!e.isFinal() && !e.isMid())
+						e.render(g);
+				}
+
+				// Pintar llamas iniciales
+				for (Flare e : flares) {
+					if (e.isMid())
+						e.render(g);
+				}
+			} catch (ConcurrentModificationException e1) {}
+			
 			// Pintar bomberman
 			player.render(g);
 			
@@ -513,35 +528,37 @@ public class Game extends Canvas implements Runnable {
 				}
 			}
 		}
-		// los enemigos con las llamas
-		for (Enemy enemy : enemies) {
-			for (Entity flare : flares) {
-				if (flare.intersects(enemy)) {
-					enemy.hurt(flare, 10);
+		try {
+			// los enemigos con las llamas
+			for (Enemy enemy : enemies) {
+				for (Entity flare : flares) {
+					if (flare.intersects(enemy)) {
+						enemy.hurt(flare, 10);
+					}
 				}
 			}
-		}
 
-		// el jugador con las llamas
-		for (Entity flare : flares) {
-			if (flare.intersects(player)) {
-				if(!player.isInvincible())
-					player.touchedBy(flare);
-				//break;
-			}
-		}
-
-		// las bombas con las llamas
-		for (Entity bomb : bombs) {
+			// el jugador con las llamas
 			for (Entity flare : flares) {
-				if (flare.intersects(bomb)) {
-					bomb.touchedBy(flare);
-					//break;
+				if (flare.intersects(player)) {
+					if (!player.isInvincible())
+						player.touchedBy(flare);
+					// break;
 				}
 			}
+
+			// las bombas con las llamas
+			for (Entity bomb : bombs) {
+				for (Entity flare : flares) {
+					if (flare.intersects(bomb)) {
+						bomb.touchedBy(flare);
+						// break;
+					}
+				}
+			}
+		} catch (ConcurrentModificationException e) {
 		}
 
-		
 		
 		// los enemigos con las bombas
 		for (Enemy enemy : enemies) {
