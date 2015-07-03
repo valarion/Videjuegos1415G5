@@ -5,3 +5,6 @@ Repositorio para la asignatura de Videjuegos de la universidad de Zaragoza para 
 * 578207 David Orera Hernández - confirmado
 * 650435 Rafael Marcén Altarriba - confirmado
 * 647809 Rubén Tomás Gracia - confirmado
+* 
+# Enlaces externos
+* https://www.youtube.com/watch?v=p-FGK5dwVWs - video del juego en funcionamiento
