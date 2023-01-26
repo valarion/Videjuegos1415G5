@@ -2,7 +2,7 @@ package videjouegos1415g5;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+//Esto es una prueba de clase
 public class KeyInput implements KeyListener {
 	
 	public KeyInput(Game game) {
